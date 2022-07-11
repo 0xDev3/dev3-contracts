@@ -1,0 +1,33 @@
+{
+    "$id": "https://schemas.dev3.sh/v1/traits",
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "title": "dev3.sh traits",
+    "description": "Supported traits used to describe smart contract implementations proposed by the dev3.sh",
+    "type": "object",
+    "properties": {
+        "traits": {
+            "additionalProperties": {
+                "type": "object",
+                "required" : [
+                    "name",
+                    "description",
+                    "interfaces"
+                ],
+                "properties" : {
+                    "name" : {
+                        "type" : "string"
+                    },
+                    "description" : {
+                        "type" : "string"
+                    },
+                    "interfaces" : {
+                        "type" : "array",
+                        "items" : {
+                            "type" : "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

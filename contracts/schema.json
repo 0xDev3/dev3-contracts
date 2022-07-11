@@ -1,0 +1,133 @@
+{
+    "$id": "https://schemas.dev3.sh/v1/contract-decorator",
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "title": "dev3.sh contract decorator",
+    "description": "Describes one smart contract implementation by providing additional information about contract events, functions, their parameters and return values.",
+    "definitions": {
+        "recommendedTypes": {
+            "type": "array",
+            "items": {
+                "oneOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        }
+    }, 
+    "type": "object",
+    "properties": {
+        "tags": {
+            "type": "array",
+            "items": { "type": "string" }
+        },
+        "implements": {
+            "type": "array",
+            "items": { "type": "string" }
+        },
+        "eventDecorators": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "signature": { "type": "string" },
+                    "name": { "type": "string" },
+                    "description": { "type": "string" },
+                    "parameterDecorators": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": { "type": "string" },
+                                "description": { "type": "string" },
+                                "recommendedTypes": { "$ref": "#/definitions/recommendedTypes" }
+                            }
+                        }
+                    }
+                },
+                "additionalProperties": false,
+                "required": [ "signature", "name", "description", "parameterDecorators" ]
+            }
+        },
+        "constructorDecorators": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "signature": { "type": "string" },
+                        "name": { "type": "string" },
+                        "description": { "type": "string" },
+                        "parameterDecorators": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "name": { "type": "string" },
+                                    "description": { "type": "string" },
+                                    "recommendedTypes": { "$ref": "#/definitions/recommendedTypes" }
+                                }
+                            }
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": [ "signature", "name", "description", "parameterDecorators" ]
+                }
+            }
+        },
+        "functionDecorators": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "signature": { "type": "string" },
+                    "name": { "type": "string" },
+                    "description": { "type": "string" },
+                    "parameterDecorators": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": { "type": "string" },
+                                "description": { "type": "string" },
+                                "recommendedTypes": { "$ref": "#/definitions/recommendedTypes" }
+                            }
+                        }
+                    },
+                    "returnDecorators": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": { "type": "string" },
+                                "description": { "type": "string" },
+                                "recommendedTypes": { "$ref": "#/definitions/recommendedTypes" }
+                            }
+                        }
+                    },
+                    "emittableEvents": {
+                        "type": "array",
+                        "items": { "type": "string" }
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "signature",
+                    "name",
+                    "description",
+                    "parameterDecorators",
+                    "returnDecorators",
+                    "emittableEvents"
+                ]
+            }
+        }
+    },
+    "required": ["tags", "implements", "eventDecorators", "constructorDecorators", "functionDecorators"]
+}

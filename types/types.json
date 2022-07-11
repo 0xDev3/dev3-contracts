@@ -1,0 +1,17 @@
+{
+    "$schema": "./schema.json",
+    "types": {
+        "walletAddress": {
+            "name": "wallet address",
+            "description": "Any non-contract ETH address."
+        },
+        "amount": {
+            "name": "amount",
+            "description": "Absolute numeric amount which should be interpreted as is."
+        },
+        "amountWithPrecision": {
+            "name": "amount with precision",
+            "description": "Numeric amount which should be converted to the human friendly form by taking the number of decimals into account"
+        }
+    }
+}

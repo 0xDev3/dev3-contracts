@@ -1,0 +1,15 @@
+{
+    "$schema": "./schema.json",
+    "traits": {
+        "erc20": {
+            "name": "ERC20 token",
+            "description": "Smart contracts that conform to the IERC20 token standard.",
+            "interfaces": ["IERC20"]
+        },
+        "erc20metadata": {
+            "name": "ERC20 token with metadata",
+            "description": "Smart contracts that conform to the IERC20 token standard while also having the three additional properties: name, symbol and decimals.",
+            "interfaces": ["IERC20Metadata"]
+        }
+    }
+}

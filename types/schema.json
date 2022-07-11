@@ -1,0 +1,26 @@
+{
+    "$id": "https://schemas.dev3.sh/v1/types",
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "title": "dev3.sh types",
+    "description": "Supported types used to describe smart contract function parameters and return values proposed by the dev3.sh",
+    "type": "object",
+    "properties": {
+        "types": {
+            "additionalProperties": {
+                "type": "object",
+                "required" : [
+                    "name",
+                    "description"
+                ],
+                "properties" : {
+                    "name" : {
+                        "type" : "string"
+                    },
+                    "description" : {
+                        "type" : "string"
+                    }
+                }
+            }
+        }
+    }
+}

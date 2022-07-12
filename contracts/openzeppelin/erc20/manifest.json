@@ -32,7 +32,7 @@
                     "name": "Token amount",
                     "description": "The amount of ERC20 token that was send.",
                     "recommendedTypes": [
-                        "types/amount"
+                        "types/amountWithPrecision"
                     ]
                 }
             ]
@@ -60,7 +60,7 @@
                     "name": "Approved token amount",
                     "description": "The amount of ERC20 token that was approved for spending.",
                     "recommendedTypes": [
-                        "types/amount"
+                        "types/amountWithPrecision"
                     ]
                 }
             ]
@@ -74,12 +74,17 @@
                 {
                     "name": "Token name",
                     "description": "Name of the token which will be deployed.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "types/string"
+                    ]
                 },
                 {
                     "name": "Token symbol",
                     "description": "Symbol of the token which will be depoyed.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "types/string",
+                        "types/ticker"
+                    ]
                 }
             ]
         }
@@ -110,7 +115,7 @@
                     "name": "Approved token amount",
                     "description": "The amount which was approved for spending.",
                     "recommendedTypes": [
-                        "types/amount"
+                        "types/amountWithPrecision"
                     ]
                 }
             ],
@@ -132,7 +137,7 @@
                     "name": "Approved token amount",
                     "description": "The amount to approve for spending.",
                     "recommendedTypes": [
-                        "types/amount"
+                        "types/amountWithPrecision"
                     ]
                 }
             ],
@@ -140,7 +145,9 @@
                 {
                     "name": "Operation succeeded",
                     "description": "Indicates whether the operation was successful.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "types/boolean"
+                    ]
                 }
             ],
             "emittableEvents": [
@@ -165,7 +172,7 @@
                     "name": "Token amount",
                     "description": "The amount of the ERC20 tokens owned by the specified address.",
                     "recommendedTypes": [
-                        "types/amount"
+                        "types/amountWithPrecision"
                     ]
                 }
             ],
@@ -180,7 +187,9 @@
                 {
                     "name": "Decimal places",
                     "description": "Number of decimals used by this ERC20 token.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "types/amount"
+                    ]
                 }
             ],
             "emittableEvents": []
@@ -201,7 +210,7 @@
                     "name": "Amount to subtract",
                     "description": "The amount which will be subtracted from the current allowed amount to spend.",
                     "recommendedTypes": [
-                        "types/amount"
+                        "types/amountWithPrecision"
                     ]
                 }
             ],
@@ -209,7 +218,9 @@
                 {
                     "name": "Operation succeeded",
                     "description": "Indicates whether the operation was successful.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "types/boolean"
+                    ]
                 }
             ],
             "emittableEvents": [
@@ -232,7 +243,7 @@
                     "name": "Amount to add",
                     "description": "The amount which will be added to the current allowed amount to spend.",
                     "recommendedTypes": [
-                        "types/amount"
+                        "types/amountWithPrecision"
                     ]
                 }
             ],
@@ -240,7 +251,9 @@
                 {
                     "name": "Operation succeeded",
                     "description": "Indicates whether the operation was successful.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "types/boolean"
+                    ]
                 }
             ],
             "emittableEvents": [
@@ -256,7 +269,9 @@
                 {
                     "name": "Token name",
                     "description": "The name of this ERC20 token.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "types/string"
+                    ]
                 }
             ],
             "emittableEvents": []
@@ -270,7 +285,10 @@
                 {
                     "name": "Token symbol",
                     "description": "The symbol of this ERC20 token.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "types/string",
+                        "types/ticker"
+                    ]
                 }
             ],
             "emittableEvents": []
@@ -285,7 +303,7 @@
                     "name": "Total token supply",
                     "description": "The total supply of this ERC20 token.",
                     "recommendedTypes": [
-                        "types/amount"
+                        "types/amountWithPrecision"
                     ]
                 }
             ],
@@ -307,7 +325,7 @@
                     "name": "Token amount",
                     "description": "The amount of ERC20 tokens to send.",
                     "recommendedTypes": [
-                        "types/amount"
+                        "types/amountWithPrecision"
                     ]
                 }
             ],
@@ -315,7 +333,9 @@
                 {
                     "name": "Operation succeeded",
                     "description": "Indicates whether the operation was successful.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "types/boolean"
+                    ]
                 }
             ],
             "emittableEvents": [
@@ -345,7 +365,7 @@
                     "name": "Token amount",
                     "description": "The amount of ERC20 tokens to send.",
                     "recommendedTypes": [
-                        "types/amount"
+                        "types/amountWithPrecision"
                     ]
                 }
             ],
@@ -353,7 +373,9 @@
                 {
                     "name": "Operation succeeded",
                     "description": "Indicates whether the operation was successful.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "types/boolean"
+                    ]
                 }
             ],
             "emittableEvents": [

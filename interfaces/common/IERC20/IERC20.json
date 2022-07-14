@@ -1,7 +1,7 @@
 {
   "_format": "hh-sol-artifact-1",
   "contractName": "IERC20",
-  "sourceName": "contracts/openzeppelin/erc20/ERC20.sol",
+  "sourceName": "interfaces/common/IERC20/IERC20.sol",
   "abi": [
     {
       "anonymous": false,

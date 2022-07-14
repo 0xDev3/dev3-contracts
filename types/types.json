@@ -5,6 +5,10 @@
             "name": "wallet address",
             "description": "Any non-contract ETH address."
         },
+        "contractAddress": {
+            "name": "smart contract address",
+            "description": "Address of the deployed smart contract."
+        },
         "amount": {
             "name": "amount",
             "description": "Absolute numeric amount which should be interpreted as is."
@@ -24,6 +28,10 @@
         "boolean": {
             "name": "boolean",
             "description": "True/False value usually representing the status of the executed operation."
+        },
+        "unixTimestamp": {
+            "name": "unix timestamp",
+            "description": "Describes point in time. It is the number of seconds that have elapsed since the Unix epoch, excluding leap seconds. The Unix epoch is 00:00:00 UTC on 1 January 1970." 
         }
     }
 }

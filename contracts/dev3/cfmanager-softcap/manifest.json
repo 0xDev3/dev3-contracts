@@ -1,0 +1,209 @@
+{
+    "$schema": "../../schema.json",
+    "tags": [
+        "crowdfunding",
+        "finance",
+        "tokens",
+        "token sale",
+        "dev3"
+    ],
+    "implements": [
+        "traits.ownable",
+        "traits.dev3.versioned",
+        "traits.dev3.campaign-common",
+        "traits.dev3.acfmanager",
+        "traits.dev3.cfmanagersoftcap"
+    ],
+    "eventDecorators": [
+        {
+            "signature": "CancelCampaign(address,address,uint256,uint256)",
+            "name": "Cancel campaign",
+            "description": "Emittd when the campaign is successfuly cancelled by the campaign owner.",
+            "parameterDecorators": [
+                {
+                    "name": "Campaign owner",
+                    "description": "Campaign owner wallet.",
+                    "recommendedTypes": [
+                        "types.walletAddress",
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Token for sale",
+                    "description": "Contract address of the token being sold before the campaign was canceled.",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "Returned supply",
+                    "description": "Amount of the tokens returned to the campaign owner once the campaign is canceled by the owner.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "Timestamp",
+                    "description": "Point in time when the event was emitted.",
+                    "recommendedTypes": [
+                        "types.unixTimestamp"
+                    ]
+                }
+            ]
+        },
+        {
+            "signature": "CancelInvestment(address,address,uint256,uint256,uint256)",
+            "name": "Cancel investment",
+            "description": "Emitted for active campaigns only, when one of existing investors cancels their investment.",
+            "parameterDecorators": [
+                {
+                    "name": "Investor",
+                    "description": "Wallet address of the investor who canceled their investment.",
+                    "recommendedTypes": [
+                        "types.walletAddress",
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Token for sale",
+                    "description": "Contract address of the token being sold before the campaign was canceled.",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "Returned supply",
+                    "description": "Amount of the tokens returned to the campaign owner once the campaign is canceled by the owner.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "Timestamp",
+                    "description": "Point in time when the event was emitted.",
+                    "recommendedTypes": [
+                        "types.unixTimestamp"
+                    ]
+                }
+            ]
+        },
+        {
+            "signature": "ChangeOwnership(address,address,uint256)",
+            "name": "Change ownership",
+            "description": "Emitted when the campaign owner is changed to a new address.",
+            "parameterDecorators": [
+                {
+                    "name": "Caller",
+                    "description": "Wallet address of the old owner who initiated the ownership change",
+                    "recommendedTypes": [
+                        "types.walletAddress",
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "New owner",
+                    "description": "Wallet address of the newly selected owner",
+                    "recommendedTypes": [
+                        "types.walletAddress",
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Timestamp",
+                    "description": "Point in time when the event was emitted.",
+                    "recommendedTypes": [
+                        "types.unixTimestamp"
+                    ]
+                }
+            ]
+        },
+        {
+            "signature": "Claim(address,address,uint256,uint256,uint256)",
+            "name": "Claim tokens",
+            "description": "Emitted when any of the investors claim their tokens after the campaign has been close successfully.",
+            "parameterDecorators": [
+                {
+                    "name": "Investor",
+                    "description": "Wallet address of the investor who claimed their investment tokens.",
+                    "recommendedTypes": [
+                        "types.walletAddress",
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Token for sale",
+                    "description": "Contract address of the token being claimed.",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "Token amount",
+                    "description": "Amount of the tokens claimed by the investor.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "Token value",
+                    "description": "Value of the tokens claimed by the investor, denominated in the payment token configured on the campaign.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "Timestamp",
+                    "description": "Point in time when the event was emitted.",
+                    "recommendedTypes": [
+                        "types.unixTimestamp"
+                    ]
+                }
+            ]
+        },
+        {
+            "signature": "Finalize(address,address,uint256,uint256,uint256,uint256)",
+            "name": "Finalize campaign",
+            "description": "Emitted when the campaign owner closes campaign successfully.",
+            "parameterDecorators": [
+                {
+                    "name": "Investor",
+                    "description": "Wallet address of the investor who claimed their investment tokens.",
+                    "recommendedTypes": [
+                        "types.walletAddress",
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Token for sale",
+                    "description": "Contract address of the token being claimed.",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "Token amount",
+                    "description": "Amount of the tokens claimed by the investor.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "Token value",
+                    "description": "Value of the tokens claimed by the investor, denominated in the payment token configured on the campaign.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "Timestamp",
+                    "description": "Point in time when the event was emitted.",
+                    "recommendedTypes": [
+                        "types.unixTimestamp"
+                    ]
+                }
+            ]
+        }
+    ],
+    "constructorDecorators": [],
+    "functionDecorators": []
+}

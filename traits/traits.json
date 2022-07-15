@@ -4,12 +4,42 @@
         "erc20": {
             "name": "ERC20 token",
             "description": "Smart contracts that conform to the IERC20 token standard.",
-            "interfaces": ["IERC20"]
+            "interfaces": ["common/IERC20"]
         },
         "erc20metadata": {
             "name": "ERC20 token with metadata",
             "description": "Smart contracts that conform to the IERC20 token standard while also having the three additional properties: name, symbol and decimals.",
-            "interfaces": ["IERC20Metadata"]
+            "interfaces": ["common/IERC20Metadata"]
+        },
+        "ownable": {
+            "name": "Ownable contract",
+            "description": "Smart contracts that conform to the Ownable interface proposed by the OpenZeppelin.",
+            "interfaces": ["common/Ownable"]
+        },
+        "contractCaller": {
+            "name": "Contract caller",
+            "description": "Smart contracts with the ability of calling other smart contracts dinamically (for example, Governor by OpenZeppelin)",
+            "interfaces": [ ]
+        },
+        "dev3.versioned": {
+            "name": "Versioned contract",
+            "description": "Contracts with this trait contain name and version strings readable by outside world.",
+            "interfaces": ["dev3/IVersioned"]
+        },
+        "dev3.campaign-common": {
+            "name": "Common crowdfuding campaign interface",
+            "description": "Interface representing common features of the crowdfunding campaigns created using dev3.sh contracts",
+            "interfaces": ["dev3/ICampaignCommon"]
+        },
+        "dev3.acfmanager": {
+            "name": "Abstract crowdfunding manager implemented by dev3.sh",
+            "description": "Core abstract contract used for building concrete crowdfunding contract implementations. Provided by dev3.sh",
+            "interfaces": ["dev3/IACfManager"]
+        },
+        "dev3.cfmanagersoftcap": {
+            "name": "Simple crowdfuding campaign contract implemented by dev3.sh",
+            "description": "Enables selling any erc20 token for any another erc20 token by configuring details such as sell price, soft cap, min and max per user investments etc.",
+            "interfaces": ["dev3/ICfManagerSoftcap"]
         }
     }
 }

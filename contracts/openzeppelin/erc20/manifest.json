@@ -5,8 +5,8 @@
         "finance"
     ],
     "implements": [
-        "traits/erc20",
-        "traits/erc20metadata"
+        "traits.erc20",
+        "traits.erc20metadata"
     ],
     "eventDecorators": [
         {
@@ -18,21 +18,21 @@
                     "name": "Sender address",
                     "description": "Address from which the ERC20 token was sent.",
                     "recommendedTypes": [
-                        "types/walletAddress"
+                        "types.walletAddress"
                     ]
                 },
                 {
                     "name": "Recipient address",
                     "description": "Address to which the ERC20 token was sent.",
                     "recommendedTypes": [
-                        "types/walletAddress"
+                        "types.walletAddress"
                     ]
                 },
                 {
                     "name": "Token amount",
                     "description": "The amount of ERC20 token that was send.",
                     "recommendedTypes": [
-                        "types/amountWithPrecision"
+                        "types.amountWithPrecision"
                     ]
                 }
             ]
@@ -46,21 +46,21 @@
                     "name": "Approver address",
                     "description": "Address of the owner who approved spending of their ERC20 token.",
                     "recommendedTypes": [
-                        "types/walletAddress"
+                        "types.walletAddress"
                     ]
                 },
                 {
                     "name": "Spender address",
                     "description": "Address for which the owner has approved to spend their ERC20 token.",
                     "recommendedTypes": [
-                        "types/walletAddress"
+                        "types.walletAddress"
                     ]
                 },
                 {
                     "name": "Approved token amount",
                     "description": "The amount of ERC20 token that was approved for spending.",
                     "recommendedTypes": [
-                        "types/amountWithPrecision"
+                        "types.amountWithPrecision"
                     ]
                 }
             ]
@@ -75,15 +75,15 @@
                     "name": "Token name",
                     "description": "Name of the token which will be deployed.",
                     "recommendedTypes": [
-                        "types/string"
+                        "types.string"
                     ]
                 },
                 {
                     "name": "Token symbol",
                     "description": "Symbol of the token which will be depoyed.",
                     "recommendedTypes": [
-                        "types/string",
-                        "types/ticker"
+                        "types.string",
+                        "types.ticker"
                     ]
                 }
             ]
@@ -99,14 +99,14 @@
                     "name": "Approver address",
                     "description": "Address of the owner which approved spending.",
                     "recommendedTypes": [
-                        "types/walletAddress"
+                        "types.walletAddress"
                     ]
                 },
                 {
                     "name": "Spender address",
                     "description": "Address of the spender.",
                     "recommendedTypes": [
-                        "types/walletAddress"
+                        "types.walletAddress"
                     ]
                 }
             ],
@@ -115,7 +115,7 @@
                     "name": "Approved token amount",
                     "description": "The amount which was approved for spending.",
                     "recommendedTypes": [
-                        "types/amountWithPrecision"
+                        "types.amountWithPrecision"
                     ]
                 }
             ],
@@ -130,14 +130,14 @@
                     "name": "Spender address",
                     "description": "Address of the spender for which spending will be approved.",
                     "recommendedTypes": [
-                        "types/walletAddress"
+                        "types.walletAddress"
                     ]
                 },
                 {
                     "name": "Approved token amount",
                     "description": "The amount to approve for spending.",
                     "recommendedTypes": [
-                        "types/amountWithPrecision"
+                        "types.amountWithPrecision"
                     ]
                 }
             ],
@@ -146,7 +146,7 @@
                     "name": "Operation succeeded",
                     "description": "Indicates whether the operation was successful.",
                     "recommendedTypes": [
-                        "types/boolean"
+                        "types.boolean"
                     ]
                 }
             ],
@@ -163,7 +163,7 @@
                     "name": "Account address",
                     "description": "Address of the account for which to check balance.",
                     "recommendedTypes": [
-                        "types/walletAddress"
+                        "types.walletAddress"
                     ]
                 }
             ],
@@ -172,7 +172,7 @@
                     "name": "Token amount",
                     "description": "The amount of the ERC20 tokens owned by the specified address.",
                     "recommendedTypes": [
-                        "types/amountWithPrecision"
+                        "types.amountWithPrecision"
                     ]
                 }
             ],
@@ -188,7 +188,7 @@
                     "name": "Decimal places",
                     "description": "Number of decimals used by this ERC20 token.",
                     "recommendedTypes": [
-                        "types/amount"
+                        "types.amount"
                     ]
                 }
             ],
@@ -203,14 +203,14 @@
                     "name": "Spender address",
                     "description": "Address of the spender for whom the allowed spending amount will be decreased.",
                     "recommendedTypes": [
-                        "types/walletAddress"
+                        "types.walletAddress"
                     ]
                 },
                 {
                     "name": "Amount to subtract",
                     "description": "The amount which will be subtracted from the current allowed amount to spend.",
                     "recommendedTypes": [
-                        "types/amountWithPrecision"
+                        "types.amountWithPrecision"
                     ]
                 }
             ],
@@ -219,7 +219,7 @@
                     "name": "Operation succeeded",
                     "description": "Indicates whether the operation was successful.",
                     "recommendedTypes": [
-                        "types/boolean"
+                        "types.boolean"
                     ]
                 }
             ],
@@ -236,14 +236,14 @@
                     "name": "Spender address",
                     "description": "Address of the spender for whom the allowed spending amount will be increased.",
                     "recommendedTypes": [
-                        "types/walletAddress"
+                        "types.walletAddress"
                     ]
                 },
                 {
                     "name": "Amount to add",
                     "description": "The amount which will be added to the current allowed amount to spend.",
                     "recommendedTypes": [
-                        "types/amountWithPrecision"
+                        "types.amountWithPrecision"
                     ]
                 }
             ],
@@ -252,7 +252,7 @@
                     "name": "Operation succeeded",
                     "description": "Indicates whether the operation was successful.",
                     "recommendedTypes": [
-                        "types/boolean"
+                        "types.boolean"
                     ]
                 }
             ],
@@ -270,7 +270,7 @@
                     "name": "Token name",
                     "description": "The name of this ERC20 token.",
                     "recommendedTypes": [
-                        "types/string"
+                        "types.string"
                     ]
                 }
             ],
@@ -286,8 +286,8 @@
                     "name": "Token symbol",
                     "description": "The symbol of this ERC20 token.",
                     "recommendedTypes": [
-                        "types/string",
-                        "types/ticker"
+                        "types.string",
+                        "types.ticker"
                     ]
                 }
             ],
@@ -303,7 +303,7 @@
                     "name": "Total token supply",
                     "description": "The total supply of this ERC20 token.",
                     "recommendedTypes": [
-                        "types/amountWithPrecision"
+                        "types.amountWithPrecision"
                     ]
                 }
             ],
@@ -318,14 +318,14 @@
                     "name": "Recipient address",
                     "description": "Address to which the ERC20 tokens will be sent.",
                     "recommendedTypes": [
-                        "types/walletAddress"
+                        "types.walletAddress"
                     ]
                 },
                 {
                     "name": "Token amount",
                     "description": "The amount of ERC20 tokens to send.",
                     "recommendedTypes": [
-                        "types/amountWithPrecision"
+                        "types.amountWithPrecision"
                     ]
                 }
             ],
@@ -334,7 +334,7 @@
                     "name": "Operation succeeded",
                     "description": "Indicates whether the operation was successful.",
                     "recommendedTypes": [
-                        "types/boolean"
+                        "types.boolean"
                     ]
                 }
             ],
@@ -351,21 +351,21 @@
                     "name": "Sender address",
                     "description": "Source address from which the ERC20 tokens will be sent. Must have approved spending of ERC20 tokens by the transaction sender.",
                     "recommendedTypes": [
-                        "types/walletAddress"
+                        "types.walletAddress"
                     ]
                 },
                 {
                     "name": "Recipient address",
                     "description": "Address to which the ERC20 tokens will be sent.",
                     "recommendedTypes": [
-                        "types/walletAddress"
+                        "types.walletAddress"
                     ]
                 },
                 {
                     "name": "Token amount",
                     "description": "The amount of ERC20 tokens to send.",
                     "recommendedTypes": [
-                        "types/amountWithPrecision"
+                        "types.amountWithPrecision"
                     ]
                 }
             ],
@@ -374,7 +374,7 @@
                     "name": "Operation succeeded",
                     "description": "Indicates whether the operation was successful.",
                     "recommendedTypes": [
-                        "types/boolean"
+                        "types.boolean"
                     ]
                 }
             ],

@@ -14,7 +14,7 @@ Other than these, the campaign owner can configure follwing properties at the ca
 5. [uint256] `tokenPrice` - price of `token1`
 6. [uint8] `tokenPriceDecimals` - precision for the `tokenPrice` param. To sell 1 `token1` for 1.337 `token2`, configure `tokenPrice=1337; tokenPriceDecimals=3;`
 7. [uint256] `softcap` - minimum funds amount of `token2` to be raised in the campaign to consider the campaign succesful. Campaign cannot be closed by the campaign owner unless this amount has been reached. If set to 0 soft cap is ignored and campaign can be closed whenever campaign owner chooses to do so.
-8. [uint256] `minInvestment` - minimum per wallet investment. Wallets can invest multiple times and add to their investment in the campaign, but the total amount of the funds invested by the single wallet must be at least `minInvestment` amount of `token2`. Set to 
+8. [uint256] `minInvestment` - minimum per wallet investment. Wallets can invest multiple times and add to their investment in the campaign, but the total amount of the funds invested by the single wallet must be at least `minInvestment` amount of `token2`. Set to 0 if you don't need this constraint for your campaign.
 9. [uint256] `maxInvestment` - maximum per wallet investment. Wallets can invest multiple times and add to their investment in the campaign, but the total amount of the funds by the single wallet can't go above this amount of `token2`.
 10. [boolean] `whitelistRequired` - only makes sense to enable this if `issuer` param was configured. In that case, investors must be whitelisted within the `issuer` mapping before being allowed to invest in the campaign.
 11. [string] `info` - textual description of the campaign.

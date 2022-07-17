@@ -40,6 +40,16 @@
             "name": "Simple crowdfuding campaign contract implemented by dev3.sh",
             "description": "Enables selling any erc20 token for any another erc20 token by configuring details such as sell price, soft cap, min and max per user investments etc.",
             "interfaces": ["dev3/ICfManagerSoftcap"]
+        },
+        "dev3.issuer-common": {
+            "name": "Common issuer interface",
+            "description": "Organizational unit holding multiple assets and/or running crowdfunding campaigns to sell the assets to investors. It's primary purpose is to hold whitelisted wallet registry enabling parties whitelisted parties to transact with and invest into the Issuer's assets.",
+            "interfaces": ["dev3/IIssuerCommon"]
+        },
+        "dev3.campaignFeeManager": {
+            "name": "Campaign fee manager",
+            "description": "Fee manager used to manage fees on crowdfunding campaigns. Fee manager can define two things: fee percentage and fee beneciary. Fee percentage is taken from the total funds raised when the campaing is closed, and is routed to the fee beneficiary wallet.",
+            "interfaces": ["dev3/ICampaignFeeManager"]
         }
     }
 }

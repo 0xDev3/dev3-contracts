@@ -69,6 +69,7 @@
     "constructorDecorators": [
         {
             "signature": "constructor(string,string)",
+            "name": "Constructor",
             "description": "Deployes the ERC20 token with given token name and symbol.",
             "parameterDecorators": [
                 {

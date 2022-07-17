@@ -166,8 +166,8 @@
             "description": "Emitted when the campaign owner closes campaign successfully.",
             "parameterDecorators": [
                 {
-                    "name": "Investor",
-                    "description": "Wallet address of the investor who claimed their investment tokens.",
+                    "name": "Campaign owner",
+                    "description": "Campaign owner wallet.",
                     "recommendedTypes": [
                         "types.walletAddress",
                         "traits.contractCaller"
@@ -175,21 +175,28 @@
                 },
                 {
                     "name": "Token for sale",
-                    "description": "Contract address of the token being claimed.",
+                    "description": "Contract address of the token being sold before the campaign was finalized.",
                     "recommendedTypes": [
                         "traits.erc20"
                     ]
                 },
                 {
-                    "name": "Token amount",
-                    "description": "Amount of the tokens claimed by the investor.",
+                    "name": "Funds raised",
+                    "description": "Total amount of the payment tokens raised during the campaign.",
                     "recommendedTypes": [
                         "types.amountWithPrecision"
                     ]
                 },
                 {
-                    "name": "Token value",
-                    "description": "Value of the tokens claimed by the investor, denominated in the payment token configured on the campaign.",
+                    "name": "Tokens sold",
+                    "description": "Total amount of the tokens sold during the campaign.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "Tokens refund",
+                    "description": "Amount of the unsold tokens returned to the campaign owner after the campaign has been finaized.",
                     "recommendedTypes": [
                         "types.amountWithPrecision"
                     ]
@@ -202,8 +209,742 @@
                     ]
                 }
             ]
+        },
+        {
+            "signature": "Invest(address,address,uint256,uint256,uint256)",
+            "name": "Invest",
+            "description": "Emitted on every successful invest action.",
+            "parameterDecorators": [
+                {
+                    "name": "Investor",
+                    "description": "Wallet address of the investor who placed new investment.",
+                    "recommendedTypes": [
+                        "types.walletAddress",
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Token for sale",
+                    "description": "Contract address of the token being sold to the new investor (reserved before the campaign is finalized).",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "Token amount",
+                    "description": "Amount of the tokens reserved for the investor.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "Token value",
+                    "description": "Value of the tokens reserved for the investor, denominated in the payment token currency.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "Timestamp",
+                    "description": "Point in time when the event was emitted.",
+                    "recommendedTypes": [
+                        "types.unixTimestamp"
+                    ]
+                }
+            ]
+        },
+        {
+            "signature": "SetInfo(string,address,uint256)",
+            "name": "Set Info",
+            "description": "Emitted each time the info description of the campaign is updated by the campaign owner.",
+            "parameterDecorators": [
+                {
+                    "name": "Info string",
+                    "description": "New text description updated for the campaign.",
+                    "recommendedTypes": [
+                        "types.string"
+                    ]
+                },
+                {
+                    "name": "Caller wallet",
+                    "description": "Caller wallet which updated the info on this campaign.",
+                    "recommendedTypes": [
+                        "types.walletAddress",
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Timestamp",
+                    "description": "Point in time when the event was emitted.",
+                    "recommendedTypes": [
+                        "types.unixTimestamp"
+                    ]
+                }
+            ]
         }
     ],
-    "constructorDecorators": [],
-    "functionDecorators": []
+    "constructorDecorators": [
+        {
+            "signature": "constructor(address,address,address,address,uint256,uint8,uint256,uint256,uint256,bool,string,address)",
+            "name": "Constructor",
+            "description": "Initializes new crowdfunding campaign contract with the campaign parameters.",
+            "parameterDecorators": [
+                {
+                    "name": "Campaign owner",
+                    "description": "Wallet address of the single user or more complex organization with the admin rights for this campaign. Only owner can close the campaign and collect the raised funds.",
+                    "recommendedTypes": [
+                        "types.walletAddress",
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Token address",
+                    "description": "Address of the token which is going to be sold to the investors via campaign.",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "Issuer",
+                    "description": "Dev3 Issuer under which the campaign is being created. Provide this only if the issuer exists, otherwise set to zero address (meaning - no issuer defined).",
+                    "recommendedTypes": [
+                        "traits.dev3.issuer-common"
+                    ]
+                },
+                {
+                    "name": "Payment currency",
+                    "description": "Token accepted as the investment method for buying the tokens via this campaign.",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "Token price",
+                    "description": "Price of 1 unit of the token being sold. Represents an amount of the payment currency required to buy 1 token sold via the campaign. This is an integer scaled to precision using the next parameter (tokenPriceDecimals).",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "Token price decimals",
+                    "description": "Determines the precision of previously set token price. For example if the tokenPrice=1234 and the tokenDecimals=3 the actual price configured is 1.234 of the payment currency tokens for each of the tokens being sold. If the tokenPrice=1234 and the tokenDecimals=4 the actual price configured is 0.1234 per token. By combining token price as an absolute number (integer) and token decimals number (integer) any price can be set.",
+                    "recommendedTypes": [
+                        "types.amount"
+                    ]
+                },
+                {
+                    "name": "Soft cap",
+                    "description": "Minimum amount of funds (in form of payment currency) to be raised for this campaign to be closeable. Investors can only claim their tokens if the campaign has been closed. Set to 0 if you don't need the soft cap and you want to be able to close the campaign regardless of the amount of funds raised.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "Min investment",
+                    "description": "Minimum per wallet investment. Wallets can invest multiple times and add to their investment in the campaign, but the total amount of the funds invested by the single wallet must be at least `minInvestment` amount of `payment currency`. Set to 0 if you don't need this constraint for your campaign.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "Max investment",
+                    "description": "Maximum per wallet investment. Wallets can invest multiple times and add to their investment in the campaign, but the total amount of the funds by the single wallet can't go above this amount. Set to ridicolously big number or uint256_max if you don't require this constraint for your campaign.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"          
+                    ]
+                },
+                {
+                    "name": "Whitelist required",
+                    "description": "If set to true, all the investors must be whitlisted (with the previouly provided issuer) before being allowed to invest in the campaign. If issuer not provided in the params before, then this value is ignored.",
+                    "recommendedTypes": [
+                        "types.boolean"
+                    ]
+                },
+                {
+                    "name": "Info",
+                    "description": "Textual value describing this campaign. This value can be used in many different ways. More complex data (images, text, etc) can be uploaded to ipfs and the ipfs hash can then be stored in this field and fetched when reading the campaign state.",
+                    "recommendedTypes": [
+                        "types.string"
+                    ]
+                },
+                {
+                    "name": "Fee Manager",
+                    "description": "Address of the fee manager to be used to distribute fees when closing the campaign. Upon successful campaign closure, the total funds raised minus the fees will go to the campaign owner's wallet while the fee amount will be routed to the fee beneficiary. Fee beneficiary and the fee percentege of the total funds raised are defined by this fee manager contract. If the fee manager is not required for the campaign simply provide the zero address here.",
+                    "recommendedTypes": [
+                        "traits.dev3.campaignFeeManager"
+                    ]
+                }
+            ]
+        }
+    ],
+    "functionDecorators": [
+        {
+            "signature": "cancelCampaign()",
+            "name": "Cancel campaign",
+            "description": "Calling this function will cancel an active crowdfunding campaign. Only owner can cancel the campaign. Canceled campaign is stopepd forever: existing investors can pull back their investments, new investors are blocked from investing and the tokens for sale are returned back to the campaign owner's wallet.",
+            "parameterDecorators": [],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "CancelCampaign(address,address,uint256,uint256)"
+            ]
+        },
+        {
+            "signature": "cancelInvestment()",
+            "name": "Cancel investment",
+            "description": "Calling this function will caller's investment in the campaign and the caller will be refunded with the amount invested. If the caller's investment is 0, or the campaign has already been closed successfuly, then this function will fail.",
+            "parameterDecorators": [],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "CancelInvestment(address,address,uint256,uint256,uint256)"
+            ]
+        },
+        {
+            "signature": "cancelInvestmentFor(address)",
+            "name": "Cancel investment for investor",
+            "description": "Calling this function will cancel an investment for any provided investor and his wallet will be refunded. This is a convience method only callable if the campaign has been cancelled to allow owner or anyone else to cancel existing investments and clear the state of the no longer active campaign.",
+            "parameterDecorators": [
+                {
+                    "name": "investor",
+                    "description": "Address of the wallet invested in the campaign",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "CancelInvestment(address,address,uint256,uint256,uint256)"
+            ]
+        },
+        {
+            "signature": "changeOwnership(address)",
+            "name": "Change ownership",
+            "description": "This function will update the owner of the campaign to the address provided as the parameter. It is only callable by the campaign owner. High caution is required when configuring the new owner since the owner is the only one being able to close the campaign and harvest the funds raised.",
+            "parameterDecorators": [
+                {
+                    "name": "new owner",
+                    "description": "Address of the wallet to be configured as the new campaign owner.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "ChangeOwnership(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "claim(address)",
+            "name": "Claim",
+            "description": "This function will claim the tokens bought via the campaign, and is only callable if the campaign is closed successfully. Tokens will be claimed and transferred to the investor's wallet if: the campaign is closed succesfully and the provided investor wallet is actually invested in the campaign, and the provided investor wallet hasn't claimed their tokens before. This is a public function callable by anyone to make it easier for campaign owner to distribute tokens to his investors without having to force them to call this function using their wallets - although every investor can also claim for themselves using this function, if they want to.",
+            "parameterDecorators": [
+                {
+                    "name": "investor",
+                    "description": "Address of the investor wallet for which the tokens are being claimed",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Claim(address,address,uint256,uint256,uint256)"
+            ]
+        },
+        {
+            "signature": "claimedAmount(address)",
+            "name": "Claimed amount",
+            "description": "Returns the amount of the tokens claimed by the given investor or zero if the investor hasn't yet claimed their tokens.",
+            "parameterDecorators": [
+                {
+                    "name": "investor",
+                    "description": "Address of the investor wallet",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "claimed amount",
+                    "description": "Amount of the tokens claimed by the investor",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "commonState()",
+            "name": "Campaign generic state",
+            "description": "Returns the current generic state of the campaign with all the important campaign info (funds raised, number of investors, etc).",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "contract name",
+                    "description": "Smart contract's unique implementation name inside the dev3 namespace",
+                    "recommendedTypes": [
+                        "types.string"
+                    ]
+                },
+                {
+                    "name": "version",
+                    "description": "Version number of the smart contract flavor",
+                    "recommendedTypes": [
+                        "types.string"
+                    ]
+                },
+                {
+                    "name": "contract address",
+                    "description": "Contract address of this concrete campaign deployment",
+                    "recommendedTypes": [
+                        "traits.ownable",
+                        "traits.dev3.versioned",
+                        "traits.dev3.campaign-common",
+                        "traits.dev3.acfmanager",
+                        "traits.dev3.cfmanagersoftcap"
+                    ]
+                },
+                {
+                    "name": "campaign owner",
+                    "description": "Wallet address of the owner of campaign",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "description",
+                    "description": "Textual info attached as the description of the campaign",
+                    "recommendedTypes": [
+                        "types.string"
+                    ]
+                },
+                {
+                    "name": "token for sale",
+                    "description": "Address of the token sold to the investors via this campaign.",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "payment currency",
+                    "description": "Token accepted as the investment method for buying the tokens via this campaign.",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "soft cap",
+                    "description": "Minimum amount of funds (in form of payment currency) to be raised for this campaign to be closeable. Investors can only claim their tokens if the campaign has been closed.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "is finalized",
+                    "description": "Flag indicating if the campaign was sucessfully finalized. If set to true campaign was closed successfuly by the campaign owner.",
+                    "recommendedTypes": [
+                        "types.boolean"
+                    ]
+                },
+                {
+                    "name": "is canceled",
+                    "description": "Flag indicating if the campaign was canceled. If set to true campaign was canceled by the campaign owner.",
+                    "recommendedTypes": [
+                        "types.boolean"
+                    ]
+                },
+                {
+                    "name": "token price",
+                    "description": "Price of 1 unit of the token being sold. Represents an amount of the payment currency required to buy 1 token sold via the campaign. This is an integer scaled to precision using the next parameter (tokenPriceDecimals).",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "token price decimals",
+                    "description": "Determines the precision of the configured token price. For example if the tokenPrice=1234 and the tokenDecimals=3 the actual price configured is 1.234 of the payment currency tokens for each of the tokens being sold. If the tokenPrice=1234 and the tokenDecimals=4 the actual price configured is 0.1234 per token. By combining token price as an absolute number (integer) and token decimals number (integer) any price can be set.",
+                    "recommendedTypes": [
+                        "types.amount"
+                    ]
+                },
+                {
+                    "name": "funds raised",
+                    "description": "Total amount of funds raised in form of payment currency. If the campaign is still ongoing, this number will increase as the campaign accepts more investments.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "tokens sold",
+                    "description": "Total amount of tokens sold via the campaign. If the campaign is still ongoing, this number will increase. If some of the investors choose to cancel their investments before the campaign is closed then this number will decrease.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "finalize()",
+            "name": "Finalize campaign",
+            "description": "Owner can call this function to finalize the campaign if the soft cap has been reached. If the call was successful, the owner (caller) will pull all of the funds raised putting the campaign in the `finalized` state. In this state, investors can claim the tokens bought via the campaign.",
+            "parameterDecorators": [],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Finalize(address,address,uint256,uint256,uint256,uint256)"
+            ]
+        },
+        {
+            "signature": "flavor()",
+            "name": "contract name",
+            "description": "Returns the smart contract's unique implementation name inside the dev3 namespace",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "contract name",
+                    "description": "smart contract's unique implementation name",
+                    "recommendedTypes": [
+                        "types.string"
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "version()",
+            "name": "contract version",
+            "description": "Returns the version of the contract's implementation - tracked by the dev3 team",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "version",
+                    "description": "Version number of the smart contract flavor",
+                    "recommendedTypes": [
+                        "types.string"
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "getInfoHistory()",
+            "name": "Get info history",
+            "description": "Returns the array of records, each of them representing one executed info update on the campaign. It is useful for transparency reasons and to allow everyone to see the updates history made on the campaign.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "updated info",
+                    "description": "New campaign info contained in this update",
+                    "recommendedTypes": [
+                        "types.string"
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "getState()",
+            "name": "Campaign state",
+            "description": "Returns the full campaign state with all the important information of the current campaign status (funds raised, number of investors, etc).",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "contract name",
+                    "description": "Smart contract's unique implementation name inside the dev3 namespace",
+                    "recommendedTypes": [
+                        "types.string"
+                    ]
+                },
+                {
+                    "name": "version",
+                    "description": "Version number of the smart contract flavor",
+                    "recommendedTypes": [
+                        "types.string"
+                    ]
+                },
+                {
+                    "name": "contract address",
+                    "description": "Contract address of this concrete campaign deployment",
+                    "recommendedTypes": [
+                        "traits.ownable",
+                        "traits.dev3.versioned",
+                        "traits.dev3.campaign-common",
+                        "traits.dev3.acfmanager",
+                        "traits.dev3.cfmanagersoftcap"
+                    ]
+                },
+                {
+                    "name": "campaign owner",
+                    "description": "Wallet address of the owner of campaign",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "token for sale",
+                    "description": "Address of the token sold to the investors via this campaign.",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "token issuer",
+                    "description": "Address of the issuer (organization) under which this campaign has been created. Or 0x0 if the issuer wasn't configured and the campaign is not a part of any organizational unit.",
+                    "recommendedTypes": [
+                        "traits.dev3.issuer-common"
+                    ]
+                },
+                {
+                    "name": "payment currency",
+                    "description": "Token accepted as the investment method for buying the tokens via this campaign.",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "token price",
+                    "description": "Price of 1 unit of the token being sold. Represents an amount of the payment currency required to buy 1 token sold via the campaign. This is an integer scaled to precision using the next parameter (tokenPriceDecimals).",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "soft cap",
+                    "description": "Minimum amount of funds (in form of payment currency) to be raised for this campaign to be closeable. Investors can only claim their tokens if the campaign has been closed.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "min investment",
+                    "description": "Minimum per wallet investment. Wallets can invest multiple times and add to their investment in the campaign, but the total amount of the funds invested by the single wallet must be at least `minInvestment` amount of `payment currency`.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "max investment",
+                    "description": "Maximum per wallet investment. Wallets can invest multiple times and add to their investment in the campaign, but the total amount of the funds by the single wallet can't go above this amount.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"          
+                    ]
+                },
+                {
+                    "name": "whitelist required",
+                    "description": "If set to true, all the investors must be whitlisted (by the organization provided as the parent campaign organization - issuer) before being allowed to invest in the campaign. If issuer not provided in the params before, then this value is ignored.",
+                    "recommendedTypes": [
+                        "types.boolean"
+                    ]
+                },
+                {
+                    "name": "is finalized",
+                    "description": "Flag indicating if the campaign was sucessfully finalized. If set to true campaign was closed successfuly by the campaign owner.",
+                    "recommendedTypes": [
+                        "types.boolean"
+                    ]
+                },
+                {
+                    "name": "is canceled",
+                    "description": "Flag indicating if the campaign was canceled. If set to true campaign was canceled by the campaign owner.",
+                    "recommendedTypes": [
+                        "types.boolean"
+                    ]
+                },
+                {
+                    "name": "total claimable tokens",
+                    "description": "Total number of tokens sold and claimable by investors. This number grows as the campaign gets more investments and is equal to the total number of tokens sold when the campaign is closed succesfully by the owner. Afterwards, as the investors claim their tokens, this number reduces and eventually goes back to zero when all of the investors have claimed their tokens.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "total investors count",
+                    "description": "Total number of different investors (wallets) participating in the campaign. This number grows as the campaign gets more of unique investors included in the fundraising, and then remains equal to the total number of unique investors when the campaign is closed succesfully by the campaign owner.",
+                    "recommendedTypes": [
+                        "types.amount"
+                    ]
+                },
+                {
+                    "name": "total claims count",
+                    "description": "Total number of claims made by the investors. This numbers starts at 0 and grows to the maximum of `total investors count` meaning all of the investors have claimed their tokens.",
+                    "recommendedTypes": [
+                        "types.amount"
+                    ]
+                },
+                {
+                    "name": "funds raised",
+                    "description": "Total amount of funds raised in form of payment currency. If the campaign is still ongoing, this number will increase as the campaign accepts more investments.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "tokens sold",
+                    "description": "Total amount of tokens sold via the campaign. If the campaign is still ongoing, this number will increase. If some of the investors choose to cancel their investments before the campaign is closed then this number will decrease.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "tokens balance",
+                    "description": "Total amount of tokens sent to the campaign to be sold and sitting at the wallet address of this campaign contract.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                },
+                {
+                    "name": "description",
+                    "description": "Textual info attached as the description of the campaign",
+                    "recommendedTypes": [
+                        "types.string"
+                    ]
+                },
+                {
+                    "name": "fee manager",
+                    "description": "Address of the fee manager handling the campaign fees. If the fee manager is defined, the fee will be taken on the successful campaign closing event, as the percentage of the funds raised. If the fee manager is not defined this value will be set to address zero (0x0).",
+                    "recommendedTypes": [
+                        "traits.dev3.campaignFeeManager"
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "invest(uint256)",
+            "name": "Invest",
+            "description": "Invests amount of `payment currency` provided as the function parameter. Investor must firstly approve funds to be spent by this campaign contract before calling this function.",
+            "parameterDecorators": [
+                {
+                    "name": "investment amount",
+                    "description": "Amount of `payment currency` token to invest in the campaign.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Invest(address,address,uint256,uint256,uint256)"
+            ]
+        },
+        {
+            "signature": "investForBeneficiary(address,address,uint256)",
+            "name": "Invest for beneficiary",
+            "description": "Convience method allowing anyone to process investors investment after he approved the funds to the contract. This reduces the number of transactions to be made by the investor to 1 only since the investor only needs to approve funds. After approval was made by the investor, anyone can call this public function with the parameters (investor,investor,amount) and the campaign will pull the funds from the investor's wallet and store the investment details just as if the investor has executed it on his own by calling the `invest()` function.",
+            "parameterDecorators": [
+                {
+                    "name": "spender",
+                    "description": "Address of the spender from which the funds are being taken when processing the investment.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "beneficiary",
+                    "description": "Address of the wallet which is going to be stored as the investor when processing this investment. This wallet must be equal to the `spender` wallet or else the investment will fail.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "investment amount",
+                    "description": "Amount of `payment currency` token to take from `spender` and invest in the campaign.",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]   
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Invest(address,address,uint256,uint256,uint256)"
+            ]
+        },
+        {
+            "signature": "investmentAmount(address)",
+            "name": "Investment amount",
+            "description": "Returns the total invested amount by the investor provided as the function parameter.",
+            "parameterDecorators": [
+                {
+                    "name": "investor",
+                    "description": "Investor wallet address",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "invested amount",
+                    "description": "Invested amount",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "isWalletWhitelisted(address)",
+            "name": "Is wallet whitelisted?",
+            "description": "Returns true for given wallet address if the wallet address is allowed to invest in the campaign",
+            "parameterDecorators": [
+                {
+                    "name": "investor wallet address",
+                    "description": "investor wallet address",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "wallet whitelisted",
+                    "description": "wallet whitelisted status flag",
+                    "recommendedTypes": [
+                        "types.boolean"
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "setInfo",
+            "name": "Set Info",
+            "description": "Updates the info string of the campaign. This is only callable by the campaign owner.",
+            "parameterDecorators": [
+                {
+                    "name": "Info text",
+                    "description": "New info text to be configured as this campaign's description",
+                    "recommendedTypes": [
+                        "types.string"
+                    ]
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "SetInfo(string,address,uint256)"
+            ]
+        },
+        {
+            "signature": "stablecoin()",
+            "name": "Payment currency",
+            "description": "Returns the address of the token being used as the payment method for this campaign",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "payment currency",
+                    "description": "Payment token address",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "tokenAmount(address)",
+            "name": "Reserved token amount",
+            "description": "Returns the reserved token amount for the given wallet address. Investor can claim this tokens if the campaign gets closed succesfully. If the investor claims his tokens this number will still keep the same value to provide a historical information of how much tokens were bought by every investor.",
+            "parameterDecorators": [
+                {
+                    "name": "investor wallet address",
+                    "description": "investor wallet address",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "token amount",
+                    "description": "token amount reserved for the investor",
+                    "recommendedTypes": [
+                        "types.amountWithPrecision"
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        }
+    ]
 }

@@ -47,7 +47,8 @@
                                 "name": { "type": "string" },
                                 "description": { "type": "string" },
                                 "recommendedTypes": { "$ref": "#/definitions/recommendedTypes" }
-                            }
+                            },
+                            "required": ["name", "description", "recommendedTypes"]
                         }
                     }
                 },
@@ -59,27 +60,25 @@
             "type": "array",
             "items": {
                 "type": "object",
-                "items": {
-                    "type": "object",
-                    "properties": {
-                        "signature": { "type": "string" },
-                        "name": { "type": "string" },
-                        "description": { "type": "string" },
-                        "parameterDecorators": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "name": { "type": "string" },
-                                    "description": { "type": "string" },
-                                    "recommendedTypes": { "$ref": "#/definitions/recommendedTypes" }
-                                }
-                            }
+                "properties": {
+                    "signature": { "type": "string" },
+                    "name": { "type": "string" },
+                    "description": { "type": "string" },
+                    "parameterDecorators": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": { "type": "string" },
+                                "description": { "type": "string" },
+                                "recommendedTypes": { "$ref": "#/definitions/recommendedTypes" }
+                            },
+                            "required": ["name", "description", "recommendedTypes"]
                         }
-                    },
-                    "additionalProperties": false,
-                    "required": [ "signature", "name", "description", "parameterDecorators" ]
-                }
+                    }
+                },
+                "additionalProperties": false,
+                "required": [ "signature", "name", "description", "parameterDecorators" ]
             }
         },
         "functionDecorators": {
@@ -98,7 +97,8 @@
                                 "name": { "type": "string" },
                                 "description": { "type": "string" },
                                 "recommendedTypes": { "$ref": "#/definitions/recommendedTypes" }
-                            }
+                            },
+                            "required": ["name", "description", "recommendedTypes"]
                         }
                     },
                     "returnDecorators": {
@@ -109,7 +109,8 @@
                                 "name": { "type": "string" },
                                 "description": { "type": "string" },
                                 "recommendedTypes": { "$ref": "#/definitions/recommendedTypes" }
-                            }
+                            },
+                            "required": ["name", "description", "recommendedTypes"]
                         }
                     },
                     "emittableEvents": {

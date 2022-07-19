@@ -46,7 +46,7 @@
             "description": "Organizational unit holding multiple assets and/or running crowdfunding campaigns to sell the assets to investors. It's primary purpose is to hold whitelisted wallet registry enabling parties whitelisted parties to transact with and invest into the Issuer's assets.",
             "interfaces": ["dev3/IIssuerCommon"]
         },
-        "dev3.campaignFeeManager": {
+        "dev3.campaignfeemanager": {
             "name": "Campaign fee manager",
             "description": "Fee manager used to manage fees on crowdfunding campaigns. Fee manager can define two things: fee percentage and fee beneciary. Fee percentage is taken from the total funds raised when the campaing is closed, and is routed to the fee beneficiary wallet.",
             "interfaces": ["dev3/ICampaignFeeManager"]

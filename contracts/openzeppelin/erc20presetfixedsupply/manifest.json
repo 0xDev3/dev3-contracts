@@ -211,7 +211,7 @@
             ]
         },
         {
-            "signature": "burnFrom(address,amount)",
+            "signature": "burnFrom(address,uint256)",
             "name": "Burn approved tokens",
             "description": "Burn the tokens from the given wallet.",
             "parameterDecorators": [

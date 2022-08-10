@@ -11,6 +11,11 @@
             "description": "Smart contracts that conform to the IERC20 token standard while also having the three additional properties: name, symbol and decimals.",
             "interfaces": ["common/IERC20Metadata"]
         },
+        "erc20burnable": {
+            "name": "ERC20 burnable token",
+            "description": "Smart contracts that conform to the IERC20 token standard while also allowing the token holders to burn their tokens and as a result reduce the total supply of the token.",
+            "interfaces": ["common/IERC20Burnable"]
+        },
         "ownable": {
             "name": "Ownable contract",
             "description": "Smart contracts that conform to the Ownable interface proposed by the OpenZeppelin.",

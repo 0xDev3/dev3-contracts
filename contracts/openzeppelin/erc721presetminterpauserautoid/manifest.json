@@ -598,7 +598,7 @@
             ]
         },
         {
-            "signature": "safeTransferFrom(address,address,uint256,string)",
+            "signature": "safeTransferFrom(address,address,uint256,bytes)",
             "name": "Safely transfer approved token with data",
             "description": "Transfers the specified token with tokenId (third parameter) from the owner's address (first parameter) to any other address (second parameter). Caller of this function must be approved by the owner of the token with the given ID or else the action will fail. Owner can give this rights to the caller by calling either `approve()` or `setApprovalForAll()` functions. Transfer is safe in a way that if the receiving token address is the smart contract address, then the check is being made if the receiving smart contract address has implemented the `onERC721Received()` function proposed by the `IERC721Receiver` interface. The extra data (fourth parameter) is sent along with the token if the receiving address is the `IERC721Receiver` contract. Caller's approval for the token transfer is removed upon the succesful transfer from sender to receiver.",
             "parameterDecorators": [

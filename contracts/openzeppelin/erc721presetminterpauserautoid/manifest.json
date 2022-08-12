@@ -730,7 +730,7 @@
             "emittableEvents": []
         },
         {
-            "signature": "tokenURI()",
+            "signature": "tokenURI(uint256)",
             "name": "Token URI",
             "description": "Returns token URI for given token ID. Token URI describes the actual digital content connected to the given token. This can for example be a link to the image file if the nft itself is an image or digital art.",
             "parameterDecorators": [

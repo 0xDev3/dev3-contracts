@@ -16,6 +16,16 @@
             "description": "Smart contracts that conform to the IERC20 token standard while also allowing the token holders to burn their tokens and as a result reduce the total supply of the token.",
             "interfaces": ["common/IERC20Burnable"]
         },
+        "erc721": {
+            "name": "ERC721 token",
+            "description": "Smart contracts that conform to the IERC721 non fungible token standard",
+            "interfaces": ["common/IERC721"]
+        },
+        "erc721burnable": {
+            "name": "ERC721 burnable token",
+            "description": "Smart contracts that conform to the IERC721 non fungible token standard while also allowing the token holders to burn their tokens.",
+            "interfaces": ["common/IERC721Burnable"]
+        },
         "ownable": {
             "name": "Ownable contract",
             "description": "Smart contracts that conform to the Ownable interface proposed by the OpenZeppelin.",

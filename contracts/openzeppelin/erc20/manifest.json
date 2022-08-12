@@ -8,6 +8,7 @@
         "traits.erc20",
         "traits.erc20metadata"
     ],
+    "description": "Base ERC20 fungible token implementation.",
     "eventDecorators": [
         {
             "signature": "Transfer(address,address,uint256)",

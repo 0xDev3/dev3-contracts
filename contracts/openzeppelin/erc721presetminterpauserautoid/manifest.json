@@ -1,0 +1,804 @@
+{
+    "$schema": "../../schema.json",
+    "tags": [
+        "nft"
+    ],
+    "implements": [
+        "traits.erc721",
+        "traits.erc721burnable"
+    ],
+    "description": "ERC721 NFT implementation with mint and burn functions.",
+    "eventDecorators": [
+        {
+            "signature": "Approval(address,address,uint256)",
+            "name": "Approval",
+            "description": "Emitted when owner enables a third party to manage the token with the given token id.",
+            "parameterDecorators": [
+                {
+                    "name": "Approver address",
+                    "description": "Address of the owner who approved someone to manage their ERC721 token.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Manager address",
+                    "description": "Address of the third party with the rights to manage ERC721 token.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token id",
+                    "description": "ERC721 token identifier being approved for management.",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "ApprovalForAll(address,address,bool)",
+            "name": "Approval for all",
+            "description": "Emitted when owner enables or disables a third party to manage all of its assets of this ERC721 token.",
+            "parameterDecorators": [
+                {
+                    "name": "Approver address",
+                    "description": "Address of the owner who approved someone to manage all of their ERC721 tokens.",
+                    "recommendedTypes": [
+                        "types.walletAddress"
+                    ]
+                },
+                {
+                    "name": "Operator address",
+                    "description": "Address of the third party with the rights to manage all of the ERC721 tokens owned by the caller.",
+                    "recommendedTypes": [
+                        "types.walletAddress"
+                    ]
+                },
+                {
+                    "name": "Management enabled",
+                    "description": "Indicates if owner has enabled (value true) or disabled (value false) the rights to the asset management.",
+                    "recommendedTypes": [
+                        "types.boolean"
+                    ]
+                }
+            ]
+        },
+        {
+            "signature": "Paused(address)",
+            "name": "Pause transfers",
+            "description": "Emitted when the wallet with the pauser role stops all token transfers.",
+            "parameterDecorators": [
+                {
+                    "name": "Pause caller",
+                    "description": "Wallet with the pause rights who initiated the action to stop all token transfers",
+                    "recommendedTypes": [
+                        "types.walletAddress"
+                    ]
+                }
+            ]
+        },
+        {
+            "signature": "RoleAdminChanged(bytes32,bytes32,bytes32)",
+            "name": "RoleAdmin Changed",
+            "description": "Emitted when the RoleAdmin property has been changed for one specific role category. Wallets with RoleAdmin role are granted the rights to add and remove members of a specific role category.",
+            "parameterDecorators": [
+                {
+                    "name": "Role category",
+                    "description": "Identifier of the Role category whose RoleAdmin property was changed",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Previous RoleAdmin value",
+                    "description": "Old RoleAdmin value. Wallets with this role can no longer manage the role category defined in the first parameter of this event.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "New RoleAdmin value",
+                    "description": "New RoleAdmin value. Wallets with this role can now manage the role category defined in the first parameter of this event.",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "RoleGranted(bytes32,address,address)",
+            "name": "Role Granted",
+            "description": "Emitted when a new wallet is granted the rights for a specific role",
+            "parameterDecorators": [
+                {
+                    "name": "Role",
+                    "description": "Role category identifier.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Account",
+                    "description": "Wallet becoming the member for role category.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Caller",
+                    "description": "Wallet managing this role category and the one who granted the role to the account.",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "RoleRevoked(bytes32,address,address)",
+            "name": "Role Revoked",
+            "description": "Emitted when the role is revoked from the specified wallet",
+            "parameterDecorators": [
+                {
+                    "name": "Role",
+                    "description": "Role category identifier.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Account",
+                    "description": "Wallet whose role has been revoked.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Caller",
+                    "description": "Wallet managing this role category and the one who revoked the role to the account.",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "Transfer(address,address,uint256)",
+            "name": "Token transfer",
+            "description": "Indicates that ERC721 transfer has occurred.",
+            "parameterDecorators": [
+                {
+                    "name": "Sender address",
+                    "description": "Address from which the ERC721 token was sent.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Recipient address",
+                    "description": "Address to which the ERC721 token was sent.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token Id",
+                    "description": "Id of the specific nft within the ERC721 collection which was transferred to another wallet",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "Unpaused(address)",
+            "name": "Unpause transfers",
+            "description": "Emitted when the wallet with the pauser role enables token transfers again.",
+            "parameterDecorators": [
+                {
+                    "name": "Pause caller",
+                    "description": "Wallet with the pause rights who initiated the action to enable all token transfers again",
+                    "recommendedTypes": []
+                }
+            ]
+        }
+    ],
+    "constructorDecorators": [
+        {
+            "signature": "constructor(string,string,string)",
+            "name": "Constructor",
+            "description": "Creates new ERC721 collection by defining token name, token symbol and the base URI to be used for calculating unique URIs for every collection item. For example having the same base url with different ids can point to different images stored on ipfs or some other storage service.",
+            "parameterDecorators": [
+                {
+                    "name": "Token name",
+                    "description": "Descriptive token name of this ERC721 nft collection. (for example, `Game Item`)",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token symbol",
+                    "description": "Short token symbol to be used for this ERC721 nft collection. (for example, `GITM`)",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Base token URI",
+                    "description": "Base token URI to be used for calculating unique URI for every collection item, usually by apending the token id to the base uri defined here.",
+                    "recommendedTypes": []
+                }
+            ]
+        }
+    ],
+    "functionDecorators": [
+        {
+            "signature": "DEFAULT_ADMIN_ROLE()",
+            "name": "Default Admin role category",
+            "description": "Returns the default admin role category to be used for managing every new role category if no other value is specified. Admins of role category can grant and revoke role to wallets, and transfer role admin rights to other wallets.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Default Admin role category",
+                    "description": "Identifier of the Admin role group.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "MINTER_ROLE()",
+            "name": "Minter role category",
+            "description": "Returns the minter role category identifier. Members of the role with this identifier have rights to mint (create) new tokens for this ERC721 collection.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Minter role category",
+                    "description": "Identifier of the Minter role group.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "PAUSER_ROLE()",
+            "name": "Pauser role category",
+            "description": "Returns the pauser role category identifier. Members of the role with this identifier have rights to pause and unpause all token transfers for this ERC721 collection.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Pauser role category",
+                    "description": "Identifier of the Pauser role group.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "approve(address,uint256)",
+            "name": "Approve token management",
+            "description": "This function will grant rights to the third party to manage caller's token specified by its token id. Call this function with special caution as the third party will get rights to transfer your token to other addresses.",
+            "parameterDecorators": [
+                {
+                    "name": "Token manager",
+                    "description": "Address of the manager with the rights to manage the specified token.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token id",
+                    "description": "Id of the token from this ERC721 collection to be unlocked for management to the specified third party.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Approval(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "balanceOf(address)",
+            "name": "Get balance",
+            "description": "Returns the amount of tokens owned by the specified address.",
+            "parameterDecorators": [
+                {
+                    "name": "Account address",
+                    "description": "Address of the account for which to check balance.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Token amount",
+                    "description": "The amount of the items from this ERC721 collection owned by the specified address.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "burn(uint256)",
+            "name": "Burn token",
+            "description": "Destroys the token with the given token id and removes it from callers wallet. On success emits the event of transferring the token id to address 0x0 which marks the token destroyed.",
+            "parameterDecorators": [
+                {
+                    "name": "Token id",
+                    "description": "Id of the token owned by the caller to be destroyed.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "getApproved(uint256)",
+            "name": "Get approved",
+            "description": "Returns the address with the rights to manage token from the collection with the given token id. If no address can manage the token then the returned value will be 0x0.",
+            "parameterDecorators": [
+                {
+                    "name": "Token id",
+                    "description": "Id of the token.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Token manager",
+                    "description": "Address of the manager with the rights to manage the given token from the collection.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "getRoleAdmin(bytes32)",
+            "name": "Get role admin",
+            "description": "Returns the role identifier whose members can manage the role given as the function parameter. Managing includes adding or removing the members from the given role group.",
+            "parameterDecorators": [
+                {
+                    "name": "Role identifier",
+                    "description": "Identifier of the role for which the admin role is queried.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Admin Role identifier",
+                    "description": "Admin role for the given role group. If the admin role was not set then the default admin role group will be returned. Usually the default value is 0x0.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "getRoleMember(bytes32,uint256)",
+            "name": "Get role member",
+            "description": "Gets the wallet address of the role member at the given index position. One role can have many more than one members.",
+            "parameterDecorators": [
+                {
+                    "name": "Role identifier",
+                    "description": "Identifier of the role for which the member address is queried.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Member index",
+                    "description": "Position in the list of members. To find out the total members count for the role identifier the `getRoleMemberCount()` function can be usesd.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Fetched role member",
+                    "description": "Address of the member fetched from the given role group at given index position.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "getRoleMemberCount(bytes32)",
+            "name": "Get role member count",
+            "description": "Returns the total number of members belonging to the role with the given role identifier",
+            "parameterDecorators": [
+                {
+                    "name": "Role identifier",
+                    "description": "Identifier of the role for which the members count is queried.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Role member count",
+                    "description": "Total number of members belonging to the role",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "grantRole(bytes32,address)",
+            "name": "Grant role",
+            "description": "Adds new member to the given role group. Only role admin can call this function.",
+            "parameterDecorators": [
+                {
+                    "name": "Role identifier",
+                    "description": "Identifier of the role for which the new member is being added.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Member wallet",
+                    "description": "Wallet address of the new role member",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "RoleGranted(bytes32,address,address)"
+            ]
+        },
+        {
+            "signature": "hasRole(bytes32,address)",
+            "name": "Has role",
+            "description": "Checks if the given wallet address is a member of a given role group.",
+            "parameterDecorators": [
+                {
+                    "name": "Role identifier",
+                    "description": "Identifier of the role for which the membership is being checked.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Member wallet",
+                    "description": "Wallet address of the account for which the role membership is being checked.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Has role",
+                    "description": "If value returned is `true`, then the given wallet address *IS* the member of the given role group.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "isApprovedForAll(address,address)",
+            "name": "Is approved for all",
+            "description": "Checks if the given operator wallet (second parameter) is approved to manage all of the tokens owned by the given owner wallet (first parameter).",
+            "parameterDecorators": [
+                {
+                    "name": "Owner wallet",
+                    "description": "Token owner wallet address.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Operator wallet",
+                    "description": "Operator wallet address.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Is approved",
+                    "description": "If value returned is `true`, then the given operator wallet *IS* approved to manage all of the tokens owned by the given owner wallet. Token owner can always change the `approve for all` status by calling the `setApprovalForAll()` function.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "mint(address)",
+            "name": "Mint",
+            "description": "Creates a new token for the given owner wallet. Its token ID will be automatically assigned (and available on the emitted Transfer event), and the token URI autogenerated based on the base URI configured for this ERC721 collection. This function is only callable by the wallets with Minter role.",
+            "parameterDecorators": [
+                {
+                    "name": "Owner wallet",
+                    "description": "Wallet address which is going to become an owner of the newly created token.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "name()",
+            "name": "Name",
+            "description": "Returns the name of this ERC721 nft collection",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Collection name",
+                    "description": "Collection name",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "ownerOf(uint256)",
+            "name": "Owner of",
+            "description": "Returns the owner of the given token with token ID. Token with ID must exist for the query to return a result.",
+            "parameterDecorators": [
+                {
+                    "name": "Token ID",
+                    "description": "Token ID",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Owner",
+                    "description": "Wallet address of the owner of the given token ID",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "pause()",
+            "name": "Pause transfers",
+            "description": "Freezes all of the token transfers until the next `unpause()` call. This is only callable by the wallets with the Pauser role.",
+            "parameterDecorators": [],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Paused(address)"
+            ]
+        },
+        {
+            "signature": "paused()",
+            "name": "Paused",
+            "description": "Checks if the token transfers for this ERC721 collection are disabled.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Is paused",
+                    "description": "If this value is `true` the token transfers are in `paused` state.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "renounceRole(bytes32,address)",
+            "name": "Renounce role",
+            "description": "Role member can call this function to renounce the given role.",
+            "parameterDecorators": [
+                {
+                    "name": "Role identifier",
+                    "description": "Role to renounce from",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Account address",
+                    "description": "Account address renouncing the given role. This parameter must be equal to the function caller address, since only role owner can renounce its membership.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "RoleRevoked(bytes32,address,address)"
+            ]
+        },
+        {
+            "signature": "revokeRole(bytes32,address)",
+            "name": "Revoke role",
+            "description": "Removes the given account address (second parameter) from the role members of the given role category (first parameter). This is only callable by the members of the admin role group defined as a manager group for the given role. To find out what's the manager group for a given role, the `getRoleAdmin()` function can be called.",
+            "parameterDecorators": [
+                {
+                    "name": "Role identifier",
+                    "description": "Role to remove the member from",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Role member",
+                    "description": "Wallet address of the role member whose role membership is being removed.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "RoleRevoked(bytes32,address,address)"
+            ]
+        },
+        {
+            "signature": "safeTransferFrom(address,address,uint256)",
+            "name": "Safely transfer approved token",
+            "description": "Transfers the specified token with tokenId (third parameter) from the owner's address (first parameter) to any other address (second parameter). Caller of this function must be approved by the owner of the token with the given ID or else the action will fail. Owner can give this rights to the caller by calling either `approve()` or `setApprovalForAll()` functions. Transfer is safe in a way that if the receiving token address is the smart contract address, then the check is being made if the receiving smart contract address has implemented the `onERC721Received()` function proposed by the `IERC721Receiver` interface. Caller's approval for the token transfer is removed upon the succesful transfer from sender to receiver.",
+            "parameterDecorators": [
+                {
+                    "name": "Sender address",
+                    "description": "Owner address from which the token will be transferred.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Recipient address",
+                    "description": "Address to which the token will be transferred.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token ID",
+                    "description": "The ID of the token owned by the sender and transferred to the receiver wallet.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)",
+                "Approval(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "safeTransferFrom(address,address,uint256,string)",
+            "name": "Safely transfer approved token with data",
+            "description": "Transfers the specified token with tokenId (third parameter) from the owner's address (first parameter) to any other address (second parameter). Caller of this function must be approved by the owner of the token with the given ID or else the action will fail. Owner can give this rights to the caller by calling either `approve()` or `setApprovalForAll()` functions. Transfer is safe in a way that if the receiving token address is the smart contract address, then the check is being made if the receiving smart contract address has implemented the `onERC721Received()` function proposed by the `IERC721Receiver` interface. The extra data (fourth parameter) is sent along with the token if the receiving address is the `IERC721Receiver` contract. Caller's approval for the token transfer is removed upon the succesful transfer from sender to receiver.",
+            "parameterDecorators": [
+                {
+                    "name": "Sender address",
+                    "description": "Owner address from which the token will be transferred.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Recipient address",
+                    "description": "Address to which the token will be transferred.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token ID",
+                    "description": "The ID of the token owned by the sender and transferred to the receiver wallet.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Extra data",
+                    "description": "Data to send to the receiver if the receiving the address is the contract implementing the `IERC721Receiver` interface.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)",
+                "Approval(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "setApprovalForAll(address,bool)",
+            "name": "Set approval for all",
+            "description": "Calling this function, caller can choose to give (or remove) rights to operator (first parameter) to manage all of the caller owned tokens of this ERC721 collection. Caller can grant (or remove) rights to multiple operators by repeatedly calling this function.",
+            "parameterDecorators": [
+                {
+                    "name": "Operator",
+                    "description": "The account address to get (or loose) rights to manage all of the caller owned tokens.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Is approved",
+                    "description": "Action type. If the flag is set to `true` the operator is being granted the rights to manage the tokens and if it is set to `false` the operator is revoked of the rights to manage the tokens.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "ApprovalForAll(address,address,bool)"
+            ]
+        },
+        {
+            "signature": "supportsInterface(bytes4)",
+            "name": "Supports interface",
+            "description": "Checks if this contract implements the interface defined by the given `interfaceId`. See ERC-165 for more info.",
+            "parameterDecorators": [
+                {
+                    "name": "Interface ID",
+                    "description": "Interface ID.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Is supported",
+                    "description": "Returns `true` if the given interface id is supported by this contract",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "symbol()",
+            "name": "Symbol",
+            "description": "Returns the symbol defined for this ERC721 collection at constructon time.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Symbol",
+                    "description": "Collection symbol",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "tokenByIndex(uint256)",
+            "name": "Token by index",
+            "description": "Returns a token ID at a given index of all the tokens stored by the contract. Use along with `totalSupply()` function to enumerate all tokens.",
+            "parameterDecorators": [
+                {
+                    "name": "Index",
+                    "description": "Token index",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Token ID",
+                    "description": "Token ID of the token at given index.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "tokenOfOwnerByIndex(address,uint256)",
+            "name": "Token of owner by index",
+            "description": "Returns a token ID owned by owner (first parameter) at a given index (second parameter) of its token list. Use along with `balanceOf()` function to enumerate all of owner's tokens.",
+            "parameterDecorators": [
+                {
+                    "name": "Token owner",
+                    "description": "The owner address",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Index",
+                    "description": "Index of the token in the owner's list of tokens",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Token ID",
+                    "description": "ID of the token at the given position in the owner's token list",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "tokenURI()",
+            "name": "Token URI",
+            "description": "Returns token URI for given token ID. Token URI describes the actual digital content connected to the given token. This can for example be a link to the image file if the nft itself is an image or digital art.",
+            "parameterDecorators": [
+                {
+                    "name": "Token ID",
+                    "description": "ID of the token for which we want to fetch the token URI value",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Token URI",
+                    "description": "Token URI calculated for the given token ID. Usually it is constructed by appending the token ID value to the base URI defined at the collection construction time.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "totalSupply()",
+            "name": "Total supply",
+            "description": "Returns the total supply of the tokens created for this ERC721 collection. Supply is increased when minting new tokens and is decreased when owners burn their owned tokens.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Total supply",
+                    "description": "Total supply",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "transferFrom(address,address,uint256)",
+            "name": "Transfer approved token",
+            "description": "Transfers the specified token with tokenId (third parameter) from the owner's address (first parameter) to any other address (second parameter). Caller of this function must be approved by the owner of the token with the given ID or else the action will fail. Owner can give this rights to the caller by calling either `approve()` or `setApprovalForAll()` functions. Caller's approval for the token transfer is removed upon the succesful transfer from sender to receiver.",
+            "parameterDecorators": [
+                {
+                    "name": "Sender address",
+                    "description": "Owner address from which the token will be transferred.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Recipient address",
+                    "description": "Address to which the token will be transferred.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token ID",
+                    "description": "The ID of the token owned by the sender and transferred to the receiver wallet.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)",
+                "Approval(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "unpause()",
+            "name": "Enable token transfers",
+            "description": "Enables the token transfers again if the transfers were previously disabled. Only the wallets with the Pauser role can call this function or else the call will fail.",
+            "parameterDecorators": [],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Unpaused(address)"
+            ]
+        }
+    ]
+}

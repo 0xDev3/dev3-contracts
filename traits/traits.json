@@ -56,6 +56,11 @@
             "description": "Enables selling any erc20 token for any another erc20 token by configuring details such as sell price, soft cap, min and max per user investments etc.",
             "interfaces": ["dev3/ICfManagerSoftcap"]
         },
+        "dev3.cfmanagersoftcapvesting": {
+            "name": "Crowdfunding campaign contract with vested token rewards implemented by dev3.sh",
+            "description": "Enables selling any erc20 token for any another erc20 token by configuring details such as sell price, soft cap, min and max per user investments etc. The tokens sold via the campaign are distributed to the investors bit by bit by defining the vesting schedule.",
+            "interfaces": ["dev3/ICfManagerSoftcapVesting"]
+        },
         "dev3.issuer-common": {
             "name": "Common issuer interface",
             "description": "Organizational unit holding multiple assets and/or running crowdfunding campaigns to sell the assets to investors. It's primary purpose is to hold whitelisted wallet registry enabling parties whitelisted parties to transact with and invest into the Issuer's assets.",

@@ -565,22 +565,6 @@
             "emittableEvents": []
         },
         {
-            "signature": "version()",
-            "name": "Contract version",
-            "description": "Returns the version of the contract's implementation - tracked by the dev3 team.",
-            "parameterDecorators": [],
-            "returnDecorators": [
-                {
-                    "name": "Contract version",
-                    "description": "Version number of the smart contract flavor inside the dev3 namespace.",
-                    "recommendedTypes": [
-                        "types.string"
-                    ]
-                }
-            ],
-            "emittableEvents": []
-        },
-        {
             "signature": "getInfoHistory()",
             "name": "Get info history",
             "description": "Returns the array of records, each of them representing one executed info update on the campaign. It is useful for transparency reasons and to allow everyone to see the updates history made on the campaign.",
@@ -850,6 +834,20 @@
             "emittableEvents": []
         },
         {
+            "signature": "owner()",
+            "name": "Owner",
+            "description": "Returns the address of the owner of this campaign. Owner can call special type of functions such as closing the campaign, pulling the funds raised or cancelin the campaign.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Owner",
+                    "description": "Address of the campaign owner",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
             "signature": "renounceOwnership()",
             "name": "Renounce ownership",
             "description": "Owner can call this function to renounce ownership for this campaign. Be cautious, this is a dangerous operation since it will leave the campaign without an owner and only owner can execute operations such us campaign finalization and pulling raised funds to their wallet.",
@@ -930,6 +928,22 @@
             "emittableEvents": [
                 "OwnershipTransferred(address,address)"
             ]
+        },
+        {
+            "signature": "version()",
+            "name": "Contract version",
+            "description": "Returns the version of the contract's implementation - tracked by the dev3 team.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Contract version",
+                    "description": "Version number of the smart contract flavor inside the dev3 namespace.",
+                    "recommendedTypes": [
+                        "types.string"
+                    ]
+                }
+            ],
+            "emittableEvents": []
         }
     ]
 }

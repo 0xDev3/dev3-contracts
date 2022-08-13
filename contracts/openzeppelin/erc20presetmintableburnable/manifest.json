@@ -1,0 +1,449 @@
+{
+    "$schema": "../../schema.json",
+    "tags": [
+        "tokens",
+        "finance"
+    ],
+    "implements": [
+        "traits.erc20",
+        "traits.erc20metadata",
+        "traits.erc20burnable",
+        "traits.erc20mintable"
+    ],
+    "description": "ERC20 fungible token with initial supply and the ability to mint and burn the tokens.",
+    "eventDecorators": [
+        {
+            "signature": "Approval(address,address,uint256)",
+            "name": "Token spending approval",
+            "description": "Indicates that approval to spend ERC20 token has occurred.",
+            "parameterDecorators": [
+                {
+                    "name": "Approver address",
+                    "description": "Address of the owner who approved spending of their ERC20 token.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Spender address",
+                    "description": "Address for which the owner has approved to spend their ERC20 token.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Approved token amount",
+                    "description": "The amount of ERC20 token that was approved for spending.",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "OwnershipTransferred(address,address)",
+            "name": "Ownership transferred",
+            "description": "Emitted when the owner is changed to a new address.",
+            "parameterDecorators": [
+                {
+                    "name": "Old owner",
+                    "description": "Wallet address of the old owner who initiated the ownership change.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "New owner",
+                    "description": "Wallet address of the newly configured owner.",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "Transfer(address,address,uint256)",
+            "name": "Token transfer",
+            "description": "Indicates that ERC20 transfer has occurred.",
+            "parameterDecorators": [
+                {
+                    "name": "Sender address",
+                    "description": "Address from which the ERC20 token was sent.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Recipient address",
+                    "description": "Address to which the ERC20 token was sent.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token amount",
+                    "description": "The amount of ERC20 token that was send.",
+                    "recommendedTypes": []
+                }
+            ]
+        }
+    ],
+    "constructorDecorators": [
+        {
+            "signature": "constructor(string,string,uint256,address)",
+            "name": "Constructor",
+            "description": "Deployes the ERC20 token with given token name and symbol. The initial supply provided is minted, and the minter role is granted to the owner address specified as the last parameter.",
+            "parameterDecorators": [
+                {
+                    "name": "Token name",
+                    "description": "Name of the token which will be deployed.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token symbol",
+                    "description": "Symbol of the token which will be depoyed.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Initial supply",
+                    "description": "Amount of the tokens to create as the initial supply and mint to the owner wallet.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Owner",
+                    "description": "This wallet will become the owner of the initial supply and will be granted the minter role.",
+                    "recommendedTypes": []
+                }
+            ]
+        }
+    ],
+    "functionDecorators": [
+        {
+            "signature": "allowance(address,address)",
+            "name": "Get allowance",
+            "description": "Returns the amount of tokens that the spender is allowed to spend on behalf of the approving owner.",
+            "parameterDecorators": [
+                {
+                    "name": "Approver address",
+                    "description": "Address of the owner which approved spending.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Spender address",
+                    "description": "Address of the spender.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Approved token amount",
+                    "description": "The amount which was approved for spending.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "approve(address,uint256)",
+            "name": "Approve token spending",
+            "description": "Grants the third party (first parameter) an access to spend a given amount of tokens (second parameter) from the caller's wallet.",
+            "parameterDecorators": [
+                {
+                    "name": "Spender address",
+                    "description": "Wallet address of the third party.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Approved token amount",
+                    "description": "The amount to approve for spending.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Operation succeeded",
+                    "description": "Indicates whether the operation was successful.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": [
+                "Approval(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "balanceOf(address)",
+            "name": "Get balance",
+            "description": "Returns the amount of ERC20 tokens owned by the given wallet address",
+            "parameterDecorators": [
+                {
+                    "name": "Account address",
+                    "description": "Address of the account for which the balance is being checked.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Token amount",
+                    "description": "The amount of the ERC20 tokens owned by the specified account.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "burn(uint256)",
+            "name": "Burn tokens",
+            "description": "Destroys the given amount of the tokens from the caller's wallet",
+            "parameterDecorators": [
+                {
+                    "name": "Token amount",
+                    "description": "The amount of tokens to burn from the caller's wallet.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "burnFrom(address,uint256)",
+            "name": "Burn approved tokens",
+            "description": "Burn the tokens from the given wallet. Token owner must approve the caller before the caller can call this function.",
+            "parameterDecorators": [
+                {
+                    "name": "Wallet address",
+                    "description": "Address of the wallet to burn the tokens from.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token amount",
+                    "description": "The amount of tokens to burn from the given wallet.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Approval(address,address,uint256)",
+                "Transfer(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "decimals()",
+            "name": "Get ERC20 decimals",
+            "description": "Returns the number of decimals used by this ERC20 token.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Decimal places",
+                    "description": "Number of decimals used by this ERC20 token.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "decreaseAllowance(address,uint256)",
+            "name": "Decrease approved amount",
+            "description": "Decrease the amount approved to the third party (first parameter) by the given amount (second parameter). Given amount is subtracted from the already approved amount.",
+            "parameterDecorators": [
+                {
+                    "name": "Spender address",
+                    "description": "Address of the spender for whom the allowed spending amount will be decreased.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Amount to subtract",
+                    "description": "The amount which will be subtracted from the current allowed amount to spend.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Operation succeeded",
+                    "description": "Indicates whether the operation was successful.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": [
+                "Approval(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "increaseAllowance(address,uint256)",
+            "name": "Increase approved amount",
+            "description": "Increases the amount of funds that can be spent by a third party (first parameter) by the given amount (second parameter). Given amount is added to the already approved amount.",
+            "parameterDecorators": [
+                {
+                    "name": "Spender address",
+                    "description": "Address of the spender for whom the allowed spending amount will be increased.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Amount to add",
+                    "description": "The amount which will be added to the current allowed amount to spend.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Operation succeeded",
+                    "description": "Indicates whether the operation was successful.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": [
+                "Approval(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "mint(address,uint256)",
+            "name": "Mint",
+            "description": "Creates new amount of tokens (second parameter) and assigns them to the given wallet (first parameter). This function is only callable by the token owner. To find who the token owner is, call `owner()` funciton.",
+            "parameterDecorators": [
+                {
+                    "name": "Wallet address",
+                    "description": "The address of the wallet to receive the newly created tokens.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token amount",
+                    "description": "Amount of the tokens to create.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "name()",
+            "name": "Get token name",
+            "description": "Returns the name of this ERC20 token.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Token name",
+                    "description": "The name of this ERC20 token.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "owner()",
+            "name": "Owner",
+            "description": "Returns the address of the owner of this token. Only owner can call `mint()` function!",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Owner",
+                    "description": "Address of the token owner",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "renounceOwnership()",
+            "name": "Renounce ownership",
+            "description": "Owner can call this function to renounce ownership for this token. Be cautious, this is a dangerous operation since it will leave the token without an owner and calling `mint()` function is no longer possible.",
+            "parameterDecorators": [],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "OwnershipTransferred(address,address)"
+            ]
+        },
+        {
+            "signature": "symbol()",
+            "name": "Get token symbol",
+            "description": "Returns the symbol of this ERC20 token.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Token symbol",
+                    "description": "The symbol of this ERC20 token.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "totalSupply()",
+            "name": "Get total token supply",
+            "description": "Returns the total supply of this ERC20 token.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Total token supply",
+                    "description": "The total supply of this ERC20 token.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "transfer(address,uint256)",
+            "name": "Transfer tokens",
+            "description": "Transfers the specified ERC20 token amount (second parameter) from caller to the given address (first parameter).",
+            "parameterDecorators": [
+                {
+                    "name": "Recipient address",
+                    "description": "Address to which the ERC20 tokens will be sent.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token amount",
+                    "description": "The amount of ERC20 tokens to send.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Operation succeeded",
+                    "description": "Indicates whether the operation was successful.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "transferFrom(address,address,uint256)",
+            "name": "Transfer approved tokens",
+            "description": "Transfers the specified ERC20 token amount from one address to another. The caller must have an approval to spend tokens from the sender address.",
+            "parameterDecorators": [
+                {
+                    "name": "Sender address",
+                    "description": "Source address from which the ERC20 tokens will be sent.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Recipient address",
+                    "description": "Address to which the ERC20 tokens will be sent.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token amount",
+                    "description": "The amount of ERC20 tokens to send.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Operation succeeded",
+                    "description": "Indicates whether the operation was successful.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)",
+                "Approval(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "transferOwnership(address)",
+            "name": "Transfer ownership",
+            "description": "This function will update the owner of the token to the address provided as the parameter. It is only callable by the token owner. High caution is required when configuring the new owner since the owner is the only one being able to mint new tokens.",
+            "parameterDecorators": [
+                {
+                    "name": "New owner",
+                    "description": "Address of the wallet to be configured as the new token owner.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "OwnershipTransferred(address,address)"
+            ]
+        }
+    ]
+}

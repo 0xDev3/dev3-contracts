@@ -1,0 +1,257 @@
+{
+    "$schema": "../../schema.json",
+    "tags": [
+        "token locks"
+    ],
+    "implements": [],
+    "description": "Contract enables anyone to lock any ERC20 token for a specified period of time.",
+    "eventDecorators": [
+        {
+            "signature": "Lock(address,address,uint256,uint256)",
+            "name": "Tokens locked",
+            "description": "Emitted every time an account locks some amount of the tokens.",
+            "parameterDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Caller account which locked the tokens",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token",
+                    "description": "Token which was locked in this event",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Amount",
+                    "description": "Amount of the tokens locked",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Lockup period",
+                    "description": "Total time for which the tokes are going to be locked (in seconds)",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "Unlock(address,address,uint256,uint256)",
+            "name": "Tokens locked",
+            "description": "Emitted every time an account locks some amount of the tokens.",
+            "parameterDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Caller account which unlocked the tokens",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token",
+                    "description": "Token which was unlocked in this event",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token lock id",
+                    "description": "Id of the token lock action for specific to the caller account. Every token lock action gets its own id used for tracking the state.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Amount",
+                    "description": "Amount of the tokens unlocked",
+                    "recommendedTypes": []
+                }
+            ]
+        }    
+    ],
+    "constructorDecorators": [],
+    "functionDecorators": [
+        {
+            "signature": "flavor()",
+            "name": "Contract name",
+            "description": "Returns unique contract name inside the dev3 namespace",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Contract name",
+                    "description": "Unique contract name",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "lock(address,uint256,uint256,string,address)",
+            "name": "Lock tokens",
+            "description": "Locks the tokens for a given period of time",
+            "parameterDecorators": [
+                {
+                    "name": "Token",
+                    "description": "Token to lock",
+                    "recommendedTypes": ["traits.erc20"]
+                },
+                {
+                    "name": "Amount",
+                    "description": "Amount of the tokens to lock",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Lockup period",
+                    "description": "Duration of the lockup period (in seconds)",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Description",
+                    "description": "Arbitrary note to connect to this lockup action",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Admin account",
+                    "description": "Admin account with the rights to unlock the tokens unconditionally (optional parameter)",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Lock(address,address,uint256,uint256)"
+            ]
+        },
+        {
+            "signature": "locks(address,uint256)",
+            "name": "Get lock status",
+            "description": "Fetches the status of a specific lock action",
+            "parameterDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Address of the account for which the status is checked",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Lockup Id",
+                    "description": "Id of the lockup action executed by the given account",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Token",
+                    "description": "Token which was locked",
+                    "recommendedTypes": ["traits.erc20"]
+                },
+                {
+                    "name": "Amount",
+                    "description": "Amount of the tokens locked",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Created at",
+                    "description": "Exact point in time when tokens were locked",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Lockup period",
+                    "description": "Duration of the lockup period",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Description",
+                    "description": "Arbitrary note connected to this lockup action",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Unlocked?",
+                    "description": "Are the tokens unlocked?",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Admin account",
+                    "description": "Account with the special rights to unconditionally unlock tokens",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "tokenLocksList(address)",
+            "name": "Get locks for account",
+            "description": "Returns the list of all of the token locks and their statuses",
+            "parameterDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Account for which the locks activity is fetched",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Token",
+                    "description": "Token which was locked",
+                    "recommendedTypes": ["traits.erc20"]
+                },
+                {
+                    "name": "Amount",
+                    "description": "Amount of the tokens locked",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Created at",
+                    "description": "Exact point in time when tokens were locked",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Lockup period",
+                    "description": "Duration of the lockup period",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Description",
+                    "description": "Arbitrary note connected to this lockup action",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Unlocked?",
+                    "description": "Are the tokens unlocked?",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Admin account",
+                    "description": "Account with the special rights to unconditionally unlock tokens",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []  
+        },
+        {
+            "signature": "unlock(address,uint256)",
+            "name": "Unlock tokens",
+            "description": "Unlocks the tokens for account if the lockup period has expired",
+            "parameterDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Account holder of the locked tokens",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Lockup Id",
+                    "description": "Tokens to unlock for a given account. Provided as the index of the item in the list fetched from the token locks list for the given account.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Unlock(address,address,uint256,uint256)"
+            ]
+        },
+        {
+            "signature": "version()",
+            "name": "Contract version",
+            "description": "Returns implementation version of the contract maintained by the dev3 organization",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Contract version",
+                    "description": "Contract implementation version",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        }
+    ]
+}

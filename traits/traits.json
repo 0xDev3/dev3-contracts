@@ -41,6 +41,11 @@
             "description": "Smart contracts with the ability of calling other smart contracts dinamically (for example, Governor by OpenZeppelin)",
             "interfaces": [ ]
         },
+        "erc20receivable": {
+            "name": "ERC20 receivable",
+            "description": "Smart contracts with the ability of safely receiving any ERC20 token.",
+            "interfaces": [ ]
+        },
         "dev3.versioned": {
             "name": "Versioned contract",
             "description": "Contracts with this trait contain name and version strings readable by outside world.",

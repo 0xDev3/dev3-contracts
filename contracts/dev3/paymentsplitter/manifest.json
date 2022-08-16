@@ -1,0 +1,197 @@
+{
+    "$schema": "../../schema.json",
+    "tags": [
+        "token distribution",
+        "payments",
+        "payment splitting"
+    ],
+    "implements": [
+        "traits.erc20receivable"
+    ],
+    "description": "Smart contract which allows to split payments among a group of accounts.",
+    "eventDecorators": [
+        {
+            "signature": "PayeeAdded(address,uint256)",
+            "name": "Payee Added",
+            "description": "Emitted when a new account has been added as one of the receivers.",
+            "parameterDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Account included in the list of receivers",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Shares",
+                    "description": "Shares owned by the account",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "PaymentReleased(address,address,uint256)",
+            "name": "Payment released",
+            "description": "Emitted when one of the shareholders withdraws his share of the tokens",
+            "parameterDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Account pulling the funds",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token",
+                    "description": "Token received",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                }
+            ]
+        }
+    ],
+    "constructorDecorators": [
+        {
+            "signature": "constructor(address[],uint256[])",
+            "name": "Constructor",
+            "description": "Initializes a new payment splitter",
+            "parameterDecorators": [
+                {
+                    "name": "Shareholders",
+                    "description": "List of the accounts participating in the splitting of funds.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Shares",
+                    "description": "List of the shares for each of the participants.",
+                    "recommendedTypes": []
+                }
+            ]
+        }
+    ],
+    "functionDecorators": [
+        {
+            "signature": "totalShares()",
+            "name": "Total shares",
+            "description": "Returns the sum of all of the shares assigned to the accounts participating in the splitting of funds.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Total shares",
+                    "description": "Total shares summed across all of the accounts",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "released(address,address)",
+            "name": "Released",
+            "description": "Returns the amount of funds pulled on the account",
+            "parameterDecorators": [
+                {
+                    "name": "Token",
+                    "description": "Token to check",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "Account",
+                    "description": "Account to check",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Funds claimed",
+                    "description": "Total amount of tokens claimed by the given account",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "release(address,address)",
+            "name": "Claim",
+            "description": "Claims the funds for a given account",
+            "parameterDecorators": [
+                {
+                    "name": "Token",
+                    "description": "Token to claim",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "Account",
+                    "description": "Account for which to claim the share of tokens",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "PaymentReleased(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "payee(uint256)",
+            "name": "Get shareholder",
+            "description": "Returns the shareholder from the list of shareholders",
+            "parameterDecorators": [
+                {
+                    "name": "Position",
+                    "description": "Index of the shareholder in the list of shareholders (starts from 0)",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Account belonging to the shareholder at the given position in the list",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "shares(address)",
+            "name": "Get shares",
+            "description": "Returns the number of shares owned by the given account",
+            "parameterDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Account to check the shares",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Shares",
+                    "description": "Amount of shares owned by the given account",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "totalReleased(address)",
+            "name": "Total released funds",
+            "description": "Returns the total released funds for the given token",
+            "parameterDecorators": [
+                {
+                    "name": "Token",
+                    "description": "Token",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Funds released",
+                    "description": "Total amount of funds released",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        }
+    ]
+}

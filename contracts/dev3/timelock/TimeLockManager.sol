@@ -442,6 +442,8 @@ contract TimeLockManager is ITimeLockManager, IVersioned {
     string constant private VERSION = "1.0.33";
 
     mapping (address => TokenLock[]) public locks;
+    
+    constructor() {}
 
     function flavor() external pure override returns (string memory) { return FLAVOR; }
     

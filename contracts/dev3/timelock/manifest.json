@@ -35,8 +35,8 @@
         },
         {
             "signature": "Unlock(address,address,uint256,uint256)",
-            "name": "Tokens locked",
-            "description": "Emitted every time an account locks some amount of the tokens.",
+            "name": "Tokens unlocked",
+            "description": "Emitted every time an account unlocks some amount of the tokens.",
             "parameterDecorators": [
                 {
                     "name": "Account",
@@ -50,7 +50,7 @@
                 },
                 {
                     "name": "Token lock id",
-                    "description": "Id of the token lock action for specific to the caller account. Every token lock action gets its own id used for tracking the state.",
+                    "description": "Id of the token lock action. Every token lock action gets its own id used for tracking the state.",
                     "recommendedTypes": []
                 },
                 {

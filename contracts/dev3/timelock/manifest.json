@@ -61,7 +61,14 @@
             ]
         }    
     ],
-    "constructorDecorators": [],
+    "constructorDecorators": [
+        {
+            "signature": "constructor()",
+            "name": "Constructor",
+            "description": "Initializes new TimeLock manager",
+            "parameterDecorators": []
+        }
+    ],
     "functionDecorators": [
         {
             "signature": "flavor()",

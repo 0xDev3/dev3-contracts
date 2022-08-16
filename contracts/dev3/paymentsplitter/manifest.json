@@ -28,30 +28,6 @@
             ]
         },
         {
-            "signature": "PaymentReceived(address,address,uint256)",
-            "name": "Payment received",
-            "description": "Emitted when a new payment is received",
-            "parameterDecorators": [
-                {
-                    "name": "Sender",
-                    "description": "Account sending the tokens",
-                    "recommendedTypes": []
-                },
-                {
-                    "name": "Token",
-                    "description": "Token received",
-                    "recommendedTypes": [
-                        "traits.erc20"
-                    ]
-                },
-                {
-                    "name": "Amount",
-                    "description": "Amount of the tokens received",
-                    "recommendedTypes": []
-                }
-            ]
-        },
-        {
             "signature": "PaymentReleased(address,address,uint256)",
             "name": "Payment released",
             "description": "Emitted when one of the shareholders withdraws his share of the tokens",

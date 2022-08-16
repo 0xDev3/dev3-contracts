@@ -180,7 +180,6 @@ contract PaymentSplitter {
 
   event PayeeAdded(address account, uint256 shares);
   event PaymentReleased(address to, address token, uint256 amount);
-  event PaymentReceived(address from, address token, uint256 amount);
 
   uint256 _totalShares;
   mapping(address => uint256) _totalReleased;

@@ -1,0 +1,232 @@
+{
+    "$schema": "../../schema.json",
+    "tags": [
+        "token distribution",
+        "vesting",
+        "tokenomics"
+    ],
+    "implements": [
+        "traits.erc20receivable"
+    ],
+    "description": "This contract handles the vesting of Eth and ERC20 tokens for a given beneficiary.",
+    "eventDecorators": [
+        {
+            "signature": "ERC20Released(address,uint256)",
+            "name": "Tokens released",
+            "description": "Emitted every time the new batch of tokens gets released and transferred to the beneficiary account.",
+            "parameterDecorators": [
+                {
+                    "name": "Token",
+                    "description": "Token released",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "description": "Amount of the tokens released",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "EtherReleased(uint256)",
+            "name": "Native coin released",
+            "description": "Emitted every time the new batch of native coins gets released and transferred to the beneficiary wallet.",
+            "parameterDecorators": [
+                {
+                    "name": "Amount",
+                    "description": "Amount of the native coins released",
+                    "recommendedTypes": []
+                }
+            ]
+        }
+    ],
+    "constructorDecorators": [
+        {
+            "signature": "constructor(address,uint64,uint64)",
+            "name": "Constructor",
+            "description": "Initializes new vesting wallet",
+            "parameterDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Account receiving the tokens from this wallet",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Start",
+                    "description": "Vesting schedule start",
+                    "recommendedTypes": [
+                        "types.unixTimestamp"
+                    ]
+                },
+                {
+                    "name": "Duration",
+                    "description": "Total duration of the vesting schedule",
+                    "recommendedTypes": []
+                }
+            ]
+        }
+    ],
+    "functionDecorators": [
+        {
+            "signature": "beneficiary()",
+            "name": "Owner account",
+            "description": "Returns account receiving the tokens from this wallet",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Owner",
+                    "description": "Owner account",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "duration()",
+            "name": "Vesting duration",
+            "description": "Returns total duration of the vesting schedule",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Duration",
+                    "description": "Total duration of the vesting schedule",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "release(address)",
+            "name": "Release tokens",
+            "description": "Transfers unlocked amount of the tokens to the owner account of this vesting wallet.",
+            "parameterDecorators": [
+                {
+                    "name": "Token",
+                    "description": "Token to release from the vesting wallet",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "ERC20Released(address,uint256)"
+            ]
+        },
+        {
+            "signature": "release()",
+            "name": "Release native coin",
+            "description": "Transfer unlocked amount of the native coins to the owner account of this vesting wallet",
+            "parameterDecorators": [],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "EtherReleased(uint256)"
+            ]
+        },
+        {
+            "signature": "released()",
+            "name": "Released native coins",
+            "description": "Returns the total amount of the released native coins",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Released native coins",
+                    "description": "Amount of released native coins",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "released(address)",
+            "name": "Released tokens",
+            "description": "Returns the total amount of the released tokens",
+            "parameterDecorators": [
+                {
+                    "name": "Token",
+                    "description": "Token id for which the total released amount is checked",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Released tokens",
+                    "description": "Total amount of tokens released for a given token id",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "start()",
+            "name": "Vesting schedule start",
+            "description": "Returns the the time when the vesting schedule is started",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Start",
+                    "description": "Timestamp of the vesting schedule start",
+                    "recommendedTypes": [
+                        "types.unixTimestamp"
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "vestedAmount(uint64)",
+            "name": "Vested native coin amount",
+            "description": "Returns the amount of the native coin that has already vested at a given time",
+            "parameterDecorators": [
+                {
+                    "name": "Timestamp",
+                    "description": "Point in time for which the vested amount is calculated.",
+                    "recommendedTypes": [
+                        "types.unixTimestamp"
+                    ]
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Vested native coin amount",
+                    "description": "Amount of the native coin that has already vested at a given time",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "vestedAmount(address,uint64)",
+            "name": "Vested token amount",
+            "description": "Returns the amount of tokens that have already vested at a given time",
+            "parameterDecorators": [
+                {
+                    "name": "Token",
+                    "description": "Token id for which the vested amount is calculated",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "Timestamp",
+                    "description": "Point in time for which the vested amount is calculated.",
+                    "recommendedTypes": [
+                        "types.unixTimestamp"
+                    ]
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Vested token amount",
+                    "description": "Amount of the tokens that have already vested at a given time",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        }
+    ]
+}

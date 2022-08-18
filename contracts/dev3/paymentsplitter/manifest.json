@@ -8,6 +8,7 @@
     "implements": [
         "traits.erc20receivable"
     ],
+    "name": "Payment Splitter",
     "description": "Smart contract which allows to split payments among a group of accounts.",
     "eventDecorators": [
         {

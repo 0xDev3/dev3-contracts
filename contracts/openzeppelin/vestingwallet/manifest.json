@@ -8,6 +8,7 @@
     "implements": [
         "traits.erc20receivable"
     ],
+    "name": "Vesting Wallet",
     "description": "This contract handles the vesting of Eth and ERC20 tokens for a given beneficiary.",
     "eventDecorators": [
         {

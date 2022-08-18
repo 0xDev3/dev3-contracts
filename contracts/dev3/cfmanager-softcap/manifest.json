@@ -14,6 +14,7 @@
         "traits.dev3.acfmanager",
         "traits.dev3.cfmanagersoftcap"
     ],
+    "name": "Basic Crowdfunding",
     "description": "Basic Crowdfunding manager implementation by the Dev3 team.",
     "eventDecorators": [
         {

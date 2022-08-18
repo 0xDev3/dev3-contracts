@@ -9,6 +9,7 @@
         "traits.erc20metadata",
         "traits.erc20burnable"
     ],
+    "name": "ERC20 Fixed Supply",
     "description": "ERC20 fungible token with fixed supply and ability to burn the tokens.",
     "eventDecorators": [
         {

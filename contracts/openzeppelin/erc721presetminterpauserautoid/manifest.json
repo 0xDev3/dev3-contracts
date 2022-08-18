@@ -7,6 +7,7 @@
         "traits.erc721",
         "traits.erc721burnable"
     ],
+    "name": "ERC721 Mintable/Burnable",
     "description": "ERC721 NFT implementation with mint and burn functions.",
     "eventDecorators": [
         {

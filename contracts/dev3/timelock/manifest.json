@@ -4,6 +4,7 @@
         "token locks"
     ],
     "implements": [],
+    "name": "Time Lock",
     "description": "Contract enables anyone to lock any ERC20 token for a specified period of time.",
     "eventDecorators": [
         {

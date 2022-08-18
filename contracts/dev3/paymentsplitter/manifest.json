@@ -56,7 +56,9 @@
                 {
                     "name": "Shareholders",
                     "description": "List of the accounts participating in the splitting of funds.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.erc20receivable"
+                    ]
                 },
                 {
                     "name": "Shares",

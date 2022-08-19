@@ -31,6 +31,11 @@
             "description": "Smart contracts that conform to the IERC721 non fungible token standard while also allowing the token holders to burn their tokens.",
             "interfaces": ["common/IERC721Burnable"]
         },
+        "erc721receivable": {
+            "name": "ERC721 receivable",
+            "description": "Smart contracts with the ability of safely receiving any ERC721 token.",
+            "interfaces": []
+        },
         "ownable": {
             "name": "Ownable contract",
             "description": "Smart contracts that conform to the Ownable interface proposed by the OpenZeppelin.",

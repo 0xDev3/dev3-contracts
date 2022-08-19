@@ -52,7 +52,10 @@
                 {
                     "name": "Account",
                     "description": "Account receiving the tokens from this wallet",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.erc20receivable",
+                        "traits.contractCaller"
+                    ]
                 },
                 {
                     "name": "Start",
@@ -64,7 +67,9 @@
                 {
                     "name": "Duration",
                     "description": "Total duration of the vesting schedule",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "types.durationSeconds"
+                    ]
                 }
             ]
         }
@@ -93,7 +98,9 @@
                 {
                     "name": "Duration",
                     "description": "Total duration of the vesting schedule",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "types.durationSeconds"
+                    ]
                 }
             ],
             "emittableEvents": []

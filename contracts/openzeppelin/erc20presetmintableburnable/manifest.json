@@ -99,7 +99,9 @@
                 {
                     "name": "Owner",
                     "description": "This wallet will become the owner of the initial supply and will be granted the minter role.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
                 }
             ]
         }
@@ -113,12 +115,16 @@
                 {
                     "name": "Approver address",
                     "description": "Address of the owner which approved spending.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
                 },
                 {
                     "name": "Spender address",
                     "description": "Address of the spender.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
                 }
             ],
             "returnDecorators": [
@@ -138,7 +144,9 @@
                 {
                     "name": "Spender address",
                     "description": "Wallet address of the third party.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
                 },
                 {
                     "name": "Approved token amount",
@@ -165,7 +173,10 @@
                 {
                     "name": "Account address",
                     "description": "Address of the account for which the balance is being checked.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller",
+                        "traits.erc20receivable"
+                    ]
                 }
             ],
             "returnDecorators": [
@@ -201,7 +212,9 @@
                 {
                     "name": "Wallet address",
                     "description": "Address of the wallet to burn the tokens from.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
                 },
                 {
                     "name": "Token amount",
@@ -237,7 +250,9 @@
                 {
                     "name": "Spender address",
                     "description": "Address of the spender for whom the allowed spending amount will be decreased.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
                 },
                 {
                     "name": "Amount to subtract",
@@ -264,7 +279,9 @@
                 {
                     "name": "Spender address",
                     "description": "Address of the spender for whom the allowed spending amount will be increased.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
                 },
                 {
                     "name": "Amount to add",
@@ -291,7 +308,10 @@
                 {
                     "name": "Wallet address",
                     "description": "The address of the wallet to receive the newly created tokens.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller",
+                        "traits.erc20receivable"
+                    ]
                 },
                 {
                     "name": "Token amount",
@@ -378,7 +398,10 @@
                 {
                     "name": "Recipient address",
                     "description": "Address to which the ERC20 tokens will be sent.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller",
+                        "traits.erc20receivable"
+                    ]
                 },
                 {
                     "name": "Token amount",
@@ -405,12 +428,17 @@
                 {
                     "name": "Sender address",
                     "description": "Source address from which the ERC20 tokens will be sent.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
                 },
                 {
                     "name": "Recipient address",
                     "description": "Address to which the ERC20 tokens will be sent.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller",
+                        "traits.erc20receivable"
+                    ]
                 },
                 {
                     "name": "Token amount",
@@ -438,7 +466,9 @@
                 {
                     "name": "New owner",
                     "description": "Address of the wallet to be configured as the new token owner.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
                 }
             ],
             "returnDecorators": [],

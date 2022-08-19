@@ -1,37 +1,13 @@
 {
     "$schema": "./schema.json",
     "types": {
-        "walletAddress": {
-            "name": "wallet address",
-            "description": "Any non-contract ETH address."
-        },
-        "contractAddress": {
-            "name": "smart contract address",
-            "description": "Address of the deployed smart contract."
-        },
-        "amount": {
-            "name": "amount",
-            "description": "Absolute numeric amount which should be interpreted as is."
-        },
-        "amountWithPrecision": {
-            "name": "amount with precision",
-            "description": "Numeric amount which should be converted to the human friendly form by taking the number of decimals into account."
-        },
-        "string": {
-            "name": "string",
-            "description": "Pure textual value."
-        },
-        "ticker": {
-            "name": "ticker",
-            "description": "Short representation for the digital asset name. For example Uniswap coin's ticker is `UNI`."
-        },
-        "boolean": {
-            "name": "boolean",
-            "description": "True/False value usually representing the status of the executed operation."
-        },
         "unixTimestamp": {
             "name": "unix timestamp",
             "description": "Describes point in time. It is the number of seconds that have elapsed since the Unix epoch, excluding leap seconds. The Unix epoch is 00:00:00 UTC on 1 January 1970." 
+        },
+        "durationSeconds": {
+            "name": "duration",
+            "description": "Represents the duration period in seconds"
         }
     }
 }

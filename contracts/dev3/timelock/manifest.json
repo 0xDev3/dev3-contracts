@@ -20,7 +20,9 @@
                 {
                     "name": "Token",
                     "description": "Token which was locked in this event",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
                 },
                 {
                     "name": "Amount",
@@ -30,7 +32,9 @@
                 {
                     "name": "Lockup period",
                     "description": "Total time for which the tokes are going to be locked (in seconds)",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "types.durationSeconds"
+                    ]
                 }
             ]
         },
@@ -47,7 +51,9 @@
                 {
                     "name": "Token",
                     "description": "Token which was unlocked in this event",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
                 },
                 {
                     "name": "Token lock id",
@@ -103,7 +109,7 @@
                 {
                     "name": "Lockup period",
                     "description": "Duration of the lockup period (in seconds)",
-                    "recommendedTypes": []
+                    "recommendedTypes": ["types.durationSeconds"]
                 },
                 {
                     "name": "Description",
@@ -113,7 +119,9 @@
                 {
                     "name": "Admin account",
                     "description": "Admin account with the rights to unlock the tokens unconditionally (optional parameter)",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
                 }
             ],
             "returnDecorators": [],
@@ -151,12 +159,12 @@
                 {
                     "name": "Created at",
                     "description": "Exact point in time when tokens were locked",
-                    "recommendedTypes": []
+                    "recommendedTypes": ["types.unixTimestamp"]
                 },
                 {
                     "name": "Lockup period",
                     "description": "Duration of the lockup period",
-                    "recommendedTypes": []
+                    "recommendedTypes": ["types.durationSeconds"]
                 },
                 {
                     "name": "Description",
@@ -201,12 +209,12 @@
                 {
                     "name": "Created at",
                     "description": "Exact point in time when tokens were locked",
-                    "recommendedTypes": []
+                    "recommendedTypes": ["types.unixTimestamp"]
                 },
                 {
                     "name": "Lockup period",
                     "description": "Duration of the lockup period",
-                    "recommendedTypes": []
+                    "recommendedTypes": ["types.durationSeconds"]
                 },
                 {
                     "name": "Description",

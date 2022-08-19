@@ -28,7 +28,9 @@
                 {
                     "name": "Token id",
                     "description": "ERC721 token identifier being approved for management.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.erc721"
+                    ]
                 }
             ]
         },
@@ -40,23 +42,17 @@
                 {
                     "name": "Approver address",
                     "description": "Address of the owner who approved someone to manage all of their ERC721 tokens.",
-                    "recommendedTypes": [
-                        "types.walletAddress"
-                    ]
+                    "recommendedTypes": []
                 },
                 {
                     "name": "Operator address",
                     "description": "Address of the third party with the rights to manage all of the ERC721 tokens owned by the caller.",
-                    "recommendedTypes": [
-                        "types.walletAddress"
-                    ]
+                    "recommendedTypes": []
                 },
                 {
                     "name": "Management enabled",
                     "description": "Indicates if owner has enabled (value true) or disabled (value false) the rights to the asset management.",
-                    "recommendedTypes": [
-                        "types.boolean"
-                    ]
+                    "recommendedTypes": []
                 }
             ]
         },
@@ -68,9 +64,7 @@
                 {
                     "name": "Pause caller",
                     "description": "Wallet with the pause rights who initiated the action to stop all token transfers",
-                    "recommendedTypes": [
-                        "types.walletAddress"
-                    ]
+                    "recommendedTypes": []
                 }
             ]
         },
@@ -250,7 +244,9 @@
                 {
                     "name": "Token manager",
                     "description": "Address of the manager with the rights to manage the specified token.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
                 },
                 {
                     "name": "Token id",
@@ -271,7 +267,10 @@
                 {
                     "name": "Account address",
                     "description": "Address of the account for which to check balance.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller",
+                        "traits.erc721receivable"
+                    ]
                 }
             ],
             "returnDecorators": [
@@ -438,12 +437,17 @@
                 {
                     "name": "Owner wallet",
                     "description": "Token owner wallet address.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.erc721receivable",
+                        "traits.contractCaller"
+                    ]
                 },
                 {
                     "name": "Operator wallet",
                     "description": "Operator wallet address.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
                 }
             ],
             "returnDecorators": [
@@ -463,7 +467,10 @@
                 {
                     "name": "Owner wallet",
                     "description": "Wallet address which is going to become an owner of the newly created token.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.erc721receivable",
+                        "traits.contractCaller"
+                    ]
                 }
             ],
             "returnDecorators": [],
@@ -579,12 +586,17 @@
                 {
                     "name": "Sender address",
                     "description": "Owner address from which the token will be transferred.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
                 },
                 {
                     "name": "Recipient address",
                     "description": "Address to which the token will be transferred.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller",
+                        "traits.erc721receivable"
+                    ]
                 },
                 {
                     "name": "Token ID",
@@ -606,12 +618,17 @@
                 {
                     "name": "Sender address",
                     "description": "Owner address from which the token will be transferred.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
                 },
                 {
                     "name": "Recipient address",
                     "description": "Address to which the token will be transferred.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller",
+                        "traits.erc721receivable"
+                    ]
                 },
                 {
                     "name": "Token ID",
@@ -638,7 +655,9 @@
                 {
                     "name": "Operator",
                     "description": "The account address to get (or loose) rights to manage all of the caller owned tokens.",
-                    "recommendedTypes": []
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
                 },
                 {
                     "name": "Is approved",

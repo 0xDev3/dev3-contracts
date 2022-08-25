@@ -1,0 +1,244 @@
+{
+    "$schema": "../../schema.json",
+    "tags": [
+        "token distribution",
+        "vouchers",
+        "secret code airdrop"
+    ],
+    "implements": [
+        "traits.ownable",
+        "traits.erc20receivable"
+    ],
+    "name": "Rewarder",
+    "description": "Smart contract which allows creating claimable token coupons.",
+    "eventDecorators": [
+        {
+            "signature": "AddReward(bytes32)",
+            "name": "Create coupon",
+            "description": "Emitted when the new coupon code is created.",
+            "parameterDecorators": [
+                {
+                    "name": "Coupon code",
+                    "description": "Coupon code identifier",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "ClaimReward(address,bytes32)",
+            "name": "Use coupon",
+            "description": "Emitted when the coupon code is used.",
+            "parameterDecorators": [
+                {
+                    "name": "Coupon user",
+                    "description": "Coupon user",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Coupon code",
+                    "description": "Coupon code identifier",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "Drain(uint256)",
+            "name": "Revoke native coins",
+            "description": "Emitted when the owner revokes all the native coins from this contract.",
+            "parameterDecorators": [
+                {
+                    "name": "Amount",
+                    "description": "Amount of native coins revoked.",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "DrainToken(address,uint256)",
+            "name": "Revoke tokens",
+            "description": "Emitted when the owner revokes all the tokens from this contract.",
+            "parameterDecorators": [
+                {
+                    "name": "Token",
+                    "description": "Token being revoked",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "description": "Amount of the tokens being revoked",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "OwnershipTransferred(address,address)",
+            "name": "Ownership transferred",
+            "description": "Emitted when the owner is changed to a new address.",
+            "parameterDecorators": [
+                {
+                    "name": "Old owner",
+                    "description": "Wallet address of the old owner who initiated the ownership change.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "New owner",
+                    "description": "Wallet address of the newly configured owner.",
+                    "recommendedTypes": []
+                }
+            ]
+        }
+    ],
+    "constructorDecorators": [
+        {
+            "signature": "constructor(address)",
+            "name": "Constructor",
+            "description": "Creates new coupone programme service",
+            "parameterDecorators": [
+                {
+                    "name": "Owner",
+                    "description": "Wallet address of the coupon programme administrator",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                }
+            ]
+        }
+    ],
+    "functionDecorators": [
+        {
+            "signature": "addRewards(struct(bytes32,address,uint256,uint256,uint256))",
+            "name": "Create coupons",
+            "description": "Creates batch of coupons",
+            "parameterDecorators": [
+                {
+                    "name": "Coupons",
+                    "description": "List of generated coupons",
+                    "recommendedTypes": [],
+                    "parameters": [
+                        {
+                            "name": "Coupon identifier",
+                            "description": "Coupon identifier",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Reward token",
+                            "description": "Token received when using the coupon",
+                            "recommendedTypes": [
+                                "traits.erc20"
+                            ]
+                        },
+                        {
+                            "name": "Reward token amount",
+                            "description": "Amount of the token received when using the coupon",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Reward native coin amount",
+                            "description": "Amount of the native coin received when using the coupon",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Expiry date",
+                            "description": "The deadline for the coupon usage",
+                            "recommendedTypes": [
+                                "types.unixTimestamp"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "AddReward(bytes32)"
+            ]
+        },
+        {
+            "signature": "claimReward(string)",
+            "name": "Use coupon",
+            "description": "Claims the coupon",
+            "parameterDecorators": [
+                {
+                    "name": "Coupon",
+                    "description": "Coupon identifier being used",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "ClaimReward(address,bytes32)"
+            ]
+        },
+        {
+            "signature": "drain(address)",
+            "name": "Revoke tokens",
+            "description": "Revokes the tokens and transfers them back to the owner wallet",
+            "parameterDecorators": [
+                {
+                    "name": "Token",
+                    "description": "Token to drain from the contract",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "DrainToken(address,uint256)"
+            ]
+        },
+        {
+            "signature": "drain()",
+            "name": "Revoke native coins",
+            "description": "Revokes the native coins and transfers them back to the owner wallet",
+            "parameterDecorators": [],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Drain(uint256)"
+            ]
+        },
+        {
+            "signature": "owner()",
+            "name": "Get Admin",
+            "description": "Returns the coupon administrator",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Admin",
+                    "description": "Coupon administrator",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "renounceOwnership()",
+            "name": "Renounce Admin Role",
+            "description": "Admin will remove his rights leaving the coupon programme without an administrator. This operation is dangeorous as admin is the only account with the rights to create new coupons or revoke pending rewards.",
+            "parameterDecorators": [],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "OwnershipTransferred(address,address)"
+            ]
+        },
+        {
+            "signature": "transferOwnership(address)",
+            "name": "Transfer ownership",
+            "description": "Transfer admin role to another account. This operation is dangeorous as admin is the only account with the rights to create new coupons or revoke pending rewards.",
+            "parameterDecorators": [
+                {
+                    "name": "New Admin",
+                    "description": "New Admin account",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "OwnershipTransferred(address,address)"
+            ]
+        }
+    ]
+}

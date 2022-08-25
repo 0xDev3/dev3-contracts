@@ -7,22 +7,23 @@ By claiming the coupon, the user receives amount of tokens defined by the coupon
 
 ## Coupon generation
 
-To create the redeemable coupon admin must generate all the data off-chain and then stores the public part of the coupon data by calling the `addRewards` function which marks the generated coupon as active.
+To create the redeemable coupon admin must generate all the data off-chain and then store the public part of the coupon data by calling the `addRewards` function which marks the generated coupon as active.
 
 The secret part of the coupon data is called the `secret key`, which is predefined by coupon creator and used to generate the coupon data. Anyone with an access to this key can redeem coupon marking it as consumed.
 
+One Rewarder contract can handle multiple coupons, and different reward tokens can be used for every coupon.
+
 To generate and activate the coupon, the following method is used:
-- admin deploys instance of this Rewarder contract (for example at address "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48")
 - admin generates secret key which is an arbitrary text value (for example: "CFW2A3R7YD")
-- admin generates coupon identifier (public info) off-chain by combining the Rewarder contract address and a generated secret key in a following way:
+- admin generates coupon identifier (public info) off-chain by combining the Rewarder contract address (for example "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48") and a generated secret key in a following way:
     - `id = keccak256(abi.encodePacked(0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48, "CFW2A3R7YD"))`
-- admin constructs a coupon object by combining the generated coupon id and the rest of parameter:
+- admin constructs a coupon object by combining the generated coupon id and choosing the values for the rest of parameters:
     1. generated id
     2. token to store in the coupon
     3. amount of the token stored in the coupon
     4. amount of native coins stored in the coupon
     5. expiry date of the coupon
-- admin calls the `addRewards` function and provides all of the coupon data from step before. `addRewards` accepts a list of generated coupons and will activate all of them at once.
+- admin calls the `addRewards` function and provides all of the coupon data from step before. `addRewards` accepts a list of generated coupons and will activate all of them at once .
 - admin funds the Rewarder contract with enough tokens and native coins to cover all of the coupon claims combined
 - admin then distributes the secret keys the end users
 

@@ -1,0 +1,257 @@
+{
+    "$schema": "../../schema.json",
+    "tags": [
+        "token distribution",
+        "payroll",
+        "salaries",
+        "automated salaries"
+    ],
+    "implements": [
+        "traits.ownable",
+        "traits.erc20receivable"
+    ],
+    "name": "Payroll Handler",
+    "description": "Define salaries for multiple wallets and easily automate recurring payments.",
+    "eventDecorators": [
+        {
+            "signature": "AddPayroll(address)",
+            "name": "Add payroll",
+            "description": "Emitted when the new employee salary is activated.",
+            "parameterDecorators": [
+                {
+                    "name": "Employee",
+                    "description": "Wallet address of the employee",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "Claim(address)",
+            "name": "Receive salary",
+            "description": "Emitted when employee receives salary.",
+            "parameterDecorators": [
+                {
+                    "name": "Employee",
+                    "description": "Wallet address of the employee",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "DrainToken(address,uint256)",
+            "name": "Remove funds",
+            "description": "Emitted when the owner pulls back funds reserverd for salaries.",
+            "parameterDecorators": [
+                {
+                    "name": "Token",
+                    "description": "Token being revoked",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "description": "Amount of the tokens being revoked",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "OwnershipTransferred(address,address)",
+            "name": "Ownership transferred",
+            "description": "Emitted when the owner is changed to a new address.",
+            "parameterDecorators": [
+                {
+                    "name": "Old owner",
+                    "description": "Wallet address of the old owner who initiated the ownership change.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "New owner",
+                    "description": "Wallet address of the newly configured owner.",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "RemovePayroll(address)",
+            "name": "Remove payroll",
+            "description": "Emitted when one employee is removed from the list of salary receivers.",
+            "parameterDecorators": [
+                {
+                    "name": "Employee",
+                    "description": "Wallet address of the employee",
+                    "recommendedTypes": []
+                }
+            ]
+        }
+    ],
+    "constructorDecorators": [
+        {
+            "signature": "constructor(address)",
+            "name": "Constructor",
+            "description": "Creates new payroll handler",
+            "parameterDecorators": [
+                {
+                    "name": "Owner",
+                    "description": "Wallet address of the payroll handler administrator. Administrator can add and remove employees and define their salaries.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                }
+            ]
+        }
+    ],
+    "functionDecorators": [
+        {
+            "signature": "addPayrolls(struct(address,address,uint256,uint256,uint256))",
+            "name": "Add employees",
+            "description": "Activates the list of employees so they can start receiving automated salaries.",
+            "parameterDecorators": [
+                {
+                    "name": "Employee salaries",
+                    "description": "List of entries defining employees and their salaries",
+                    "recommendedTypes": [],
+                    "parameters": [
+                        {
+                            "name": "Employee",
+                            "description": "Wallet address of the employee",
+                            "recommendedTypes": [
+                                "traits.erc20receivable",
+                                "traits.contractCaller"
+                            ]
+                        },
+                        {
+                            "name": "Payment token",
+                            "description": "Token in which the salary will be paid out",
+                            "recommendedTypes": [
+                                "traits.erc20"
+                            ]
+                        },
+                        {
+                            "name": "Salary amount",
+                            "description": "Amount of the tokens received periodically by employee",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Period basis",
+                            "description": "Time interval between two salaries.",
+                            "recommendedTypes": [
+                                "types.durationSeconds"
+                            ]
+                        },
+                        {
+                            "name": "Salary start date",
+                            "description": "Defines the starting point for salary payouts. This can be a point in the past and the first salary can be paid out once the defined period basis time has passed.",
+                            "recommendedTypes": [
+                                "types.unixTimestamp"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "AddPayroll(address)"
+            ]
+        },
+        {
+            "signature": "claim(address[])",
+            "name": "Pay salaries",
+            "description": "Pays out salaries to a list of employees.",
+            "parameterDecorators": [
+                {
+                    "name": "Employess",
+                    "description": "List of employees",
+                    "recommendedTypes": [
+                        "types.erc20receivable",
+                        "types.contractCaller"
+                    ]
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Claim(address)"
+            ]
+        },
+        {
+            "signature": "drain(address)",
+            "name": "Remove funds",
+            "description": "Revokes the tokens and transfers them back to the owner wallet",
+            "parameterDecorators": [
+                {
+                    "name": "Token",
+                    "description": "Token to drain from the contract",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "DrainToken(address,uint256)"
+            ]
+        },
+        {
+            "signature": "owner()",
+            "name": "Get Admin",
+            "description": "Returns the administrator. Administrator can add and remove employees and define their salaries.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Admin",
+                    "description": "Administrator account",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "removePayrolls(address[])",
+            "name": "Remove employees",
+            "description": "Removes employees from the list of salary receivers. They are no longer able to receive salary after this action.",
+            "parameterDecorators": [
+                {
+                    "name": "Employess",
+                    "description": "List of employees to remove",
+                    "recommendedTypes": [
+                        "types.erc20receivable",
+                        "types.contractCaller"
+                    ]
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "RemovePayroll(address)"
+            ]
+        },
+        {
+            "signature": "renounceOwnership()",
+            "name": "Renounce Admin Role",
+            "description": "Admin will remove his rights leaving the payroll handler without an administrator. This operation is dangeorous as admin is the only account with the rights to add or remove employees and define their salaries.",
+            "parameterDecorators": [],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "OwnershipTransferred(address,address)"
+            ]
+        },
+        {
+            "signature": "transferOwnership(address)",
+            "name": "Transfer ownership",
+            "description": "Transfer admin role to another account. This operation is dangeorous as admin is the only account with the rights to add or remove employees and define their salaries.",
+            "parameterDecorators": [
+                {
+                    "name": "New Admin",
+                    "description": "New Admin account",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "OwnershipTransferred(address,address)"
+            ]
+        }
+    ]
+}

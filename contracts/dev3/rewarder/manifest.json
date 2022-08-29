@@ -108,7 +108,7 @@
     ],
     "functionDecorators": [
         {
-            "signature": "addRewards(struct(bytes32,address,uint256,uint256,uint256))",
+            "signature": "addRewards(struct(bytes32,address,uint256,uint256,uint256)[])",
             "name": "Create coupons",
             "description": "Creates batch of coupons",
             "parameterDecorators": [

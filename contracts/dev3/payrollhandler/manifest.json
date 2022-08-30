@@ -157,7 +157,7 @@
         },
         {
             "signature": "claim(address[])",
-            "name": "Pay salaries",
+            "name": "Distribute salaries",
             "description": "Pays out salaries to a list of employees.",
             "parameterDecorators": [
                 {

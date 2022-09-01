@@ -92,6 +92,86 @@
           "recommendedTypes": []
         }
       ]
+    },
+    {
+      "signature": "OwnershipTransferred(address,address)",
+      "name": "Ownership transferred",
+      "description": "Ownership is transferred from an address to an address",
+      "parameterDecorators": [
+        {
+          "name": "Previous owner",
+          "description": "Address which was the previous owner.",
+          "recommendedTypes": []
+        },
+        {
+          "name": "New owner",
+          "description": "Address which becomes the new owner.",
+          "recommendedTypes": []
+        }
+      ]
+    },
+    {
+      "signature": "ResourceSet(uint64)",
+      "name": "Resource set",
+      "description": "New resource set",
+      "parameterDecorators": [
+        {
+          "name": "Id of the resource",
+          "description": "Resource ID",
+          "recommendedTypes": []
+        }
+      ]
+    },
+    {
+      "signature": "ResourceAddedToToken(uint256,uint64)",
+      "name": "Resource added to token",
+      "description": "New resource added to token",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Resource ID",
+          "description": "Resource ID",
+          "recommendedTypes": []
+        }
+      ]
+    },
+    {
+      "signature": "ResourceAccepted(uint256,uint64)",
+      "name": "Resource accepted to token",
+      "description": "Pending resource accepted to token",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Resource ID",
+          "description": "Resource ID",
+          "recommendedTypes": []
+        }
+      ]
+    },
+    {
+      "signature": "ResourceRejected(uint256,uint64)",
+      "name": "Resource rejected from token",
+      "description": "Pending resource rejected from token",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Resource ID",
+          "description": "Resource ID",
+          "recommendedTypes": []
+        }
+      ]
     }
   ],
   "constructorDecorators": [
@@ -141,7 +221,7 @@
         }
       ],
       "returnDecorators": [],
-      "emittableEvents": []
+      "emittableEvents": ["ResourceAccepted(uint256,uint64)"]
     },
     {
       "signature": "addResourceEntry(string)",
@@ -155,7 +235,7 @@
         }
       ],
       "returnDecorators": [],
-      "emittableEvents": []
+      "emittableEvents": ["ResourceSet(uint64)"]
     },
     {
       "signature": "addResourceToToken(uint256,uint64,uint64)",
@@ -179,7 +259,7 @@
         }
       ],
       "returnDecorators": [],
-      "emittableEvents": []
+      "emittableEvents": ["ResourceAddedToToken(uint256,uint64)"]
     },
     {
       "signature": "approve(address,uint256)",
@@ -198,7 +278,7 @@
         }
       ],
       "returnDecorators": [],
-      "emittableEvents": [""]
+      "emittableEvents": ["Approval(address,address,uint256)"]
     },
     {
       "signature": "approveForResources(address,uint256)",
@@ -217,7 +297,7 @@
           "recommendedTypes": []
         }
       ],
-      "emittableEvents": []
+      "emittableEvents": ["ApprovalForResources(address,address,uint256)"]
     },
     {
       "signature": "balanceOf(address)",
@@ -718,7 +798,7 @@
         }
       ],
       "returnDecorators": [],
-      "emittableEvents": []
+      "emittableEvents": ["ResourceRejected(uint256,uint64)"]
     },
     {
       "signature": "renounceOwnership()",
@@ -1028,7 +1108,7 @@
         }
       ],
       "returnDecorators": [],
-      "emittableEvents": []
+      "emittableEvents": ["OwnershipTransferred(address,address)"]
     }
   ]
 }

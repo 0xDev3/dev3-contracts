@@ -1,0 +1,1034 @@
+{
+  "$schema": "../../schema.json",
+  "tags": ["nft", "multiresource"],
+  "implements": ["traits.erc721"],
+  "name": "RMRK Multiresource NFT",
+  "description": "This contract supports NFTs with multiple resources",
+  "eventDecorators": [
+    {
+      "signature": "Approval(address,address,uint256)",
+      "name": "Approval",
+      "description": "Emitted when owner enables a third party to manage the token with the given token id.",
+      "parameterDecorators": [
+        {
+          "name": "Approver address",
+          "description": "Address of the owner who approved someone to manage their ERC721 token.",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Manager address",
+          "description": "Address of the third party with the rights to manage ERC721 token.",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Token id",
+          "description": "ERC721 token identifier being approved for management.",
+          "recommendedTypes": ["traits.erc721"]
+        }
+      ]
+    },
+    {
+      "signature": "ApprovalForAll(address,address,bool)",
+      "name": "Approval for all",
+      "description": "Emitted when owner enables or disables a third party to manage all of its assets of this ERC721 token.",
+      "parameterDecorators": [
+        {
+          "name": "Approver address",
+          "description": "Address of the owner who approved someone to manage all of their ERC721 tokens.",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Operator address",
+          "description": "Address of the third party with the rights to manage all of the ERC721 tokens owned by the caller.",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Management enabled",
+          "description": "Indicates if owner has enabled (value true) or disabled (value false) the rights to the asset management.",
+          "recommendedTypes": []
+        }
+      ]
+    },
+    {
+      "signature": "ApprovalForAllForResources(address,address,bool)",
+      "name": "Approval for all",
+      "description": "Emitted when owner enables or disables a third party to manage resources.",
+      "parameterDecorators": [
+        {
+          "name": "Approver address",
+          "description": "Address of the owner who approved someone to manage all of their resources.",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Operator address",
+          "description": "Address of the third party with the rights to manage all of the resources owned by the caller.",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Management enabled",
+          "description": "Indicates if owner has enabled (value true) or disabled (value false) the rights to the asset management.",
+          "recommendedTypes": []
+        }
+      ]
+    },
+    {
+      "signature": "Transfer(address,address,uint256)",
+      "name": "Token transferred",
+      "description": "Token is transferred from an address to an address",
+      "parameterDecorators": [
+        {
+          "name": "From",
+          "description": "Address from which the token was sent.",
+          "recommendedTypes": []
+        },
+        {
+          "name": "To",
+          "description": "Address to which the token was sent.",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Token ID",
+          "description": "ID of the token transferred",
+          "recommendedTypes": []
+        }
+      ]
+    }
+  ],
+  "constructorDecorators": [
+    {
+      "signature": "constructor(string,string,uint256,uint256)",
+      "name": "Constructor",
+      "description": "Initializes new RMRK multi resource NFT collection",
+      "parameterDecorators": [
+        {
+          "name": "Name",
+          "description": "Name of the NFT collection",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Symbol",
+          "description": "Token symbol of the collection",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Max supply",
+          "description": "Max number of tokens in the collection",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Price per mint",
+          "description": "Price paid for minting a new token",
+          "recommendedTypes": []
+        }
+      ]
+    }
+  ],
+  "functionDecorators": [
+    {
+      "signature": "acceptResource(uint256,uint256)",
+      "name": "Accept resource",
+      "description": "Accepts a pending resource",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "Token ID for which the resource is accepted",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Resource Index",
+          "description": "Resource id for resource to accept",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": []
+    },
+    {
+      "signature": "addResourceEntry(string)",
+      "name": "Add resource entry",
+      "description": "Adds a new resource to the collection",
+      "parameterDecorators": [
+        {
+          "name": "Metadata URI",
+          "description": "Metadata URI of the resource entry",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": []
+    },
+    {
+      "signature": "addResourceToToken(uint256,uint64,uint64)",
+      "name": "Add resource to token",
+      "description": "Attaches a resource entry to a token",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Resource ID",
+          "description": "Resource ID",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Overwrites",
+          "description": "Resource ID of the resource to overwrite(if desired)",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": []
+    },
+    {
+      "signature": "approve(address,uint256)",
+      "name": "Approve token",
+      "description": "Approves token to an address",
+      "parameterDecorators": [
+        {
+          "name": "To address",
+          "description": "Address to which the token will be approved",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": [""]
+    },
+    {
+      "signature": "approveForResources(address,uint256)",
+      "name": "Approve for resources",
+      "description": "",
+      "parameterDecorators": [],
+      "returnDecorators": [
+        {
+          "name": "To address",
+          "description": "Address to which the token resource management will be approved",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "balanceOf(address)",
+      "name": "Get balance",
+      "description": "Returns the amount of tokens owned by the specified address.",
+      "parameterDecorators": [
+        {
+          "name": "Account address",
+          "description": "Address of the account for which to check balance.",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Token amount",
+          "description": "The amount of the items from this ERC721 collection owned by the specified address.",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "getActiveResourcePriorities(uint256)",
+      "name": "Get active resource priorities",
+      "description": "Returns the array of priorities for active resources",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Array of pririoties",
+          "description": "Array of priorities for active  resources",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "getActiveResources(uint256)",
+      "name": "Get active resources",
+      "description": "Returns active resources for requested token",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Active resources",
+          "description": "Array of active resource IDs",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "getAllResources(uint256)",
+      "name": "Get all resources",
+      "description": "Returns all resources for requested token",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "All resources",
+          "description": "Array of all resource IDs",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "getApproved(uint256)",
+      "name": "Get approved",
+      "description": "Returns the address with the rights to manage token from the collection with the given token id. If no address can manage the token then the returned value will be 0x0.",
+      "parameterDecorators": [
+        {
+          "name": "Token id",
+          "description": "Id of the token.",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Token manager",
+          "description": "Address of the manager with the rights to manage the given token from the collection.",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "getApprovedForResources(uint256)",
+      "name": "Get approved",
+      "description": "Returns the address with the rights to manage resources from the collection with the given token id.",
+      "parameterDecorators": [
+        {
+          "name": "Token id",
+          "description": "Id of the token.",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Resource manager",
+          "description": "Address of the manager with the rights to manage the resources of the given token from the collection.",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "getFallbackURI()",
+      "name": "Fallback metadata URI",
+      "description": "Metadata URI",
+      "parameterDecorators": [],
+      "returnDecorators": [
+        {
+          "name": "Fallback metadata URI",
+          "description": "Metadata URI",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "getFullPendingResources(uint256)",
+      "name": "Get full pending resources",
+      "description": "Returns pending resources with their metadata for requested token",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Resources array",
+          "description": "Returns an array with resource ID and metadata URI",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "getFullResources(uint256)",
+      "name": "Get full resources",
+      "description": "Returns full active resources with their metadata for requested token",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Resources array",
+          "description": "Returns an array with resource ID and metadata URI",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "getLock()",
+      "name": "Get lock",
+      "description": "Returns the state of the lock",
+      "parameterDecorators": [],
+      "returnDecorators": [
+        {
+          "name": "Lock",
+          "description": "Returns a boolean value if lock is on/off",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "getPendingResObjectByIndex(uint256,uint256)",
+      "name": "Get pending resources by index",
+      "description": "Returns pending resources with their metadata for requested token",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Resource index",
+          "description": "Token ID",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Resources array",
+          "description": "Returns an array with resource ID and metadata URI",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "getPendingResources(uint256)",
+      "name": "Get pending resources",
+      "description": "Returns pending resources for requested token",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Resources array",
+          "description": "Returns an array with pending resource IDs",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "getResObjectByIndex(uint256,uint256)",
+      "name": "Get resource by index",
+      "description": "Returns resource with their metadata for requested token",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Resource index",
+          "description": "Token ID",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Resources array",
+          "description": "Returns a struct with resource ID and metadata URI",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "getResource(uint64)",
+      "name": "Get resource by id",
+      "description": "Returns resource with metadata",
+      "parameterDecorators": [
+        {
+          "name": "Resource ID",
+          "description": "Resource ID",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Resource struct",
+          "description": "Returns a struct with resource ID and metadata URI",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "getResourceOverwrites(uint256, uint64)",
+      "name": "Get resource overwrites",
+      "description": "Returns pending overwrites for resource id on token id",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Resource ID",
+          "description": "Resource ID",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Resource id",
+          "description": "Returns a resource ID",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "isApprovedForAll(address,address)",
+      "name": "Is approved for all",
+      "description": "Checks if the given operator wallet (second parameter) is approved to manage all of the tokens owned by the given owner wallet (first parameter).",
+      "parameterDecorators": [
+        {
+          "name": "Owner wallet",
+          "description": "Token owner wallet address.",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Operator wallet",
+          "description": "Operator wallet address.",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Is approved",
+          "description": "If value returned is `true`, then the given operator wallet *IS* approved to manage all of the tokens owned by the given owner wallet. Token owner can always change the `approve for all` status by calling the `setApprovalForAll()` function.",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "isApprovedForAllForResources(address,address)",
+      "name": "Is approved for all resources",
+      "description": "Checks if the given operator wallet (second parameter) is approved to manage all of the resources owned by the given owner wallet (first parameter).",
+      "parameterDecorators": [
+        {
+          "name": "Owner wallet",
+          "description": "Token owner wallet address.",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Operator wallet",
+          "description": "Operator wallet address.",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Is approved",
+          "description": "If value returned is `true`, then the given operator wallet *IS* approved to manage all of the resources owned by the given owner wallet. Token owner can always change the `approve for all` status by calling the `setApprovalForAll()` function.",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "isTokenEnumeratedResource(uint64)",
+      "name": "Is token resource enumerated",
+      "description": "Returns if the token has enumerated resource",
+      "parameterDecorators": [
+        {
+          "name": "Resource id",
+          "description": "Resource id",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Boolean value",
+          "description": "Boolean value of the state if token has enumerated resource",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "maxSupply()",
+      "name": "Max supply",
+      "description": "Returns max suplly of NFTs in the collection",
+      "parameterDecorators": [],
+      "returnDecorators": [
+        {
+          "name": "Max supplly",
+          "description": "Returns a number of max tokens in the collection",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "mint(address,uint256)",
+      "name": "Mint",
+      "description": "Mints a new token to an address",
+      "parameterDecorators": [
+        {
+          "name": "To address",
+          "description": "Minted token owner",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Number of tokens to mint",
+          "description": "Quantity of NFTs to mint",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": []
+    },
+    {
+      "signature": "name()",
+      "name": "Name",
+      "description": "Collection name",
+      "parameterDecorators": [],
+      "returnDecorators": [
+        {
+          "name": "Name",
+          "description": "Returns name of the collection",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "owner()",
+      "name": "Owner",
+      "description": "Collection owner",
+      "parameterDecorators": [],
+      "returnDecorators": [
+        {
+          "name": "Owner",
+          "description": "Returns address of owner of the collection",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "ownerOf(uint256)",
+      "name": "Owner Of",
+      "description": "Returns token owner for requested token id",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Owner",
+          "description": "Returns address of owner of the token",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "pricePerMint()",
+      "name": "Price per mint",
+      "description": "Price for minting of a new token",
+      "parameterDecorators": [],
+      "returnDecorators": [
+        {
+          "name": "Price",
+          "description": "Returns price of the minting of a new token",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "rejectAllResources(uint256)",
+      "name": "Reject all resources",
+      "description": "Rejects all resources for a given token id",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": []
+    },
+    {
+      "signature": "rejectResource(uint256,uint256)",
+      "name": "Reject a resource",
+      "description": "Rejects a resource for a given token id and resource id",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "Token ID",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Resource Index",
+          "description": "Resource index in the pending array",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": []
+    },
+    {
+      "signature": "renounceOwnership()",
+      "name": "Renounces ownership",
+      "description": "Renounces ownership of the collection",
+      "parameterDecorators": [],
+      "returnDecorators": [],
+      "emittableEvents": []
+    },
+    {
+      "signature": "safeTransferFrom(address,address,uint256)",
+      "name": "Safe Transfer From",
+      "description": "Transfers a token from an address to an address",
+      "parameterDecorators": [
+        {
+          "name": "From",
+          "description": "Address from which the token was sent.",
+          "recommendedTypes": []
+        },
+        {
+          "name": "To",
+          "description": "Address to which the token was sent.",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Token ID",
+          "description": "ID of the token transferred",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": ["Transfer(address,address,uint256)"]
+    },
+    {
+      "signature": "safeTransferFrom(address,address,uint256,bytes)",
+      "name": "Safe Transfer From",
+      "description": "Transfers a token from an address to an address",
+      "parameterDecorators": [
+        {
+          "name": "From",
+          "description": "Address from which the token was sent.",
+          "recommendedTypes": []
+        },
+        {
+          "name": "To",
+          "description": "Address to which the token was sent.",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Token ID",
+          "description": "ID of the token transferred",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Data",
+          "description": "Bytes data",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": ["Transfer(address,address,uint256)"]
+    },
+    {
+      "signature": "setApprovalForAll(address,bool)",
+      "name": "Set approval for all",
+      "description": "Calling this function, caller can choose to give (or remove) rights to operator (first parameter) to manage all of the caller owned tokens of this ERC721 collection. Caller can grant (or remove) rights to multiple operators by repeatedly calling this function.",
+      "parameterDecorators": [
+        {
+          "name": "Operator",
+          "description": "The account address to get (or loose) rights to manage all of the caller owned tokens.",
+          "recommendedTypes": ["traits.contractCaller"]
+        },
+        {
+          "name": "Is approved",
+          "description": "Action type. If the flag is set to `true` the operator is being granted the rights to manage the tokens and if it is set to `false` the operator is revoked of the rights to manage the tokens.",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": ["ApprovalForAll(address,address,bool)"]
+    },
+    {
+      "signature": "setApprovalForAllForResources(address,bool)",
+      "name": "Set approval for all",
+      "description": "Calling this function, caller can choose to give (or remove) rights to operator (first parameter) to manage all of the resources of this ERC721 collection. Caller can grant (or remove) rights to multiple operators by repeatedly calling this function.",
+      "parameterDecorators": [
+        {
+          "name": "Operator",
+          "description": "The account address to get (or loose) rights to manage all of the resources.",
+          "recommendedTypes": ["traits.contractCaller"]
+        },
+        {
+          "name": "Is approved",
+          "description": "Action type. If the flag is set to `true` the operator is being granted the rights to manage the resources and if it is set to `false` the operator is revoked of the rights to manage the resources.",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": ["ApprovalForAllForResources(address,address,bool)"]
+    },
+    {
+      "signature": "setFallbackURI(string)",
+      "name": "Sets fallback metadata URI",
+      "description": "Metadata URI",
+      "parameterDecorators": [
+        {
+          "name": "Fallback metadata URI",
+          "description": "Metadata URI",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": []
+    },
+    {
+      "signature": "setLock(bool)",
+      "name": "Set lock",
+      "description": "Sets lock on the contract",
+      "parameterDecorators": [
+        {
+          "name": "Lock value",
+          "description": "Boolean value",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": []
+    },
+    {
+      "signature": "setPriority(uint256,uint16[])",
+      "name": "Set priority",
+      "description": "Sets priorities for the given token id",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "ID of the token transferred",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Priorities",
+          "description": "Array of priroities",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": []
+    },
+    {
+      "signature": "setTokenEnumeratedResource(uint64,bool)",
+      "name": "Set Token Enumerated Resource",
+      "description": "Sets token enumerated resource state",
+      "parameterDecorators": [
+        {
+          "name": "Resource ID",
+          "description": "ID of the resource",
+          "recommendedTypes": []
+        },
+        {
+          "name": "State",
+          "description": "Boolean value to set for token enumerated resource",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": []
+    },
+    {
+      "signature": "supportsInterface(bytes4)",
+      "name": "Supports interface",
+      "description": "Checks if this contract implements the interface defined by the given `interfaceId`. See ERC-165 for more info.",
+      "parameterDecorators": [
+        {
+          "name": "Interface ID",
+          "description": "Interface ID.",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Is supported",
+          "description": "Returns `true` if the given interface id is supported by this contract",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "symbol()",
+      "name": "Symbol",
+      "description": "Returns the symbol defined for this ERC721 collection at constructon time.",
+      "parameterDecorators": [],
+      "returnDecorators": [
+        {
+          "name": "Symbol",
+          "description": "Collection symbol",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "tokenURI(uint256)",
+      "name": "Token URI",
+      "description": "Returns token URI for given token ID. Token URI describes the actual digital content connected to the given token. This can for example be a link to the image file if the nft itself is an image or digital art.",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "ID of the token for which we want to fetch the token URI value",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Token URI",
+          "description": "Token URI calculated for the given token ID. Usually it is constructed by appending the token ID value to the base URI defined at the collection construction time.",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "tokenURIAtIndex(uint256,uint256)",
+      "name": "Token URI at Index",
+      "description": "Returns token URI for given token ID and index. Token URI describes the actual digital content connected to the given token. This can for example be a link to the image file if the nft itself is an image or digital art.",
+      "parameterDecorators": [
+        {
+          "name": "Token ID",
+          "description": "ID of the token for which we want to fetch the token URI value",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Resource Index",
+          "description": "Index of the resource for which we want to fetch the token URI value",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "Token URI",
+          "description": "Token URI calculated for the given token ID. Usually it is constructed by appending the token ID value to the base URI defined at the collection construction time.",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "totalResources()",
+      "name": "Total resources",
+      "description": "Returns the total number of resources created for this RMRK collection. Supply is increased when adding new resources.",
+      "parameterDecorators": [],
+      "returnDecorators": [
+        {
+          "name": "Total resources",
+          "description": "Total number of resources",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "totalSupply()",
+      "name": "Total supply",
+      "description": "Returns the total supply of the tokens created for this ERC721 collection. Supply is increased when minting new tokens and is decreased when owners burn their owned tokens.",
+      "parameterDecorators": [],
+      "returnDecorators": [
+        {
+          "name": "Total supply",
+          "description": "Total supply",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "transferFrom(address,address,uint256)",
+      "name": "Transfer From",
+      "description": "Transfers a token from an address to an address",
+      "parameterDecorators": [
+        {
+          "name": "From",
+          "description": "Address from which the token was sent.",
+          "recommendedTypes": []
+        },
+        {
+          "name": "To",
+          "description": "Address to which the token was sent.",
+          "recommendedTypes": []
+        },
+        {
+          "name": "Token ID",
+          "description": "ID of the token transferred",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": ["Transfer(address,address,uint256)"]
+    },
+    {
+      "signature": "transferOwnership(address)",
+      "name": "Transfer Ownership",
+      "description": "Transfers ownership of collection to a new address",
+      "parameterDecorators": [
+        {
+          "name": "New owner",
+          "description": "Address of the new owner",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": []
+    }
+  ]
+}

@@ -434,46 +434,6 @@
       "emittableEvents": []
     },
     {
-      "signature": "getFullPendingResources(uint256)",
-      "name": "Get full pending resources",
-      "description": "Returns pending resources with their metadata for requested token",
-      "parameterDecorators": [
-        {
-          "name": "Token ID",
-          "description": "Token ID",
-          "recommendedTypes": []
-        }
-      ],
-      "returnDecorators": [
-        {
-          "name": "Resources array",
-          "description": "Returns an array with resource ID and metadata URI",
-          "recommendedTypes": []
-        }
-      ],
-      "emittableEvents": []
-    },
-    {
-      "signature": "getFullResources(uint256)",
-      "name": "Get full resources",
-      "description": "Returns full active resources with their metadata for requested token",
-      "parameterDecorators": [
-        {
-          "name": "Token ID",
-          "description": "Token ID",
-          "recommendedTypes": []
-        }
-      ],
-      "returnDecorators": [
-        {
-          "name": "Resources array",
-          "description": "Returns an array with resource ID and metadata URI",
-          "recommendedTypes": []
-        }
-      ],
-      "emittableEvents": []
-    },
-    {
       "signature": "getLock()",
       "name": "Get lock",
       "description": "Returns the state of the lock",

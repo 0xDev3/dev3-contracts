@@ -26,7 +26,6 @@ abstract contract Context {
     }
 }
 
-
 // File @openzeppelin/contracts/access/Ownable.sol@v4.7.3
 
 // OpenZeppelin Contracts (last updated v4.7.0) (access/Ownable.sol)
@@ -48,7 +47,10 @@ pragma solidity ^0.8.0;
 abstract contract Ownable is Context {
     address private _owner;
 
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+    event OwnershipTransferred(
+        address indexed previousOwner,
+        address indexed newOwner
+    );
 
     /**
      * @dev Initializes the contract setting the deployer as the initial owner.
@@ -95,7 +97,10 @@ abstract contract Ownable is Context {
      * Can only be called by the current owner.
      */
     function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(newOwner != address(0), "Ownable: new owner is the zero address");
+        require(
+            newOwner != address(0),
+            "Ownable: new owner is the zero address"
+        );
         _transferOwnership(newOwner);
     }
 
@@ -110,9 +115,7 @@ abstract contract Ownable is Context {
     }
 }
 
-
 // File contracts/RMRK/access/OwnableLock.sol
-
 
 pragma solidity ^0.8.0;
 
@@ -138,9 +141,7 @@ contract OwnableLock is Ownable {
     }
 }
 
-
 // File contracts/RMRK/utils/RMRKMintingUtils.sol
-
 
 pragma solidity ^0.8.15;
 
@@ -174,7 +175,6 @@ contract RMRKMintingUtils {
     }
 }
 
-
 // File @openzeppelin/contracts/utils/introspection/IERC165.sol@v4.7.3
 
 // OpenZeppelin Contracts v4.4.1 (utils/introspection/IERC165.sol)
@@ -202,7 +202,6 @@ interface IERC165 {
     function supportsInterface(bytes4 interfaceId) external view returns (bool);
 }
 
-
 // File @openzeppelin/contracts/token/ERC721/IERC721.sol@v4.7.3
 
 // OpenZeppelin Contracts (last updated v4.7.0) (token/ERC721/IERC721.sol)
@@ -216,17 +215,29 @@ interface IERC721 is IERC165 {
     /**
      * @dev Emitted when `tokenId` token is transferred from `from` to `to`.
      */
-    event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
+    event Transfer(
+        address indexed from,
+        address indexed to,
+        uint256 indexed tokenId
+    );
 
     /**
      * @dev Emitted when `owner` enables `approved` to manage the `tokenId` token.
      */
-    event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId);
+    event Approval(
+        address indexed owner,
+        address indexed approved,
+        uint256 indexed tokenId
+    );
 
     /**
      * @dev Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets.
      */
-    event ApprovalForAll(address indexed owner, address indexed operator, bool approved);
+    event ApprovalForAll(
+        address indexed owner,
+        address indexed operator,
+        bool approved
+    );
 
     /**
      * @dev Returns the number of tokens in ``owner``'s account.
@@ -336,16 +347,21 @@ interface IERC721 is IERC165 {
      *
      * - `tokenId` must exist.
      */
-    function getApproved(uint256 tokenId) external view returns (address operator);
+    function getApproved(uint256 tokenId)
+        external
+        view
+        returns (address operator);
 
     /**
      * @dev Returns if the `operator` is allowed to manage all of the assets of `owner`.
      *
      * See {setApprovalForAll}
      */
-    function isApprovedForAll(address owner, address operator) external view returns (bool);
+    function isApprovedForAll(address owner, address operator)
+        external
+        view
+        returns (bool);
 }
-
 
 // File @openzeppelin/contracts/token/ERC721/IERC721Receiver.sol@v4.7.3
 
@@ -376,7 +392,6 @@ interface IERC721Receiver {
     ) external returns (bytes4);
 }
 
-
 // File @openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol@v4.7.3
 
 // OpenZeppelin Contracts v4.4.1 (token/ERC721/extensions/IERC721Metadata.sol)
@@ -403,7 +418,6 @@ interface IERC721Metadata is IERC721 {
      */
     function tokenURI(uint256 tokenId) external view returns (string memory);
 }
-
 
 // File @openzeppelin/contracts/utils/Address.sol@v4.7.3
 
@@ -466,10 +480,16 @@ library Address {
      * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
      */
     function sendValue(address payable recipient, uint256 amount) internal {
-        require(address(this).balance >= amount, "Address: insufficient balance");
+        require(
+            address(this).balance >= amount,
+            "Address: insufficient balance"
+        );
 
         (bool success, ) = recipient.call{value: amount}("");
-        require(success, "Address: unable to send value, recipient may have reverted");
+        require(
+            success,
+            "Address: unable to send value, recipient may have reverted"
+        );
     }
 
     /**
@@ -490,7 +510,10 @@ library Address {
      *
      * _Available since v3.1._
      */
-    function functionCall(address target, bytes memory data) internal returns (bytes memory) {
+    function functionCall(address target, bytes memory data)
+        internal
+        returns (bytes memory)
+    {
         return functionCall(target, data, "Address: low-level call failed");
     }
 
@@ -524,7 +547,13 @@ library Address {
         bytes memory data,
         uint256 value
     ) internal returns (bytes memory) {
-        return functionCallWithValue(target, data, value, "Address: low-level call with value failed");
+        return
+            functionCallWithValue(
+                target,
+                data,
+                value,
+                "Address: low-level call with value failed"
+            );
     }
 
     /**
@@ -539,10 +568,15 @@ library Address {
         uint256 value,
         string memory errorMessage
     ) internal returns (bytes memory) {
-        require(address(this).balance >= value, "Address: insufficient balance for call");
+        require(
+            address(this).balance >= value,
+            "Address: insufficient balance for call"
+        );
         require(isContract(target), "Address: call to non-contract");
 
-        (bool success, bytes memory returndata) = target.call{value: value}(data);
+        (bool success, bytes memory returndata) = target.call{value: value}(
+            data
+        );
         return verifyCallResult(success, returndata, errorMessage);
     }
 
@@ -552,8 +586,17 @@ library Address {
      *
      * _Available since v3.3._
      */
-    function functionStaticCall(address target, bytes memory data) internal view returns (bytes memory) {
-        return functionStaticCall(target, data, "Address: low-level static call failed");
+    function functionStaticCall(address target, bytes memory data)
+        internal
+        view
+        returns (bytes memory)
+    {
+        return
+            functionStaticCall(
+                target,
+                data,
+                "Address: low-level static call failed"
+            );
     }
 
     /**
@@ -579,8 +622,16 @@ library Address {
      *
      * _Available since v3.4._
      */
-    function functionDelegateCall(address target, bytes memory data) internal returns (bytes memory) {
-        return functionDelegateCall(target, data, "Address: low-level delegate call failed");
+    function functionDelegateCall(address target, bytes memory data)
+        internal
+        returns (bytes memory)
+    {
+        return
+            functionDelegateCall(
+                target,
+                data,
+                "Address: low-level delegate call failed"
+            );
     }
 
     /**
@@ -628,7 +679,6 @@ library Address {
         }
     }
 }
-
 
 // File @openzeppelin/contracts/utils/Strings.sol@v4.7.3
 
@@ -687,7 +737,11 @@ library Strings {
     /**
      * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation with fixed length.
      */
-    function toHexString(uint256 value, uint256 length) internal pure returns (string memory) {
+    function toHexString(uint256 value, uint256 length)
+        internal
+        pure
+        returns (string memory)
+    {
         bytes memory buffer = new bytes(2 * length + 2);
         buffer[0] = "0";
         buffer[1] = "x";
@@ -707,9 +761,7 @@ library Strings {
     }
 }
 
-
 // File contracts/RMRK/interfaces/IRMRKMultiResource.sol
-
 
 pragma solidity ^0.8.0;
 
@@ -1001,9 +1053,7 @@ interface IRMRKMultiResource {
         returns (bool);
 }
 
-
 // File contracts/RMRK/library/RMRKLib.sol
-
 
 pragma solidity ^0.8.0;
 
@@ -1049,20 +1099,11 @@ library RMRKLib {
     }
 }
 
-
 // File contracts/RMRK/RMRKMultiResource.sol
 
 // OpenZeppelin Contracts (last updated v4.7.0) (token/ERC721/ERC721.sol)
 
 pragma solidity ^0.8.15;
-
-
-
-
-
-
-
-
 
 error ERC721AddressZeroIsNotaValidOwner();
 error ERC721ApprovalToCurrentOwner();
@@ -1962,14 +2003,9 @@ contract RMRKMultiResource is
     }
 }
 
-
 // File contracts/implementations/RMRKMultiResourceImpl.sol
 
-
 pragma solidity ^0.8.15;
-
-
-
 
 //import "hardhat/console.sol";
 
@@ -2022,7 +2058,9 @@ contract RMRKMultiResourceImpl is
         if (mintPriceRequired != msg.value) revert RMRKMintUnderpriced();
 
         uint256 nextToken = _totalSupply + 1;
-        _totalSupply += numToMint;
+        unchecked {
+            _totalSupply += numToMint;
+        }
         uint256 totalSupplyOffset = _totalSupply + 1;
 
         for (uint256 i = nextToken; i < totalSupplyOffset; ) {

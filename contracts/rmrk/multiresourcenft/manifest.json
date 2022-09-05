@@ -868,16 +868,10 @@
       "emittableEvents": []
     },
     {
-      "signature": "setLock(bool)",
+      "signature": "setLock()",
       "name": "Set lock",
       "description": "Sets lock on the contract",
-      "parameterDecorators": [
-        {
-          "name": "Lock value",
-          "description": "Boolean value",
-          "recommendedTypes": []
-        }
-      ],
+      "parameterDecorators": [],
       "returnDecorators": [],
       "emittableEvents": []
     },

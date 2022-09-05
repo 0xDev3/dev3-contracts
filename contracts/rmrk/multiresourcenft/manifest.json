@@ -360,16 +360,10 @@
       "emittableEvents": []
     },
     {
-      "signature": "getAllResources(uint256)",
+      "signature": "getAllResources()",
       "name": "Get all resources",
       "description": "Returns all resources for requested token",
-      "parameterDecorators": [
-        {
-          "name": "Token ID",
-          "description": "Token ID",
-          "recommendedTypes": []
-        }
-      ],
+      "parameterDecorators": [],
       "returnDecorators": [
         {
           "name": "All resources",

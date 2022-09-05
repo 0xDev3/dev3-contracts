@@ -596,7 +596,7 @@
       "returnDecorators": [
         {
           "name": "Resource id",
-          "description": "Returns a resource ID",
+          "description": "Returns a resource ID, returns 0 if the proposed resource is not overriding anything.",
           "recommendedTypes": []
         }
       ],
@@ -675,11 +675,11 @@
     {
       "signature": "maxSupply()",
       "name": "Max supply",
-      "description": "Returns max suplly of NFTs in the collection",
+      "description": "Returns max supply of NFTs in the collection",
       "parameterDecorators": [],
       "returnDecorators": [
         {
-          "name": "Max supplly",
+          "name": "Max supply",
           "description": "Returns a number of max tokens in the collection",
           "recommendedTypes": []
         }
@@ -689,7 +689,7 @@
     {
       "signature": "mint(address,uint256)",
       "name": "Mint",
-      "description": "Mints a new token to an address",
+      "description": "Mints new tokens to an address",
       "parameterDecorators": [
         {
           "name": "To address",
@@ -770,7 +770,7 @@
     {
       "signature": "rejectAllResources(uint256)",
       "name": "Reject all resources",
-      "description": "Rejects all resources for a given token id",
+      "description": "Rejects all the pending resources for a given token id.",
       "parameterDecorators": [
         {
           "name": "Token ID",
@@ -784,7 +784,7 @@
     {
       "signature": "rejectResource(uint256,uint256)",
       "name": "Reject a resource",
-      "description": "Rejects a resource for a given token id and resource id",
+      "description": "Rejects a pending resource for a given token id and index (of pending resources array)",
       "parameterDecorators": [
         {
           "name": "Token ID",
@@ -930,7 +930,7 @@
     {
       "signature": "setPriority(uint256,uint16[])",
       "name": "Set priority",
-      "description": "Sets priorities for the given token id",
+      "description": "Sets priorities for the given token id. They are assigned to active resources on the corresponding positions.",
       "parameterDecorators": [
         {
           "name": "Token ID",
@@ -949,7 +949,7 @@
     {
       "signature": "setTokenEnumeratedResource(uint64,bool)",
       "name": "Set Token Enumerated Resource",
-      "description": "Sets token enumerated resource state",
+      "description": "Sets token enumerated resource state. If this is active for a resource, the tokenId is appended when getting TokenURI for it.",
       "parameterDecorators": [
         {
           "name": "Resource ID",
@@ -1022,7 +1022,7 @@
     {
       "signature": "tokenURIAtIndex(uint256,uint256)",
       "name": "Token URI at Index",
-      "description": "Returns token URI for given token ID and index. Token URI describes the actual digital content connected to the given token. This can for example be a link to the image file if the nft itself is an image or digital art.",
+      "description": "Returns token URI for given token ID and resource index. Token URI describes the actual digital content connected to the given token. This can for example be a link to the image file if the nft itself is an image or digital art.",
       "parameterDecorators": [
         {
           "name": "Token ID",

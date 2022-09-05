@@ -532,7 +532,7 @@
       "emittableEvents": []
     },
     {
-      "signature": "getResourceOverwrites(uint256, uint64)",
+      "signature": "getResourceOverwrites(uint256,uint64)",
       "name": "Get resource overwrites",
       "description": "Returns pending overwrites for resource id on token id",
       "parameterDecorators": [

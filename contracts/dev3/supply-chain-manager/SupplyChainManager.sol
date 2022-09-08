@@ -82,7 +82,11 @@ interface IERC20 {
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
-contract SupplyChainManagerDemo {
+contract SupplyChainManager {
+
+    /*
+        TYPES
+    */
     
     enum State {
         EMPTY,
@@ -116,6 +120,10 @@ contract SupplyChainManagerDemo {
         State state;
     }
 
+    /*
+        STATE
+    */
+
     address manager;
     address manufacturer;
     address paymentCurrency;
@@ -127,6 +135,10 @@ contract SupplyChainManagerDemo {
     mapping(string => StateChange[]) productHistory;
     mapping(address => StateChange[]) userHistory;
 
+    /*
+        CONSTRUCTOR
+    */
+
     constructor(
         address _manager,
         address _manufacturer,
@@ -136,6 +148,10 @@ contract SupplyChainManagerDemo {
         manufacturer = _manufacturer;
         paymentCurrency = _paymentCurrency;
     }
+
+    /*
+        MODIFIERS
+    */
 
     modifier onlyManager() {
         require(
@@ -161,9 +177,10 @@ contract SupplyChainManagerDemo {
         _;
     }
 
-    /**
+    /*
         SUPPLY CHAIN MANAGEMENT
-     */
+    */
+
     function setProduced(
         string memory barcode,
         uint256 price,
@@ -259,9 +276,10 @@ contract SupplyChainManagerDemo {
         IERC20(paymentCurrency).transfer(manufacturer, products[id].price);
     }
 
-    /**
+    /*
         USERS MANAGEMENT
     */
+
     function addUser(
         address wallet,
         string memory info,
@@ -294,9 +312,10 @@ contract SupplyChainManagerDemo {
         users[userIdMapping[wallet]].active = active;
     }
 
-    /**
+    /*
         READ FUNCTIONS
     */
+
     function getUsers() external view returns (User[] memory) {
         return users;
     }

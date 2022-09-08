@@ -1,0 +1,358 @@
+{
+    "$schema": "../../schema.json",
+    "tags": [
+        "supply chain management",
+        "product tracker",
+        "escrow"
+    ],
+    "implements": [],
+    "name": "Supply Chain Manager",
+    "description": "Demo implementation of smart contract tracking the supply chain and settling payments between buyer and producer.",
+    "eventDecorators": [],
+    "constructorDecorators": [
+        {
+            "signature": "constructor(address,address,address)",
+            "name": "Constructor",
+            "description": "Initializes Supply Chain Manager with the basic parameters.",
+            "parameterDecorators": [
+                {
+                    "name": "Manager",
+                    "description": "Account of the manager in charge of the Supply Chain process. Manager can add users and grant roles to the users participating in the supply chain process.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Manufacturer",
+                    "description": "Account of the manufacturer. This is where the payments are received automatically once the buyers receive the product.",
+                    "recommendedTypes": [
+                        "traits.erc20receivable",
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Payment currency",
+                    "description": "Currency in which payments are made when buyers pay to the manufacturer.",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                }
+            ]
+        }
+    ],
+    "functionDecorators": [
+        {
+            "signature": "addUser(address,string,uint8)",
+            "name": "Add user",
+            "description": "Adds the new user with the role in the supply chain process.",
+            "parameterDecorators": [
+                {
+                    "name": "User",
+                    "description": "Account of the user being registered",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Info",
+                    "description": "Additional info attached to this user's registration",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Role",
+                    "description": "Role identifier granted to the user. 1 - producer, 2 - packer, 3 - shipper, 4 - buyer",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": []
+        },
+        {
+            "signature": "getProductHistory(string)",
+            "name": "Get product history",
+            "description": "Returns the list of state changes for the product with given barcode",
+            "parameterDecorators": [
+                {
+                    "name": "Barcode",
+                    "description": "Product barcode",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Product history",
+                    "description": "List of items describing state changes in the product lifetime",
+                    "recommendedTypes": [],
+                    "parameters": [
+                        {
+                            "name": "State updated by",
+                            "description": "Account of the user who updated the state for the item",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "State updated at",
+                            "description": "Timestamp describin when the state was updated",
+                            "recommendedTypes": [
+                                "types.unixTimestamp"
+                            ]
+                        },
+                        {
+                            "name": "Old state",
+                            "description": "Old state of the product, before this update occured.",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "New state",
+                            "description": "New state of the product, introduced in this update.",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Note",
+                            "description": "Textual info attached to the state update.",
+                            "recommendedTypes": []
+                        }
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "getProducts()",
+            "name": "Get products",
+            "description": "Returns the list of all the products and their states.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Products list",
+                    "description": "List of all the products tracked by this platform",
+                    "recommendedTypes": [],
+                    "parameters": [
+                        {
+                            "name": "Id",
+                            "description": "Internal ID of the product unique for this supply chain system.",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Barcode",
+                            "description": "Barcode assigned to the product.",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Price",
+                            "description": "Price of the product.",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Description",
+                            "description": "Detailed description of the product.",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "State",
+                            "description": "State of the product. 1 - Produced, 2 - Packed, 3 - Shipped, 4 - Received",
+                            "recommendedTypes": []
+                        }
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "getUserHistory(address)",
+            "name": "Get user history",
+            "description": "Returns the historical activity made by the given user",
+            "parameterDecorators": [
+                {
+                    "name": "User",
+                    "description": "Account of the user",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "User's activity",
+                    "description": "Historical list of product state updates executed by the given user",
+                    "parameters": [
+                        {
+                            "name": "State updated by",
+                            "description": "Account of the user who updated the state for the item",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "State updated at",
+                            "description": "Timestamp describin when the state was updated",
+                            "recommendedTypes": [
+                                "types.unixTimestamp"
+                            ]
+                        },
+                        {
+                            "name": "Old state",
+                            "description": "Old state of the product, before this update occured.",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "New state",
+                            "description": "New state of the product, introduced in this update.",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Note",
+                            "description": "Textual info attached to the state update.",
+                            "recommendedTypes": []
+                        }
+                    ],
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "getUsers()",
+            "name": "Get users",
+            "description": "Returns the list of all the users regsitered and participating in the different supply chain roles",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Users list",
+                    "description": "List of the users and their state stored in the system",
+                    "parameters": [
+                        {
+                            "name": "Wallet",
+                            "description": "User's wallet address",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Info",
+                            "description": "Detailed information about the user",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Role",
+                            "description": "User's role in the system. 1 - producer, 2 - packer, 3 - shipper, 4 - buyer",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Registration date",
+                            "description": "User's registration date.",
+                            "recommendedTypes": [
+                                "types.unixTimestamp"
+                            ]
+                        },
+                        {
+                            "name": "Active",
+                            "description": "Is user approved by the manager to participate in the supply chain processes.",
+                            "recommendedTypes": []
+                        }
+                    ],
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "setProduced(string,uint256,string,string)",
+            "name": "Set produced",
+            "description": "Marks the product as produced. Only users with role PRODUCER(1) can execute this action.",
+            "parameterDecorators": [
+                {
+                    "name": "Barcode",
+                    "description": "Unique barcode assigned to the product once it's produced.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Price",
+                    "description": "Price of the product unit",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Description",
+                    "description": "Detailed product description",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Note",
+                    "description": "Additional note attached to this state update action.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": []
+        },
+        {
+            "signature": "setPacked(uint256,string)",
+            "name": "Set packed",
+            "description": "Marks the product as packed. Only users with role PACKER(2) can execute this action.",
+            "parameterDecorators": [
+                {
+                    "name": "Product id",
+                    "description": "Internal id of the product",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Note",
+                    "description": "Additional note attached to this state update action",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": []
+        },
+        {
+            "signature": "setShipped(uint256,string)",
+            "name": "Set shipped",
+            "description": "Marks the product as shipped. Only users with role SHIPPER(3) can execute this action.",
+            "parameterDecorators": [
+                {
+                    "name": "Product id",
+                    "description": "Internal id of the product",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Note",
+                    "description": "Additional note attached to this state update action",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": []
+        },
+        {
+            "signature": "setReceived(uint256,string)",
+            "name": "Set received",
+            "description": "Marks the product as received. Only users with role RECEIVER(3) can execute this action.",
+            "parameterDecorators": [
+                {
+                    "name": "Product id",
+                    "description": "Internal id of the product",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Note",
+                    "description": "Additional note attached to this state update action",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": []
+        },
+        {
+            "signature": "updateUserStatus(address,bool)",
+            "name": "Update user",
+            "description": "Updates the user's ability to participate in the supply chain process. Only callable by the manager.",
+            "parameterDecorators": [
+                {
+                    "name": "User",
+                    "description": "User's wallet address",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Permission granted",
+                    "description": "Either set to `true` if allowed, or `false` if not allowed to participate in the supply chain process and execute state updates for his role.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": []
+        }
+    ]
+}

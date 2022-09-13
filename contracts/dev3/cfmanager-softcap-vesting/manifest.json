@@ -320,7 +320,7 @@
     ],
     "constructorDecorators": [
         {
-            "signature": "constructor(struct(address,address,address,address,uint256,uint8,uint256,uint256,uint256,bool,string,address))",
+            "signature": "constructor(tuple(address,address,address,address,uint256,uint8,uint256,uint256,uint256,bool,string,address))",
             "name": "Constructor",
             "description": "Initializes new crowdfunding campaign contract with the campaign parameters.",
             "parameterDecorators": [

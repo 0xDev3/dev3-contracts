@@ -104,7 +104,7 @@
     ],
     "functionDecorators": [
         {
-            "signature": "addPayrolls(struct(address,address,uint256,uint256,uint256)[])",
+            "signature": "addPayrolls(tuple(address,address,uint256,uint256,uint256)[])",
             "name": "Add employees",
             "description": "Activates the list of employees so they can start receiving automated salaries.",
             "parameterDecorators": [

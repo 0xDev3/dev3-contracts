@@ -1255,9 +1255,6 @@ contract KNN3ProfileClient is ChainlinkClient, ConfirmedOwner {
     mapping(address => AssetsAndDefi) public AssetsAndDefiData;
     mapping(address => Governance) public GovernanceData;
 
-    address linkTokenAddress = 0xb0897686c545045aFc77CF20eC7A532E3120E0F1; // polygon link
-
-    // address linkTokenAddress = 0x326C977E6efc84E512bB9C30f76E30c160eD06FB; // goerli link
     uint256 private constant ORACLE_PAYMENT = 1 * 10**1; // 1 * 10**18
 
     event RequestBasicProfileFulfilled(
@@ -1287,7 +1284,7 @@ contract KNN3ProfileClient is ChainlinkClient, ConfirmedOwner {
         string[] snapshot_link
     );
 
-    constructor() ConfirmedOwner(msg.sender) {
+    constructor(address linkTokenAddress) ConfirmedOwner(msg.sender) {
         setChainlinkToken(linkTokenAddress);
     }
 

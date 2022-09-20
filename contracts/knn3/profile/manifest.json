@@ -126,10 +126,16 @@
   ],
   "constructorDecorators": [
     {
-      "signature": "constructor()",
+      "signature": "constructor(address)",
       "name": "Constructor",
       "description": "Initializes new KNN3ProfileClient",
-      "parameterDecorators": []
+      "parameterDecorators": [
+        {
+          "name": "linkTokenAddress",
+          "description": "linkTokenAddress https://docs.chain.link/docs/link-token-contracts/",
+          "recommendedTypes": []
+        }
+      ]
     }
   ],
   "functionDecorators": [

@@ -1,0 +1,504 @@
+{
+  "$schema": "../../schema.json",
+  "tags": ["knn3", "chainlink", "profile", "oracle"],
+  "implements": [],
+  "name": "KNN3ProfileClient",
+  "description": "",
+  "eventDecorators": [
+    {
+      "signature": "RequestBasicProfileFulfilled(bytes32,address[],address[],string[],string[])",
+      "name": "Basic Profile Fulfilled",
+      "description": "Emitted every time on fulfillBasicProfile",
+      "parameterDecorators": [
+        {
+          "name": "requestId",
+          "description": "oracle requestId",
+          "recommendedTypes": []
+        },
+        {
+          "name": "user",
+          "description": "user array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "addr",
+          "description": "addr array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "ens",
+          "description": "ens array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "twitter_name",
+          "description": "twitter_name array",
+          "recommendedTypes": []
+        }
+      ]
+    },
+    {
+      "signature": "RequestSocialStatusFulfilled(bytes32,address[],string[],string[])",
+      "name": "Social Fulfilled",
+      "description": "Emitted every time on fulfillBasicProfile",
+      "parameterDecorators": [
+        {
+          "name": "requestId",
+          "description": "oracle requestId",
+          "recommendedTypes": []
+        },
+        {
+          "name": "user",
+          "description": "user array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "follower",
+          "description": "follower array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "following",
+          "description": "following array",
+          "recommendedTypes": []
+        }
+      ]
+    },
+    {
+      "signature": "RequestassetsAndDefiFulfilled(bytes32,address[],string[],string[],string[])",
+      "name": "Assets And Defi Fulfilled",
+      "description": "Emitted every time on fulfillBasicProfile",
+      "parameterDecorators": [
+        {
+          "name": "requestId",
+          "description": "oracle requestId",
+          "recommendedTypes": []
+        },
+        {
+          "name": "user",
+          "description": "user array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "if_staking",
+          "description": "if_staking array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "nft",
+          "description": "nft array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "nft_link",
+          "description": "nft_link array",
+          "recommendedTypes": []
+        }
+      ]
+    },
+    {
+      "signature": "RequestGovernanceFulfilled(bytes32,address[],string[],string[])",
+      "name": "Governance Fulfilled",
+      "description": "Emitted every time on fulfillBasicProfile",
+      "parameterDecorators": [
+        {
+          "name": "requestId",
+          "description": "oracle requestId",
+          "recommendedTypes": []
+        },
+        {
+          "name": "user",
+          "description": "user array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "snapshot",
+          "description": "snapshot array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "snapshot_link",
+          "description": "snapshot_link array",
+          "recommendedTypes": []
+        }
+      ]
+    }
+  ],
+  "constructorDecorators": [
+    {
+      "signature": "constructor()",
+      "name": "Constructor",
+      "description": "Initializes new KNN3ProfileClient",
+      "parameterDecorators": []
+    }
+  ],
+  "functionDecorators": [
+    {
+      "signature": "requestBasicProfile(address,string)",
+      "name": "requestBasicProfile",
+      "description": "request basic profile",
+      "parameterDecorators": [
+        {
+          "name": "_oracle",
+          "description": "_oracle address",
+          "recommendedTypes": []
+        },
+        {
+          "name": "_jobId",
+          "description": "_jobId",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": []
+    },
+    {
+      "signature": "requestSocialStatus(address, string)",
+      "name": "requestSocialStatus",
+      "description": "request social status",
+      "parameterDecorators": [
+        {
+          "name": "_oracle",
+          "description": "_oracle address",
+          "recommendedTypes": []
+        },
+        {
+          "name": "_jobId",
+          "description": "_jobId",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": []
+    },
+    {
+      "signature": "requestAssetsAndDefi(address, string)",
+      "name": "requestAssetsAndDefi",
+      "description": "request assets And defi",
+      "parameterDecorators": [
+        {
+          "name": "_oracle",
+          "description": "_oracle address",
+          "recommendedTypes": []
+        },
+        {
+          "name": "_jobId",
+          "description": "_jobId",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": []
+    },
+    {
+      "signature": "requestGovernance(address, string)",
+      "name": "requestGovernance",
+      "description": "request governance",
+      "parameterDecorators": [
+        {
+          "name": "_oracle",
+          "description": "_oracle address",
+          "recommendedTypes": []
+        },
+        {
+          "name": "_jobId",
+          "description": "_jobId",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": []
+    },
+
+    {
+      "signature": "fulfillAssetsAndDefi(bytes32,address[],address[],string[],string[])",
+      "name": "fulfillAssetsAndDefi",
+      "description": "fulfillAssetsAndDefi",
+      "parameterDecorators": [
+        {
+          "name": "_requestId",
+          "description": "_requestId",
+          "recommendedTypes": []
+        },
+        {
+          "name": "user",
+          "description": "user array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "addr",
+          "description": "addr array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "ens",
+          "description": "ens array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "twitter_name",
+          "description": "twitter_name array",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": []
+    },
+
+    {
+      "signature": "fulfillSocialStatus(bytes32,address[],string[],string[])",
+      "name": "fulfillSocialStatus",
+      "description": "fulfillSocialStatus",
+      "parameterDecorators": [
+        {
+          "name": "_requestId",
+          "description": "_requestId",
+          "recommendedTypes": []
+        },
+        {
+          "name": "user",
+          "description": "user array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "follower",
+          "description": "follower array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "following",
+          "description": "following array",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": [
+        "RequestSocialStatusFulfilled(bytes32,address[],string[],string[])"
+      ]
+    },
+
+    {
+      "signature": "fulfillAssetsAndDefi(bytes32,address[],string[],string[],string[])",
+      "name": "fulfillAssetsAndDefi",
+      "description": "fulfillAssetsAndDefi",
+      "parameterDecorators": [
+        {
+          "name": "_requestId",
+          "description": "_requestId",
+          "recommendedTypes": []
+        },
+        {
+          "name": "user",
+          "description": "user array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "if_staking",
+          "description": "if_staking array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "nft",
+          "description": "nft array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "nft_link",
+          "description": "nft_link array",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": [
+        "RequestassetsAndDefiFulfilled(bytes32,address[],string[],string[],string[])"
+      ]
+    },
+
+    {
+      "signature": "fulfillGovernance(bytes32,address[],string[],string[])",
+      "name": "fulfillAssetsAndDefi",
+      "description": "fulfillAssetsAndDefi",
+      "parameterDecorators": [
+        {
+          "name": "_requestId",
+          "description": "_requestId",
+          "recommendedTypes": []
+        },
+        {
+          "name": "user",
+          "description": "user array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "snapshot",
+          "description": "snapshot array",
+          "recommendedTypes": []
+        },
+        {
+          "name": "snapshot_link",
+          "description": "snapshot_link array",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [],
+      "emittableEvents": [
+        "RequestGovernanceFulfilled(bytes32,address[],string[],string[])"
+      ]
+    },
+
+    {
+      "signature": "getChainlinkToken()",
+      "name": "getChainlinkToken",
+      "description": "get chainlink token address",
+      "parameterDecorators": [],
+      "returnDecorators": [
+        {
+          "name": "chainlink address",
+          "description": "chainlink address",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "withdrawLink()",
+      "name": "withdrawLink",
+      "description": "withdrawLink",
+      "parameterDecorators": [],
+      "returnDecorators": [],
+      "emittableEvents": []
+    },
+    {
+      "signature": "AssetsAndDefiData(address)",
+      "name": "AssetsAndDefiData",
+      "description": "get assetsAndDefiData by address",
+      "parameterDecorators": [
+        {
+          "name": "address",
+          "description": "address",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "if_staking",
+          "description": "if_staking",
+          "recommendedTypes": []
+        },
+        {
+          "name": "nft",
+          "description": "nft",
+          "recommendedTypes": []
+        },
+        {
+          "name": "nft_link",
+          "description": "nft_link",
+          "recommendedTypes": []
+        },
+        {
+          "name": "update_time",
+          "description": "update_time",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": [
+        "RequestBasicProfileFulfilled(bytes32,address[],address[],string[],string[])"
+      ]
+    },
+    {
+      "signature": "BasicProfileData(address)",
+      "name": "BasicProfileData",
+      "description": "get basicProfileData by address",
+      "parameterDecorators": [
+        {
+          "name": "address",
+          "description": "address",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "address",
+          "description": "address",
+          "recommendedTypes": []
+        },
+        {
+          "name": "ens",
+          "description": "ens",
+          "recommendedTypes": []
+        },
+        {
+          "name": "twitter_name",
+          "description": "twitter_name",
+          "recommendedTypes": []
+        },
+        {
+          "name": "update_time",
+          "description": "update_time",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "GovernanceData(address)",
+      "name": "GovernanceData",
+      "description": "get governanceData by address",
+      "parameterDecorators": [
+        {
+          "name": "address",
+          "description": "address",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "snapshot",
+          "description": "snapshot",
+          "recommendedTypes": []
+        },
+        {
+          "name": "snapshot_link",
+          "description": "snapshot_link",
+          "recommendedTypes": []
+        },
+        {
+          "name": "update_time",
+          "description": "update_time",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    },
+    {
+      "signature": "SocialStatusData(address)",
+      "name": "SocialStatusData",
+      "description": "get socialStatusData by address",
+      "parameterDecorators": [
+        {
+          "name": "address",
+          "description": "address",
+          "recommendedTypes": []
+        }
+      ],
+      "returnDecorators": [
+        {
+          "name": "follower",
+          "description": "follower",
+          "recommendedTypes": []
+        },
+        {
+          "name": "following",
+          "description": "following",
+          "recommendedTypes": []
+        },
+        {
+          "name": "update_time",
+          "description": "update_time",
+          "recommendedTypes": []
+        }
+      ],
+      "emittableEvents": []
+    }
+  ]
+}

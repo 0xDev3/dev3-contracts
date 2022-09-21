@@ -3,7 +3,7 @@
   "tags": ["knn3", "chainlink", "profile", "oracle"],
   "implements": [],
   "name": "KNN3ProfileClient",
-  "description": "",
+  "description": "This smart contract can be used by others to obtain on-chain addresses’ tags and credentials powered by KNN3 Network.",
   "eventDecorators": [
     {
       "signature": "RequestBasicProfileFulfilled(bytes32,address[],address[],string[],string[])",

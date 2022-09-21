@@ -135,20 +135,6 @@
             "emittableEvents": []
         },
         {
-            "signature": "tokenURI()",
-            "name": "Get Base URI",
-            "description": "Returns the base URI for the NFT collection.",
-            "parameterDecorators": [],
-            "returnDecorators": [
-                {
-                    "name": "Base URI",
-                    "description": "Base URI of the NFT collection.",
-                    "recommendedTypes": []
-                }
-            ],
-            "emittableEvents": []
-        },
-        {
             "signature": "approve(address,uint256)",
             "name": "Approve token management",
             "description": "This function will grant rights to the third party to manage caller's token specified by its token id. Call this function with special caution as the third party will get rights to transfer your token to other addresses.",

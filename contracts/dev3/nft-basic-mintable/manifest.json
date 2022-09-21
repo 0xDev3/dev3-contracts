@@ -1,0 +1,521 @@
+{
+    "$schema": "../../schema.json",
+    "tags": [
+        "nft"
+    ],
+    "implements": [
+        "traits.erc721"
+    ],
+    "name": "ERC721 Basic Mintable",
+    "description": "ERC721 NFT implementation with mintable by admin",
+    "eventDecorators": [
+        {
+            "signature": "Approval(address,address,uint256)",
+            "name": "Approval",
+            "description": "Emitted when owner enables a third party to manage the token with the given token id.",
+            "parameterDecorators": [
+                {
+                    "name": "Approver address",
+                    "description": "Address of the owner who approved someone to manage their ERC721 token.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Manager address",
+                    "description": "Address of the third party with the rights to manage ERC721 token.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token id",
+                    "description": "ERC721 token identifier being approved for management.",
+                    "recommendedTypes": [
+                        "traits.erc721"
+                    ]
+                }
+            ]
+        },
+        {
+            "signature": "ApprovalForAll(address,address,bool)",
+            "name": "Approval for all",
+            "description": "Emitted when owner enables or disables a third party to manage all of its assets of this ERC721 token.",
+            "parameterDecorators": [
+                {
+                    "name": "Approver address",
+                    "description": "Address of the owner who approved someone to manage all of their ERC721 tokens.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Operator address",
+                    "description": "Address of the third party with the rights to manage all of the ERC721 tokens owned by the caller.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Management enabled",
+                    "description": "Indicates if owner has enabled (value true) or disabled (value false) the rights to the asset management.",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "OwnershipTransferred(address,address)",
+            "name": "Ownership transferred",
+            "description": "Emitted when the owner is changed to a new address.",
+            "parameterDecorators": [
+                {
+                    "name": "Old owner",
+                    "description": "Wallet address of the old owner who initiated the ownership change.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "New owner",
+                    "description": "Wallet address of the newly configured owner.",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "Transfer(address,address,uint256)",
+            "name": "Token transfer",
+            "description": "Indicates that ERC721 transfer has occurred.",
+            "parameterDecorators": [
+                {
+                    "name": "Sender address",
+                    "description": "Address from which the ERC721 token was sent.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Recipient address",
+                    "description": "Address to which the ERC721 token was sent.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token Id",
+                    "description": "Id of the specific nft within the ERC721 collection which was transferred to another wallet",
+                    "recommendedTypes": []
+                }
+            ]
+        }
+    ],
+    "constructorDecorators": [
+        {
+            "signature": "constructor(string,string,string)",
+            "name": "Constructor",
+            "description": "Creates new ERC721 collection by defining token name, token symbol and the base URI to be used for calculating unique URIs for every collection item. Base URI can be omitted (set empty value) and can be set by admin later by calling the `setBaseURI()` function.",
+            "parameterDecorators": [
+                {
+                    "name": "Token name",
+                    "description": "Descriptive token name of this ERC721 nft collection. (for example, `Game Item`)",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token symbol",
+                    "description": "Short token symbol to be used for this ERC721 nft collection. (for example, `GITM`)",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Base token URI",
+                    "description": "Base token URI to be used for calculating unique URI for every collection item. This URI should point to the folder containing json files named 0,1,2... and so on. For example `ipfs://{long-ipfs-hash}/` is a valid base URI if this hash points directly the folder with the file names starting from `0`, `1`... where every file contains the json description of the concrete nft item. Note that the slash symbol (`/`) at the end of the token URI is very important and if omitted, specifc nft items will not be displayed properly!",
+                    "recommendedTypes": []
+                }
+            ]
+        }
+    ],
+    "functionDecorators": [
+        {
+            "signature": "setBaseURI(string)",
+            "name": "Set Base URI",
+            "description": "Sets the base URI for the NFT collection. Base token URI is used for calculating unique URI for every collection item. This URI should point to the folder containing json files named 0,1,2... and so on. For example `ipfs://{long-ipfs-hash}/` is a valid base URI if this hash points directly the folder with the file names starting from `0`, `1`... where every file contains the json description of the concrete nft item. Note that the slash symbol (`/`) at the end of the token URI is very important and if omitted, specifc nft items will not be displayed properly!",
+            "parameterDecorators": [
+                {
+                    "name": "Base token URI",
+                    "description": "Base token URI to be used for calculating unique URI for every collection item. This URI should point to the folder containing json files named 0,1,2... and so on. For example `ipfs://{long-ipfs-hash}/` is a valid base URI if this hash points directly the folder with the file names starting from `0`, `1`... where every file contains the json description of the concrete nft item. Note that the slash symbol (`/`) at the end of the token URI is very important and if omitted, specifc nft items will not be displayed properly!",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": []
+        },
+        {
+            "signature": "tokenURI()",
+            "name": "Get Base URI",
+            "description": "Returns the base URI for the NFT collection.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Base URI",
+                    "description": "Base URI of the NFT collection.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "approve(address,uint256)",
+            "name": "Approve token management",
+            "description": "This function will grant rights to the third party to manage caller's token specified by its token id. Call this function with special caution as the third party will get rights to transfer your token to other addresses.",
+            "parameterDecorators": [
+                {
+                    "name": "Token manager",
+                    "description": "Address of the manager with the rights to manage the specified token.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Token id",
+                    "description": "Id of the token from this ERC721 collection to be unlocked for management to the specified third party.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Approval(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "balanceOf(address)",
+            "name": "Get balance",
+            "description": "Returns the amount of tokens owned by the specified address.",
+            "parameterDecorators": [
+                {
+                    "name": "Account address",
+                    "description": "Address of the account for which to check balance.",
+                    "recommendedTypes": [
+                        "traits.contractCaller",
+                        "traits.erc721receivable"
+                    ]
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Token amount",
+                    "description": "The amount of the items from this ERC721 collection owned by the specified address.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "getApproved(uint256)",
+            "name": "Get approved",
+            "description": "Returns the address with the rights to manage token from the collection with the given token id. If no address can manage the token then the returned value will be 0x0.",
+            "parameterDecorators": [
+                {
+                    "name": "Token id",
+                    "description": "Id of the token.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Token manager",
+                    "description": "Address of the manager with the rights to manage the given token from the collection.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "isApprovedForAll(address,address)",
+            "name": "Is approved for all",
+            "description": "Checks if the given operator wallet (second parameter) is approved to manage all of the tokens owned by the given owner wallet (first parameter).",
+            "parameterDecorators": [
+                {
+                    "name": "Owner wallet",
+                    "description": "Token owner wallet address.",
+                    "recommendedTypes": [
+                        "traits.erc721receivable",
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Operator wallet",
+                    "description": "Operator wallet address.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Is approved",
+                    "description": "If value returned is `true`, then the given operator wallet *IS* approved to manage all of the tokens owned by the given owner wallet. Token owner can always change the `approve for all` status by calling the `setApprovalForAll()` function.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "mint(address,uint256)",
+            "name": "Mint",
+            "description": "Creates a new batch of freshly minted tokens for the given owner wallet. Its token IDs will be automatically assigned (and available on the emitted Transfer event), and the token URI autogenerated based on the base URI configured for this ERC721 collection. This function is only callable by the admin.",
+            "parameterDecorators": [
+                {
+                    "name": "Owner wallet",
+                    "description": "Wallet address which is going to become an owner of the newly created token.",
+                    "recommendedTypes": [
+                        "traits.erc721receivable",
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Items amount",
+                    "description": "Number of new item collections to create and transfer to the given owner's wallet.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "name()",
+            "name": "Name",
+            "description": "Returns the name of this ERC721 nft collection",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Collection name",
+                    "description": "Collection name",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "owner()",
+            "name": "Get Admin",
+            "description": "Returns the administrator account. Admin is the only one able to mint new items and update the base token URI.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Admin",
+                    "description": "NFT administrator",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "ownerOf(uint256)",
+            "name": "Owner of",
+            "description": "Returns the owner of the given token with token ID. Token with ID must exist for the query to return a result.",
+            "parameterDecorators": [
+                {
+                    "name": "Token ID",
+                    "description": "Token ID",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Owner",
+                    "description": "Wallet address of the owner of the given token ID",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "renounceOwnership()",
+            "name": "Renounce Admin Role",
+            "description": "Admin will remove his rights leaving the nft collection without an administrator. Be careful since admin is the only one able to mint new items and update the base token URI. Make sure these parameters are final before renouncing onwership and leaving the contract without an owner.",
+            "parameterDecorators": [],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "OwnershipTransferred(address,address)"
+            ]
+        },
+        {
+            "signature": "transferOwnership(address)",
+            "name": "Transfer ownership",
+            "description": "Transfer admin role to another account. Be careful since admin is the only one able to mint new items and update the base token URI.",
+            "parameterDecorators": [
+                {
+                    "name": "New Admin",
+                    "description": "New Admin account",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "OwnershipTransferred(address,address)"
+            ]
+        },
+        {
+            "signature": "safeTransferFrom(address,address,uint256)",
+            "name": "Safely transfer approved token",
+            "description": "Transfers the specified token with tokenId (third parameter) from the owner's address (first parameter) to any other address (second parameter). Caller of this function must be approved by the owner of the token with the given ID or else the action will fail. Owner can give this rights to the caller by calling either `approve()` or `setApprovalForAll()` functions. Transfer is safe in a way that if the receiving token address is the smart contract address, then the check is being made if the receiving smart contract address has implemented the `onERC721Received()` function proposed by the `IERC721Receiver` interface. Caller's approval for the token transfer is removed upon the succesful transfer from sender to receiver.",
+            "parameterDecorators": [
+                {
+                    "name": "Sender address",
+                    "description": "Owner address from which the token will be transferred.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Recipient address",
+                    "description": "Address to which the token will be transferred.",
+                    "recommendedTypes": [
+                        "traits.contractCaller",
+                        "traits.erc721receivable"
+                    ]
+                },
+                {
+                    "name": "Token ID",
+                    "description": "The ID of the token owned by the sender and transferred to the receiver wallet.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)",
+                "Approval(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "safeTransferFrom(address,address,uint256,bytes)",
+            "name": "Safely transfer approved token with data",
+            "description": "Transfers the specified token with tokenId (third parameter) from the owner's address (first parameter) to any other address (second parameter). Caller of this function must be approved by the owner of the token with the given ID or else the action will fail. Owner can give this rights to the caller by calling either `approve()` or `setApprovalForAll()` functions. Transfer is safe in a way that if the receiving token address is the smart contract address, then the check is being made if the receiving smart contract address has implemented the `onERC721Received()` function proposed by the `IERC721Receiver` interface. The extra data (fourth parameter) is sent along with the token if the receiving address is the `IERC721Receiver` contract. Caller's approval for the token transfer is removed upon the succesful transfer from sender to receiver.",
+            "parameterDecorators": [
+                {
+                    "name": "Sender address",
+                    "description": "Owner address from which the token will be transferred.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Recipient address",
+                    "description": "Address to which the token will be transferred.",
+                    "recommendedTypes": [
+                        "traits.contractCaller",
+                        "traits.erc721receivable"
+                    ]
+                },
+                {
+                    "name": "Token ID",
+                    "description": "The ID of the token owned by the sender and transferred to the receiver wallet.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Extra data",
+                    "description": "Data to send to the receiver if the receiving the address is the contract implementing the `IERC721Receiver` interface.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)",
+                "Approval(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "setApprovalForAll(address,bool)",
+            "name": "Set approval for all",
+            "description": "Calling this function, caller can choose to give (or remove) rights to operator (first parameter) to manage all of the caller owned tokens of this ERC721 collection. Caller can grant (or remove) rights to multiple operators by repeatedly calling this function.",
+            "parameterDecorators": [
+                {
+                    "name": "Operator",
+                    "description": "The account address to get (or loose) rights to manage all of the caller owned tokens.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Is approved",
+                    "description": "Action type. If the flag is set to `true` the operator is being granted the rights to manage the tokens and if it is set to `false` the operator is revoked of the rights to manage the tokens.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "ApprovalForAll(address,address,bool)"
+            ]
+        },
+        {
+            "signature": "supportsInterface(bytes4)",
+            "name": "Supports interface",
+            "description": "Checks if this contract implements the interface defined by the given `interfaceId`. See ERC-165 for more info.",
+            "parameterDecorators": [
+                {
+                    "name": "Interface ID",
+                    "description": "Interface ID.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Is supported",
+                    "description": "Returns `true` if the given interface id is supported by this contract",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "symbol()",
+            "name": "Symbol",
+            "description": "Returns the symbol defined for this ERC721 collection at constructon time.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Symbol",
+                    "description": "Collection symbol",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "tokenURI(uint256)",
+            "name": "Token URI",
+            "description": "Returns token URI for given token ID. Token URI describes the actual digital content connected to the given token. This can for example be a link to the image file if the nft itself is an image or digital art.",
+            "parameterDecorators": [
+                {
+                    "name": "Token ID",
+                    "description": "ID of the token for which we want to fetch the token URI value",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Token URI",
+                    "description": "Token URI calculated for the given token ID. Usually it is constructed by appending the token ID value to the base URI defined at the collection construction time.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "transferFrom(address,address,uint256)",
+            "name": "Transfer approved token",
+            "description": "Transfers the specified token with tokenId (third parameter) from the owner's address (first parameter) to any other address (second parameter). Caller of this function must be approved by the owner of the token with the given ID or else the action will fail. Owner can give this rights to the caller by calling either `approve()` or `setApprovalForAll()` functions. Caller's approval for the token transfer is removed upon the succesful transfer from sender to receiver.",
+            "parameterDecorators": [
+                {
+                    "name": "Sender address",
+                    "description": "Owner address from which the token will be transferred.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Recipient address",
+                    "description": "Address to which the token will be transferred.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token ID",
+                    "description": "The ID of the token owned by the sender and transferred to the receiver wallet.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)",
+                "Approval(address,address,uint256)"
+            ]
+        }
+    ]
+}

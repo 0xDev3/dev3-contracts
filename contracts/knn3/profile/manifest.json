@@ -159,7 +159,7 @@
       "emittableEvents": []
     },
     {
-      "signature": "requestSocialStatus(address, string)",
+      "signature": "requestSocialStatus(address,string)",
       "name": "requestSocialStatus",
       "description": "request social status",
       "parameterDecorators": [
@@ -178,7 +178,7 @@
       "emittableEvents": []
     },
     {
-      "signature": "requestAssetsAndDefi(address, string)",
+      "signature": "requestAssetsAndDefi(address,string)",
       "name": "requestAssetsAndDefi",
       "description": "request assets And defi",
       "parameterDecorators": [
@@ -197,7 +197,7 @@
       "emittableEvents": []
     },
     {
-      "signature": "requestGovernance(address, string)",
+      "signature": "requestGovernance(address,string)",
       "name": "requestGovernance",
       "description": "request governance",
       "parameterDecorators": [

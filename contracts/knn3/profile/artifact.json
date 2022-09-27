@@ -414,7 +414,7 @@
           "internalType": "string[]",
           "name": "nft_link",
           "type": "string[]"
-        }
+        }gi
       ],
       "name": "fulfillAssetsAndDefi",
       "outputs": [],

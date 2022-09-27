@@ -217,7 +217,7 @@
     },
 
     {
-      "signature": "fulfillAssetsAndDefi(bytes32,address[],address[],string[],string[])",
+      "signature": "fulfillAssetsAndDefi(bytes32,address[],string[],string[],string[])",
       "name": "fulfillAssetsAndDefi",
       "description": "fulfillAssetsAndDefi",
       "parameterDecorators": [

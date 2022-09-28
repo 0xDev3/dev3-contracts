@@ -1,0 +1,86 @@
+{
+    "$schema": "../../schema.json",
+    "tags": [
+        "token distribution",
+        "disperse",
+        "batch payments"
+    ],
+    "implements": [],
+    "name": "Disperse",
+    "description": "Smart contract for token and native coin distribution.",
+    "eventDecorators": [],
+    "constructorDecorators": [],
+    "functionDecorators": [
+        {
+            "signature": "disperseEther(address[],uint256[])",
+            "name": "Disperse native currency",
+            "description": "Distributes the native currency amounts to the given receivers.",
+            "parameterDecorators": [
+                {
+                    "name": "Receivers",
+                    "description": "List of addresses receiving the funds",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Amounts",
+                    "description": "List of amounts to distribute to the given receivers. Receiver at position 1 in the receivers list will receive the amount at position 1 in amounts list and so on.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": []
+        },
+        {
+            "signature": "disperseToken(address,address[],uint256[])",
+            "name": "Disperse tokens",
+            "description": "Distributes the tokens to the given receivers.",
+            "parameterDecorators": [
+                {
+                    "name": "Token",
+                    "description": "Token to distribute to the list of receivers",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "Receivers",
+                    "description": "List of addresses receiving the funds",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Amounts",
+                    "description": "List of amounts to distribute to the given receivers. Receiver at position 1 in the receivers list will receive the amount at position 1 in amounts list and so on.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": []
+        },
+        {
+            "signature": "disperseToken(address,address[],uint256[])",
+            "name": "Disperse tokens",
+            "description": "Distributes the tokens to the given receivers.",
+            "parameterDecorators": [
+                {
+                    "name": "Token",
+                    "description": "Token to distribute to the list of receivers",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                },
+                {
+                    "name": "Receivers",
+                    "description": "List of addresses receiving the funds",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Amounts",
+                    "description": "List of amounts to distribute to the given receivers. Receiver at position 1 in the receivers list will receive the amount at position 1 in amounts list and so on.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": []
+        }
+    ]
+}

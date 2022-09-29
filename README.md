@@ -38,4 +38,4 @@ contracts
 ```
 If you, as an individual, or a new organization/startup/company/DAO, want to contribute your own smart contract implementation but your organization namespace is missing, simply create it in the `contracts` hierarchy and the add the implementation within the created namespace.
 
-We at [0xDev3](dev3.sh) propose a standardized way of adding new deployable smart contract implementations and the full process is described [here](docs/CONTRIBUTING.md).
+We at [0xDev3](https://dev3.sh) propose a standardized way of adding new deployable smart contract implementations and the full process is described [here](docs/CONTRIBUTING.md).

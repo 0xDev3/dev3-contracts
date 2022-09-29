@@ -2,10 +2,12 @@
 
 Thanks for taking the time to improve this repository by suggesting your changes, improvements, or structural modifications in order to bring the most of value to the web3 developers!
 
+If you like to learn by examples, you can go to the [contracts](../contracts/) directly and check how some of the contracts have been decoreated to get an idea of how the process looks like.
+
 Below you'll find steps on how to contribute by adding your own smart contract implementation.
 To a solidity developer, it shouldn't take more than one hour to follow the steps here and decorate their smart contract before opening a pull request.
 
-## 1. Fork  
+## 1. Fork
 
 To add your Smart Contract implementation, you should fork this repo, add your files and then open up a pull request which is going to be reviewd by the 0xDev3 team and the rest of the web3 community before being merged to master and automatically published on the [Dev3 Platform](https://app.dev3.sh)!
 
@@ -63,19 +65,19 @@ Every manifest file will contains the same root structure:
 Fields are explained below:
 
 ### **$schema**
-```json
+```
 $schema: "../../schema.json"
 ```
 Points to the [`contracts/schema.json`](../contracts/schema.json) file from this repo.
 
 ### **tags**
-```json
+```
 tags: ["tag1", "tag2", "tag3"]
 ```
 Tags help describe your contract and make it easier to search for the contract when filtering this ever-growing collection. Values are completely arbitrary but make sure to try to select keywords most suitable for the purpose and the core features of your contract.
 
 ### **implements**
-```json
+```
 implements: ["traits.erc20", "traits.ownable"]
 ```
 Contains the list of interfaces to which your contract conforms to. These values must be taken from the list of [allowed traits](../traits/traits.json) from this repo. For example, the list above describes the contract to be of trait erc20 (conforms to the ERC20 token interface), and of trait ownable (conforms to the ownable interface). 
@@ -124,7 +126,7 @@ For example, here's the json describing one constructor for the token vesting co
 
 ```json
 {
-    "signature": "constructor(address,uint256)", // valid constructor signature with solidity types and no spaces
+    "signature": "constructor(address,uint256)", /* valid constructor signature with solidity types and no spaces*/
     "name": "Constructor", // human readable name
     "description": "Initializes a new contract instance", // human readable description of what this constructor does
     "parameterDecorators": [
@@ -167,7 +169,7 @@ For example, when transfering tokens to a receiving account, the receiver parame
 The relation between types in the array is OR meaning our platform recommendation engine will recommend all the contracts having erc20receivable OR contractCaller traits, to be provided as the receiver value, which is fine because both of them are capable of managing the received tokens.
 
 Function parameters can be more complex than the plain solidity types. To express array in function signature, simply append brackets next to the parameter type (without spaces). For example this signature is a function accepting array of strings and array of uin256 as input params.
-```json
+```
 signature: "constructor(string[],uint256[])"
 ```
 

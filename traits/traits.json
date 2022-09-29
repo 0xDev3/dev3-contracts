@@ -43,7 +43,7 @@
         },
         "contractCaller": {
             "name": "Contract caller",
-            "description": "Smart contracts with the ability of calling other smart contracts dinamically (for example, Governor by OpenZeppelin)",
+            "description": "External wallets or smart contracts with the ability of calling other smart contracts dinamically (for example, Governor by OpenZeppelin)",
             "interfaces": [ ]
         },
         "erc20receivable": {

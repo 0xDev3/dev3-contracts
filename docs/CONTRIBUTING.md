@@ -124,7 +124,7 @@ List of jsons, each of them describing one constructor function. If your contrac
 
 For example, here's the json describing one constructor for the token vesting contract. Constructor accepts two parameters: token address and amount.
 
-```json
+```yaml
 {
     "signature": "constructor(address,uint256)", /* valid constructor signature with solidity types and no spaces*/
     "name": "Constructor", // human readable name

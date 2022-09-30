@@ -126,9 +126,9 @@ For example, here's the json describing one constructor for the token vesting co
 
 ```yaml
 {
-    "signature": "constructor(address,uint256)", /* valid constructor signature with solidity types and no spaces*/
-    "name": "Constructor", // human readable name
-    "description": "Initializes a new contract instance", // human readable description of what this constructor does
+    "signature": "constructor(address,uint256)", # valid constructor signature with solidity types and no spaces
+    "name": "Constructor", # human readable name
+    "description": "Initializes a new contract instance", # human readable description of what this constructor does
     "parameterDecorators": [
         {
             "name": "Token", // first constructor parameter

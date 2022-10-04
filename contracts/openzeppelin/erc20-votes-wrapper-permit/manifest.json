@@ -9,7 +9,9 @@
     "implements": [
         "traits.erc20",
         "traits.erc20metadata",
-        "traits.erc20burnable"
+        "traits.erc20wrapper",
+        "traits.erc20votes",
+        "traits.erc20permit"
     ],
     "name": "ERC20 Fixed Supply",
     "description": "ERC20 fungible token with fixed supply and ability to burn the tokens.",

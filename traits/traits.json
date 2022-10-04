@@ -21,6 +21,21 @@
             "description": "Smart contracts that conform to the IERC20 token standard while also allowing for a creation of new tokens and as a result increasing the total token supply.",
             "interfaces": ["common/IERC20Mintable"]
         },
+        "erc20wrapper": {
+            "name": "ERC20 wrapper",
+            "description": "Wraps underlying ERC20 token. Users can deposit and withdraw 'underlying tokens' and receive a matching number of 'wrapped tokens'.",
+            "interfaces": []
+        },
+        "erc20votes": {
+            "name": "ERC20 votes",
+            "description": "Extension of ERC20 to support Compound-like voting and delegation.",
+            "interfaces": []
+        },
+        "erc20permit": {
+            "name": "ERC20 permit",
+            "description": "ERC20 Permit extension allowing approvals to be made via signatures, as defined in EIP-2612.",
+            "interfaces": []
+        },
         "erc721": {
             "name": "ERC721 token",
             "description": "Smart contracts that conform to the IERC721 non fungible token standard",

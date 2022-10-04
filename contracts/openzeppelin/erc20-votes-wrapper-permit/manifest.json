@@ -193,7 +193,7 @@
             ]
         },
         {
-            "signature": "delegateBySig(address,uint256,uint256,uint8,bytes32)",
+            "signature": "delegateBySig(address,uint256,uint256,uint8,bytes32,bytes32)",
             "name": "Delegate by signature",
             "description": "Delegates the voting power to a given account by providing the message signed by the delegator off-chain.",
             "parameterDecorators": [

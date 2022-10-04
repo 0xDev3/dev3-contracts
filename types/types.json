@@ -8,6 +8,10 @@
         "durationSeconds": {
             "name": "duration",
             "description": "Represents the duration period in seconds"
+        },
+        "blockNumber": {
+            "name": "block number",
+            "description": "Describes point in time in a form of block number."
         }
     }
 }

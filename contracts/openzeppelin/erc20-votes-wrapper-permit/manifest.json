@@ -1,0 +1,729 @@
+{
+    "$schema": "../../schema.json",
+    "tags": [
+        "tokens",
+        "voting",
+        "token wrapper",
+        "governance token"
+    ],
+    "implements": [
+        "traits.erc20",
+        "traits.erc20metadata",
+        "traits.erc20burnable"
+    ],
+    "name": "ERC20 Fixed Supply",
+    "description": "ERC20 fungible token with fixed supply and ability to burn the tokens.",
+    "eventDecorators": [
+        {
+            "signature": "Transfer(address,address,uint256)",
+            "name": "Token transfer",
+            "description": "Indicates that ERC20 transfer has occurred.",
+            "parameterDecorators": [
+                {
+                    "name": "Sender address",
+                    "description": "Address from which the ERC20 token was sent.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Recipient address",
+                    "description": "Address to which the ERC20 token was sent.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token amount",
+                    "description": "The amount of ERC20 token that was send.",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "Approval(address,address,uint256)",
+            "name": "Token spending approval",
+            "description": "Indicates that approval to spend ERC20 token has occurred.",
+            "parameterDecorators": [
+                {
+                    "name": "Approver address",
+                    "description": "Address of the owner who approved spending of their ERC20 token.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Spender address",
+                    "description": "Address for which the owner has approved to spend their ERC20 token.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Approved token amount",
+                    "description": "The amount of ERC20 token that was approved for spending.",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "DelegateChanged(address,address,address)",
+            "name": "Delegate changed",
+            "description": "Emitted when the tokens are delegated to another representative to be counted as voting power.",
+            "parameterDecorators": [
+                {
+                    "name": "Delegator",
+                    "description": "Account delegating the power to another representative.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Old representative",
+                    "description": "Account representing the delegator before this change occured.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "New representative",
+                    "description": "New account to represent the delegator.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                }
+            ]
+        },
+        {
+            "signature": "DelegateVotesChanged(address,uint256,uint256)",
+            "name": "Delegate votes changed",
+            "description": "Emitted when the voting power of the account changes.",
+            "parameterDecorators": [
+                {
+                    "name": "Delegate",
+                    "description": "Account holding the voting power",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Previous voting power",
+                    "description": "Voting power balance of the delegator before this change occured.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "New voting power",
+                    "description": "Voting power balance of the delegator after the change occured.",
+                    "recommendedTypes": []
+                }
+            ]
+        }
+    ],
+    "constructorDecorators": [
+        {
+            "signature": "constructor(string,string,address)",
+            "name": "Constructor",
+            "description": "Deployes the voting token wrapper with given token name and symbol.",
+            "parameterDecorators": [
+                {
+                    "name": "Token name",
+                    "description": "Name of the token which will be deployed.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Token symbol",
+                    "description": "Symbol of the token which will be depoyed.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Wrapped token",
+                    "description": "Original token for which the governance is created.",
+                    "recommendedTypes": [ "traits.erc20" ]
+                }
+            ]
+        }
+    ],
+    "functionDecorators": [
+        {
+            "signature": "checkpoints(address,uint32)",
+            "name": "Get checkpoints",
+            "description": "Returns the selected checkpoint from the account's historical list of checkpoints. Checkpoints trackt the voting power changes for a given account.",
+            "parameterDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Account address to query for the checkpoints history.",
+                    "recommendedTypes": [ "traits.contractCaller" ]
+                },
+                {
+                    "name": "Index",
+                    "description": "Selected item from the list of the historical checkpoints for the given account.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Checkpoint",
+                    "description": "Checkpoint describing account's voting power at a defined point in time",
+                    "parameters": [
+                        {
+                            "name": "From block",
+                            "description": "Point in time when the checkpoint was made and the voting power was updated for the account",
+                            "recommendedTypes": [ "types.blockNumber" ]
+                        },
+                        {
+                            "name": "Votes",
+                            "description": "Total voting power assigned to the given account since the moment when the checkpoint was created.",
+                            "recommendedTypes": []
+                        }
+                    ],
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "delegate(address)",
+            "name": "Delegate",
+            "description": "Delegates voting power to another account",
+            "parameterDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Account to which the voting power is delegated to.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "DelegateChanged(address,address,address)",
+                "DelegateVotesChanged(address,uint256,uint256)"
+            ]
+        },
+        {
+            "signature": "delegateBySig(address,uint256,uint256,uint8,bytes32)",
+            "name": "Delegate by signature",
+            "description": "Delegates the voting power to a given account by providing the message signed by the delegator off-chain.",
+            "parameterDecorators": [
+                {
+                    "name": "Delegatee",
+                    "description": "Receiver of the voting rights transferred from the message signer.",
+                    "recommendedTypes": [ "traits.contractCaller" ]
+                },
+                {
+                    "name": "Nonce",
+                    "description": "Message nonce. Must be configured properly by the message signer and auto-incremented for every new signed message sent to this contract.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Expiry",
+                    "description": "Message expiry. Message expiration timestamp configured before the message was signed.",
+                    "recommendedTypes": [
+                        "types.unixTimestamp"
+                    ]
+                },
+                {
+                    "name": "V",
+                    "description": "V",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "R",
+                    "description": "R",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "S",
+                    "description": "S",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "DelegateChanged(address,address,address)",
+                "DelegateVotesChanged(address,uint256,uint256)" 
+            ]
+        },
+        {
+            "signature": "delegates(address)",
+            "name": "Delegates",
+            "description": "Returns the account configured to hold the voting rights for the given delegator account.",
+            "parameterDecorators": [
+                {
+                    "name": "Delegator",
+                    "description": "Delegator account",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Voting rights holder",
+                    "description": "Account holding the rights delegated by the delegator",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "depositFor(address,uint256)",
+            "name": "Deposit for",
+            "description": "Deposits underlying token and creates the equal amount of wrapped tokens used by the governance.",
+            "parameterDecorators": [
+                {
+                    "name": "Receiver",
+                    "description": "Account to receive wrapped governance tokens",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Amount",
+                    "description": "Amount of the underlying tokens to deposit",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)",
+                "DelegateVotesChanged(address,uint256,uint256)"
+            ]
+        },
+        {
+            "signature": "getPastTotalSupply(uint256)",
+            "name": "Get past total supply",
+            "description": "Returns the total supply of votes available at the given point in time.",
+            "parameterDecorators": [
+                {
+                    "name": "Block number",
+                    "description": "Block number in the past for which the total votes supply is queried.",
+                    "recommendedTypes": [ "types.blockNumber" ]
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Votes supply",
+                    "description": "Total number of existing votes (wrapped tokens) at the given point in time.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "getPastVotes(address,uint256)",
+            "name": "Get past votes",
+            "description": "Returns the amount of votes that the given account had at the given point in time",
+            "parameterDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Account to check the voting power for.",
+                    "recommendedTypes": [ "traits.contractCaller" ]
+                },
+                {
+                    "name": "Block number",
+                    "description": "Block number in the past for which the past votes is queried.",
+                    "recommendedTypes": [ "types.blockNumber" ]
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Voting power",
+                    "description": "Voting power for the given account and the point in time.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "getVotes(address)",
+            "name": "Get votes",
+            "description": "Returns the current amount of voting power held by the given account.",
+            "parameterDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Account for which the voting power is queried.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Voting power",
+                    "description": "Voting power held by the account.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "nonces(address)",
+            "name": "Get next valid nonce",
+            "description": "Returns the next valid nonce which must be used by the account when constructing and signing delegateBySig() or permit() functions.",
+            "parameterDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Account for which the next valid nonce is queried.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Nonce",
+                    "description": "Next valid nonce to be used for signing off-chain transactions: see permit() and delegateBySig() functions.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "numCheckpoints(address)",
+            "name": "Number of checkpoints",
+            "description": "Get number of checkpoints for given account. Checkpoints represent historical changes of account's voting power.",
+            "parameterDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Account for which the number of checkpoints is queried.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Number of checkpoints",
+                    "description": "Total number of checkpoints stored for the given account.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)",
+            "name": "Permit",
+            "description": "Grants the given spender rights to manage given amount of owner's tokens. Owner must construct his intent off-chain and call this function while providing the message signature (see EIP-2612).",
+            "parameterDecorators": [
+                {
+                    "name": "Owner",
+                    "description": "Account of the owner who constructed and signed the allowance.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Spender",
+                    "description": "Spender account defined in the signed message.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Amount",
+                    "description": "Amount of tokens to approve, defined in the signed message.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Deadline",
+                    "description": "Deadline, defined in the signed message, after which the signed message becomes invalid and cannot be processed anymore by calling this function.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "V",
+                    "description": "V",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "R",
+                    "description": "R",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "S",
+                    "description": "S",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Approval(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "underlying()",
+            "name": "Underlying token",
+            "description": "Underlying token wrapped inside this governance token.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Underlying token",
+                    "description": "Token wrapped inside this governance token.",
+                    "recommendedTypes": [
+                        "traits.erc20"
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "withdrawTo(address,uint256)",
+            "name": "Withdraw to",
+            "description": "Withdraws underlying token and burns the equal amount of wrapped tokens used by the governance.",
+            "parameterDecorators": [],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)",
+                "DelegateVotesChanged(address,uint256,uint256)"
+            ]
+        },
+        {
+            "signature": "allowance(address,address)",
+            "name": "Get allowance",
+            "description": "Returns the amount of tokens that the spender is allowed to spend on behalf of the approving owner.",
+            "parameterDecorators": [
+                {
+                    "name": "Approver address",
+                    "description": "Address of the owner which approved spending.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Spender address",
+                    "description": "Address of the spender.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Approved token amount",
+                    "description": "The amount which was approved for spending.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "approve(address,uint256)",
+            "name": "Approve token spending",
+            "description": "Approves the specified amount for spending for the specified spender address. Transaction sender is implicitly the approving owner.",
+            "parameterDecorators": [
+                {
+                    "name": "Spender address",
+                    "description": "Address of the spender for which spending will be approved.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Approved token amount",
+                    "description": "The amount to approve for spending.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Operation succeeded",
+                    "description": "Indicates whether the operation was successful.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": [
+                "Approval(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "balanceOf(address)",
+            "name": "Get balance",
+            "description": "Returns the amount of ERC20 tokens owned by the specified address.",
+            "parameterDecorators": [
+                {
+                    "name": "Account address",
+                    "description": "Address of the account for which to check balance.",
+                    "recommendedTypes": [
+                        "traits.contractCaller",
+                        "traits.erc20receivable"
+                    ]
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Token amount",
+                    "description": "The amount of the ERC20 tokens owned by the specified address.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "decimals()",
+            "name": "Get ERC20 decimals",
+            "description": "Returns the number of decimals used by this ERC20 token.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Decimal places",
+                    "description": "Number of decimals used by this ERC20 token.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "decreaseAllowance(address,uint256)",
+            "name": "Decrease allowed spending amount",
+            "description": "Decrease the approved spending amount for the specified spender address. Transaction sender is implicitly the owner which decreases the approved allowance for the spender.",
+            "parameterDecorators": [
+                {
+                    "name": "Spender address",
+                    "description": "Address of the spender for whom the allowed spending amount will be decreased.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Amount to subtract",
+                    "description": "The amount which will be subtracted from the current allowed amount to spend.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Operation succeeded",
+                    "description": "Indicates whether the operation was successful.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": [
+                "Approval(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "increaseAllowance(address,uint256)",
+            "name": "Increase allowed spending amount",
+            "description": "Increases the amount of funds that can be spent by another address.",
+            "parameterDecorators": [
+                {
+                    "name": "Spender address",
+                    "description": "Address of the spender for whom the allowed spending amount will be increased.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Amount to add",
+                    "description": "The amount which will be added to the current allowed amount to spend.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Operation succeeded",
+                    "description": "Indicates whether the operation was successful.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": [
+                "Approval(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "name()",
+            "name": "Get token name",
+            "description": "Returns the name of this ERC20 token.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Token name",
+                    "description": "The name of this ERC20 token.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "symbol()",
+            "name": "Get token symbol",
+            "description": "Returns the symbol of this ERC20 token.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Token symbol",
+                    "description": "The symbol of this ERC20 token.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "totalSupply()",
+            "name": "Get total token supply",
+            "description": "Returns the total supply of this ERC20 token.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Total token supply",
+                    "description": "The total supply of this ERC20 token.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "transfer(address,uint256)",
+            "name": "Transfer tokens",
+            "description": "Transfers the specified ERC20 token amount to the specified address. Transaction sender is the address from which the tokens will be sent.",
+            "parameterDecorators": [
+                {
+                    "name": "Recipient address",
+                    "description": "Address to which the ERC20 tokens will be sent.",
+                    "recommendedTypes": [
+                        "traits.contractCaller",
+                        "traits.erc20receivable"
+                    ]
+                },
+                {
+                    "name": "Token amount",
+                    "description": "The amount of ERC20 tokens to send.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Operation succeeded",
+                    "description": "Indicates whether the operation was successful.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "transferFrom(address,address,uint256)",
+            "name": "Transfer approved tokens",
+            "description": "Transfers the specified ERC20 token amount from one address to another. The ERC20 tokens must be approved for spending by the source address for the transaction sender.",
+            "parameterDecorators": [
+                {
+                    "name": "Sender address",
+                    "description": "Source address from which the ERC20 tokens will be sent. Must have approved spending of ERC20 tokens by the transaction sender.",
+                    "recommendedTypes": [
+                        "traits.contractCaller"
+                    ]
+                },
+                {
+                    "name": "Recipient address",
+                    "description": "Address to which the ERC20 tokens will be sent.",
+                    "recommendedTypes": [
+                        "traits.contractCaller",
+                        "traits.erc20receivable"
+                    ]
+                },
+                {
+                    "name": "Token amount",
+                    "description": "The amount of ERC20 tokens to send.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Operation succeeded",
+                    "description": "Indicates whether the operation was successful.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)",
+                "Approval(address,address,uint256)"
+            ]
+        }
+    ]
+}

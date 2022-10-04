@@ -3291,6 +3291,7 @@ contract GovernorCountingSimpleImpl is GovernorCountingSimple, GovernorVotes, Go
     
     uint256 private _votingDelay;
     uint256 private _votingPeriod;
+    uint256 private _proposalThreshold;
     uint256 private _quorum;
     
     constructor(
@@ -3298,6 +3299,7 @@ contract GovernorCountingSimpleImpl is GovernorCountingSimple, GovernorVotes, Go
         IVotes votingToken_,
         uint256 votingDelay_,
         uint256 votingPeriod_,
+        uint256 proposalThreshold_,
         uint256 quorumPercentage_
     )
     Governor(name_)
@@ -3306,6 +3308,7 @@ contract GovernorCountingSimpleImpl is GovernorCountingSimple, GovernorVotes, Go
     {
         _votingDelay = votingDelay_;
         _votingPeriod = votingPeriod_;
+        _proposalThreshold = proposalThreshold_;
     }
 
     /**
@@ -3326,5 +3329,9 @@ contract GovernorCountingSimpleImpl is GovernorCountingSimple, GovernorVotes, Go
      */
     function votingPeriod() public view override returns (uint256) {
         return _votingPeriod;
+    }
+
+    function proposalThreshold() public view override returns (uint256) {
+        return _proposalThreshold;
     }
 }

@@ -51,6 +51,16 @@
             "description": "Smart contracts with the ability of safely receiving any ERC721 token.",
             "interfaces": []
         },
+        "erc1155receiver": {
+            "name": "ERC1155 receiver",
+            "description": "Smart contracts with the ability to safely receive ERC1155 tokens.",
+            "interfaces": []
+        },
+        "governor": {
+            "name": "Governor",
+            "description": "Conformos to the OpenZeppelin's IGovernor interface.",
+            "interfaces": []
+        },
         "ownable": {
             "name": "Ownable contract",
             "description": "Smart contracts that conform to the Ownable interface proposed by the OpenZeppelin.",

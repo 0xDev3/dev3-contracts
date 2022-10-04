@@ -1,0 +1,67 @@
+{
+    "$schema": "../../schema.json",
+    "tags": [
+        "governance",
+        "token voting",
+        "quorum fraction voting",
+        "for-against-abstain voting"
+    ],
+    "implements": [
+        "traits.governor",
+        "traits.erc20receivable",
+        "traits.erc721receivable",
+        "traits.erc1155receiver",
+        "traits.contractCaller"
+    ],
+    "name": "Governor - Simple, Voting Token",
+    "description": "Enables proposal-based governance system using the voting tokens as voting power.",
+    "constructorDecorators": [
+        {
+            "signature": "constructor(string,address,uint256,uint256,uint256)",
+            "name": "Constructor",
+            "description": "Creates new Governance system based on the given voting token.",
+            "parameterDecorators": [
+                {
+                    "name": "Name",
+                    "description": "Governance system name",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Voting token",
+                    "description": "Voting token to be used as the voting power source.",
+                    "recommendedTypes": [
+                        "traits.erc20votes"
+                    ]
+                },
+                {
+                    "name": "Voting delay",
+                    "description": "How long after a proposal is created should voting power be fixed. A large voting delay gives users time to unstake tokens if necessary.",
+                    "recommendedTypes": [
+                        "types.durationBlocks"
+                    ]
+                },
+                {
+                    "name": "Voting period",
+                    "description": "How long does a proposal remain open to votes.",
+                    "recommendedTypes": [
+                        "types.durationBlocks"
+                    ]
+                },
+                {
+                    "name": "Proposal threshold",
+                    "description": "The number of votes required in order for a voter to become a proposer.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Quorum percentage (0-100)",
+                    "description": "Minimum number of votes casted, as a percentage of total votes available in the system, required to reach a quorum.",
+                    "recommendedTypes": []
+                }
+            ]
+        }
+    ],
+    "functionDecorators": [
+        
+    ],
+    "eventDecorators": []
+}

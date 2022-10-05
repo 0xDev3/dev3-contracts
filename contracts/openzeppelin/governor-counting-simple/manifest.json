@@ -701,7 +701,7 @@
             "emittableEvents": []
         },
         {
-            "signature": "updateQuorumNumerator",
+            "signature": "updateQuorumNumerator(uint256)",
             "name": "Update quorum numerator",
             "description": "Updates the numerator defining the quorum percentage. Callable only by the governance.",
             "parameterDecorators": [

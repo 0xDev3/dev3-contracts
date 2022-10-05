@@ -536,7 +536,7 @@
             "emittableEvents": []
         },
         {
-            "signature": "proposalThreshold(uint256)",
+            "signature": "proposalThreshold()",
             "name": "Proposal threshold",
             "description": "Returns the number of votes required in order for a voter to become a proposer.",
             "parameterDecorators": [],

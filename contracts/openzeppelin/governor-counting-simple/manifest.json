@@ -166,7 +166,7 @@
     ],
     "constructorDecorators": [
         {
-            "signature": "constructor(string,address,uint256,uint256,uint256)",
+            "signature": "constructor(string,address,uint256,uint256,uint256,uint256)",
             "name": "Constructor",
             "description": "Creates new Governance system based on the given voting token.",
             "parameterDecorators": [

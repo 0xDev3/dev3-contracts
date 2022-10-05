@@ -29,7 +29,7 @@
             ]
         },
         {
-            "signature": "ProposalCreated(uint256,address,address[],address[],string[],bytes[],uint256,uint256,string)",
+            "signature": "ProposalCreated(uint256,address,address[],uint256[],string[],bytes[],uint256,uint256,string)",
             "name": "Proposal created",
             "description": "Emitted when the new proposal gets created.",
             "parameterDecorators": [

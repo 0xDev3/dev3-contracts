@@ -15,6 +15,155 @@
     ],
     "name": "Governor - Simple, Voting Token",
     "description": "Enables proposal-based governance system using the voting tokens as voting power.",
+    "eventDecorators": [
+        {
+            "signature": "ProposalCanceled(uint256)",
+            "name": "Proposal canceled",
+            "description": "Emitted when the proposal gets canceled.",
+            "parameterDecorators": [
+                {
+                    "name": "Proposal Id",
+                    "description": "Id of the canceled proposal.",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "ProposalCreated(uint256,address,address[],address[],string[],bytes[],uint256,uint256,string)",
+            "name": "Proposal created",
+            "description": "Emitted when the new proposal gets created.",
+            "parameterDecorators": [
+                {
+                    "name": "Proposal Id",
+                    "description": "Id of the created proposal.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Proposer",
+                    "description": "Account which created the proposal.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Targets",
+                    "description": "Target addresses (`to` fields in the raw transactions)",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Values",
+                    "description": "Values (eth amounts to send in the raw transactions)",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Signatures",
+                    "description": "Unused field",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Voting starts at",
+                    "description": "Timestamp defining the start of the voting process.",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "ProposalExecuted(uint256)",
+            "name": "Proposal executed",
+            "description": "Emitted when the proposal gets executed.",
+            "parameterDecorators": [
+                {
+                    "name": "Proposal Id",
+                    "description": "Id of the proposal that was executed.",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "QuorumNumeratorUpdated(uint256,uint256)",
+            "name": "Quorum numerator updated",
+            "description": "Emitted when the quorum numerator parameter gets updated. Quorum is a percentage defined by its numerator and denominator.",
+            "parameterDecorators": [
+                {
+                    "name": "Old quorum numerator",
+                    "description": "Old quorum numerator",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "New quorum numerator",
+                    "description": "New quorum numerator",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "VoteCast(address,uint256,uint8,uint256,string)",
+            "name": "Vote cast",
+            "description": "Emitted when the new vote is casted for the proposal.",
+            "parameterDecorators": [
+                {
+                    "name": "Voter",
+                    "description": "Account casting the vote.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Proposal Id",
+                    "description": "Id of the proposal.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Support",
+                    "description": "Voting option chosen by the voter.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Weight",
+                    "description": "Voter's voting power,",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Reason",
+                    "description": "Reason provided by the voter when casting the vote.",
+                    "recommendedTypes": []
+                }
+            ]
+        },
+        {
+            "signature": "VoteCastWithParams(address,uint256,uint8,uint256,string,bytes)",
+            "name": "Vote cast with params",
+            "description": "Emitted when the new vote is casted for the proposal by also providing the vote params.",
+            "parameterDecorators": [
+                {
+                    "name": "Voter",
+                    "description": "Account casting the vote.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Proposal Id",
+                    "description": "Id of the proposal.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Support",
+                    "description": "Voting option chosen by the voter.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Weight",
+                    "description": "Voter's voting power,",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Reason",
+                    "description": "Reason provided by the voter when casting the vote.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Parameters",
+                    "description": "Additional parameters provided by the voter if the counting mechanism requires additional parameters together with the voting option.",
+                    "recommendedTypes": []
+                }
+            ]
+        }
+    ],
     "constructorDecorators": [
         {
             "signature": "constructor(string,address,uint256,uint256,uint256)",
@@ -61,7 +210,557 @@
         }
     ],
     "functionDecorators": [
-        
-    ],
-    "eventDecorators": []
+        {
+            "signature": "BALLOT_TYPEHASH()",
+            "name": "Ballot typehash",
+            "description": "Used for casting vote off chain by signing the vote message. This typehash must be included in the message when casting a simple vote (the one without additional params).",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Ballot typehash",
+                    "description": "Ballot typehash",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "EXTENDED_BALLOT_TYPEHASH()",
+            "name": "Ballot typehash",
+            "description": "Used for casting vote off chain by signing the vote message. This typehash must be included in the message when casting an extended vote (the one containing additional params).",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Extended ballot typehash",
+                    "description": "Extended ballot typehash",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "COUNTING_MODE()",
+            "name": "Counting mode",
+            "description": "Description of the possible vote options for castVote() and the way these votes are counted. This contract uses 'support=bravo&quorum=for,abstain' for this value. 'support=bravo' refers to the vote options 0 = Against, 1 = For, 2 = Abstain. 'quorum=for,abstain' means that both For and Abstain votes are counted towards quorum.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Counting mode",
+                    "description": "Counting used by this governance system.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "castVote(uint256,uint8)",
+            "name": "Cast vote",
+            "description": "Casts vote for provided proposal.",
+            "parameterDecorators": [
+                {
+                    "name": "Proposal Id",
+                    "description": "Id of the proposal for which the vote is being cast.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Vote decision",
+                    "description": "0 = Against, 1 = For, 2 = Abstain",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Voting power",
+                    "description": "Voter's voting power used when casting the vote.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": [
+                "VoteCast(address,uint256,uint8,uint256,string)"      
+            ]
+        },
+        {
+            "signature": "castVoteBySig(uint256,uint8,uint8,bytes32,bytes32)",
+            "name": "Cast vote by signature",
+            "description": "Casts vote for proposal by providing the vote decision signed by the voter off-chain.",
+            "parameterDecorators": [
+                {
+                    "name": "Proposal Id",
+                    "description": "Id of the proposal for which the vote is being cast.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Vote decision",
+                    "description": "0 = Against, 1 = For, 2 = Abstain",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "V",
+                    "description": "V",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "R",
+                    "description": "R",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "S",
+                    "description": "S",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Voting power",
+                    "description": "Voter's voting power used when casting the vote.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": [
+                "VoteCast(address,uint256,uint8,uint256,string)" 
+            ]
+        },
+        {
+            "signature": "castVoteWithReason(uint256,uint8,string)",
+            "name": "Cast vote with reason",
+            "description": "Casts vote for a proposal while also providing the reason for the vote.",
+            "parameterDecorators": [
+                {
+                    "name": "Proposal Id",
+                    "description": "Id of the proposal for which the vote is being cast.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Vote decision",
+                    "description": "0 = Against, 1 = For, 2 = Abstain",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Reason",
+                    "description": "Reason behind this vote decision - any textual value.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Voting power",
+                    "description": "Voter's voting power used when casting the vote.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": [
+                "VoteCast(address,uint256,uint8,uint256,string)"
+            ]
+        },
+        {
+            "signature": "execute(address[],uint256[],bytes[],bytes32)",
+            "name": "Execute",
+            "description": "Execute a successful proposal. This requires the quorum to be reached, the vote to be successful, and the deadline to be reached.",
+            "parameterDecorators": [
+                {
+                    "name": "Targets",
+                    "description": "Target smart contracts defined in the successful proposal.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Values",
+                    "description": "Values of ether to attach to every action of the passed proposal.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Calldatas",
+                    "description": "Encoded function with parameters to call on targets defined in the proposal.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Description hash",
+                    "description": "Hash of the proposal description",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Proposal Id",
+                    "description": "Returns the proposal id of the executed proposal.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": [
+                "ProposalExecuted(uint256)"
+            ]
+        },
+        {
+            "signature": "getVotes(address,uint256)",
+            "name": "Get votes",
+            "description": "Returns the voting power the account owned at a specified point in time.",
+            "parameterDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Account wallet address.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Block number",
+                    "description": "Block number at which the voting power is checked for the account.",
+                    "recommendedTypes": [
+                        "types.blockNumber"
+                    ]
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Voting power",
+                    "description": "Voting power of the account",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "hasVoted(uint256,address)",
+            "name": "Has voted",
+            "description": "Returns wether given account has cast a vote on the given proposal.",
+            "parameterDecorators": [
+                {
+                    "name": "Account",
+                    "description": "Account wallet address.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Proposal Id",
+                    "description": "Proposal Id",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Has voted",
+                    "description": "Has user voted result",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "hashProposal(address[],uint256[],bytes[],bytes32)",
+            "name": "Hash proposal",
+            "description": "Calculates the unique hash for a given proposal data",
+            "parameterDecorators": [
+                {
+                    "name": "Targets",
+                    "description": "Target smart contracts.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Values",
+                    "description": "Values of ether to attach to every action target call.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Calldatas",
+                    "description": "Encoded function with parameters to call on targets.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Description hash",
+                    "description": "Hash of the proposal description",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Proposal hash",
+                    "description": "Hash of the provided proposal data.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "name()",
+            "name": "Name",
+            "description": "Get governance system name",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Governance name",
+                    "description": "Governance name",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "proposalDeadline(uint256)",
+            "name": "Get proposal deadline",
+            "description": "Returns the given proposal deadline",
+            "parameterDecorators": [
+                {
+                    "name": "Proposal Id",
+                    "description": "Proposal Id",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Proposal deadline",
+                    "description": "Block number of the proposal deadline",
+                    "recommendedTypes": [
+                        "types.blockNumber"
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "proposalSnapshot(uint256)",
+            "name": "Proposal snapshot",
+            "description": "Returns the snapshot - block number at which the voting starts.",
+            "parameterDecorators": [
+                {
+                    "name": "Proposal Id",
+                    "description": "Proposal Id",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Snapshot",
+                    "description": "Block number at which the voting will start",
+                    "recommendedTypes": [
+                        "types.blockNumber"
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "proposalThreshold(uint256)",
+            "name": "Proposal threshold",
+            "description": "Returns the number of votes required in order for a voter to become a proposer.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Threshold",
+                    "description": "Minimum voting power required to become a proposer",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "proposalVotes(uint256)",
+            "name": "Get votes for proposal",
+            "description": "Returns vote count distribution for given proposal.",
+            "parameterDecorators": [
+                {
+                    "name": "Proposal Id",
+                    "description": "Proposal Id",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Against",
+                    "description": "Against votes",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "For",
+                    "description": "For votes",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Abstain",
+                    "description": "Abstain votes",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "propose(address[],uint256[],bytes[],string)",
+            "name": "Propose",
+            "description": "Creates new proposal",
+            "parameterDecorators": [
+                {
+                    "name": "Targets",
+                    "description": "Target smart contracts to call if proposal is executed.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Values",
+                    "description": "Values of ether to attach to every action target call.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Calldatas",
+                    "description": "Encoded function with parameters to call on targets.",
+                    "recommendedTypes": []
+                },
+                {
+                    "name": "Description",
+                    "description": "Proposal description",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Proposal id",
+                    "description": "Id of the successfully created proposal",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": [
+                "ProposalCreated(uint256,address,address[],address[],string[],bytes[],uint256,uint256,string)"
+            ]
+        },
+        {
+            "signature": "quorum(uint256)",
+            "name": "Get past quorum",
+            "description": "Retrieves the total voting power required to to be cast on a vote in order to achieve the quorum and execute the proposal. .",
+            "parameterDecorators": [
+                {
+                    "name": "Block number",
+                    "description": "Block number at which the quorum is being read.",
+                    "recommendedTypes": [
+                        "types.blockTimestamp"
+                    ]
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Voting power",
+                    "description": "Voting power required for a proposal to pass, at a given block number.",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "quorumNumerator()",
+            "name": "Quorum numerator",
+            "description": "Numerator defining the quorum percentage",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Numerator",
+                    "description": "Numerator",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "quorumDenominator()",
+            "name": "Quorum denominator",
+            "description": "Denominator defining the quorum percentage",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Denominator",
+                    "description": "Denominator",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "state(uint256)",
+            "name": "Get state",
+            "description": "Returns the state of the given proposal.",
+            "parameterDecorators": [
+                {
+                    "name": "Proposal Id",
+                    "description": "Proposal Id",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "State",
+                    "description": "0 - Pending; 1 - Active; 2 - Canceled; 3 - Defeated; 4 - Succeeded; 5 - Queued; 6 - Expired; 7 - Executed;",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "token()",
+            "name": "Voting token",
+            "description": "Token used as the voting power.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Token",
+                    "description": "Voting token",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "updateQuorumNumerator",
+            "name": "Update quorum numerator",
+            "description": "Updates the numerator defining the quorum percentage. Callable only by the governance.",
+            "parameterDecorators": [
+                {
+                    "name": "New numerator",
+                    "description": "New numerator",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "QuorumNumeratorUpdated(uint256,uint256)"
+            ]
+        },
+        {
+            "signature": "version()",
+            "name": "Get version",
+            "description": "Governor contract version.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Version",
+                    "description": "Governor contract version",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "votingDelay()",
+            "name": "Get voting delay",
+            "description": "Delay, in number of block, between the proposal is created and the vote starts.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Delay",
+                    "description": "Voting delay in number of blocks.",
+                    "recommendedTypes": [
+                        "types.durationBlocks"
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "votingPeriod()",
+            "name": "Get voting period",
+            "description": "Delay, in number of blocks, between the vote start and vote ends.",
+            "parameterDecorators": [],
+            "returnDecorators": [
+                {
+                    "name": "Voting period",
+                    "description": "Voting period in number of blocks.",
+                    "recommendedTypes": [
+                        "types.durationBlocks"
+                    ]
+                }
+            ],
+            "emittableEvents": []
+        }
+    ]
 }

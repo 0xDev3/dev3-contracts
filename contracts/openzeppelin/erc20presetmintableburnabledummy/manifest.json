@@ -10,7 +10,7 @@
         "traits.erc20burnable",
         "traits.erc20mintable"
     ],
-    "name": "ERC20 Mintable",
+    "name": "ERC20 Mintable [DUMMY]",
     "description": "ERC20 fungible token with initial supply and the ability to mint and burn the tokens. Anyone can mint any amount of tokens.",
     "eventDecorators": [
         {

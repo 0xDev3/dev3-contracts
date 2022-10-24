@@ -272,9 +272,9 @@
             ]
         },
         {
-            "signature": "mint(address,uint256)",
-            "name": "Mint",
-            "description": "Creates new amount of tokens (second parameter) and assigns them to the given wallet (first parameter). This function is only callable by the token owner. To find who the token owner is, call `owner()` funciton.",
+            "signature": "mintTo(address,uint256)",
+            "name": "Mint to",
+            "description": "Creates new amount of tokens (second parameter) and assigns them to the given wallet (first parameter).",
             "parameterDecorators": [
                 {
                     "name": "Wallet address",
@@ -287,6 +287,22 @@
                 {
                     "name": "Token amount",
                     "description": "Amount of the tokens to create.",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [],
+            "emittableEvents": [
+                "Transfer(address,address,uint256)"
+            ]
+        },
+        {
+            "signature": "mint(uint256)",
+            "name": "Mint",
+            "description": "Creates new amount of tokens and assigns them to the caller.",
+            "parameterDecorators": [
+                {
+                    "name": "Token amount",
+                    "description": "Amount of the tokens to mint to the caller's wallet.",
                     "recommendedTypes": []
                 }
             ],

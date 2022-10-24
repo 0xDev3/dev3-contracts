@@ -552,8 +552,11 @@ contract ERC20PresetMintableBurnable is ERC20, ERC20Burnable {
         string memory symbol
     ) ERC20(name, symbol) {}
 
-    function mint(address to, uint256 amount) public {
+    function mintTo(address to, uint256 amount) public {
         _mint(to, amount);
     }
 
+    function mint(uint256 amount) public {
+        _mint(msg.sender, amount);
+    }
 }

@@ -174,6 +174,46 @@
             "emittableEvents": [
                 "OwnershipTransferred(address,address)"
             ]
+        },
+        {
+            "signature": "calculateHash(string)",
+            "name": "Calculate hash",
+            "description": "Calculates the hash for the given secret key. The hash has to be attached to the reward data then calling the addRewards function. The secret key from which the hash was generated must be provided in the claim function to claim the reward successfully.",
+            "parameterDecorators": [
+                {
+                    "name": "Secret key",
+                    "description": "Secret key string",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Calculated hash",
+                    "description": "Calculated hash",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
+        },
+        {
+            "signature": "calculateHashes(string[])",
+            "name": "Calculate hashes",
+            "description": "Calculates the hashes list for the given secret keys list.",
+            "parameterDecorators": [
+                {
+                    "name": "Secret keys list",
+                    "description": "Secret keys list",
+                    "recommendedTypes": []
+                }
+            ],
+            "returnDecorators": [
+                {
+                    "name": "Calculated hashes list",
+                    "description": "Calculated hashes list",
+                    "recommendedTypes": []
+                }
+            ],
+            "emittableEvents": []
         }
     ]
 }

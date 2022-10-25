@@ -291,8 +291,7 @@ contract NftRewarder is Ownable {
     }
 
     function claimReward(string memory key) public {
-        bytes memory data = abi.encodePacked(address(this), key);
-        bytes32 calculatedHash = keccak256(data);
+        bytes32 calculatedHash = calculateHash(key);
         Reward memory reward = rewards[calculatedHash];
         require(
             reward.secretHash == calculatedHash,
@@ -313,5 +312,19 @@ contract NftRewarder is Ownable {
             reward.tokenId
         );
         emit ClaimReward(msg.sender, calculatedHash);
+    }
+
+    function calculateHashes(string[] memory keys) public view returns (bytes32[] memory) {
+        bytes32[] memory hashes = new bytes32[](keys.length);
+        for (uint256 i = 0; i < keys.length; i++) {
+            hashes[i] = calculateHash(keys[i]);
+        }
+        return hashes;
+    }
+
+    function calculateHash(string memory key) public view returns (bytes32) {
+        return keccak256(
+            abi.encodePacked(address(this), key)
+        );
     }
 }

@@ -6,7 +6,8 @@
         "secret code airdrop"
     ],
     "implements": [
-        "traits.ownable"
+        "traits.ownable",
+        "traits.erc721receivable"
     ],
     "name": "Nft Rewarder",
     "description": "Smart contract which allows creating claimable nft coupons.",

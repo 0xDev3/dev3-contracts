@@ -2255,7 +2255,7 @@ contract ERC721PresetMinterPauserAutoId is
      *
      * - the caller must have the `MINTER_ROLE`.
      */
-    function mint(address to, uint256 amount) public {
+    function mintMany(address to, uint256 amount) public {
         require(hasRole(MINTER_ROLE, _msgSender()), "ERC721PresetMinterPauserAutoId: must have minter role to mint");
         
         for (uint256 i = 0; i < amount; i++) {

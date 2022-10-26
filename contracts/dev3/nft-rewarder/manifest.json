@@ -177,29 +177,29 @@
             ]
         },
         {
-            "signature": "calculateHashString(string)",
-            "name": "Calculate hash string",
-            "description": "Calculates the hash string for the given secret key. The hash has to be attached to the reward data then calling the addRewards function. The secret key from which the hash was generated must be provided in the claim function to claim the reward successfully.",
+            "signature": "calculateHash(string)",
+            "name": "Calculate hash",
+            "description": "Calculates the hash for the given secret key. The hash has to be attached to the reward data then calling the addRewards function. The secret key from which the hash was generated must be provided in the claim function to claim the reward successfully.",
             "parameterDecorators": [
                 {
                     "name": "Secret key",
-                    "description": "Secret key",
+                    "description": "Secret key string",
                     "recommendedTypes": []
                 }
             ],
             "returnDecorators": [
                 {
-                    "name": "Calculated hash string",
-                    "description": "Calculated hash string",
+                    "name": "Calculated hash",
+                    "description": "Calculated hash",
                     "recommendedTypes": []
                 }
             ],
             "emittableEvents": []
         },
         {
-            "signature": "calculateHashStrings(string[])",
-            "name": "Calculate hash strings",
-            "description": "Calculates the hash strings for the given list of secret keys.",
+            "signature": "calculateHashes(string[])",
+            "name": "Calculate hashes",
+            "description": "Calculates the hashes list for the given secret keys list.",
             "parameterDecorators": [
                 {
                     "name": "Secret keys list",
@@ -209,8 +209,8 @@
             ],
             "returnDecorators": [
                 {
-                    "name": "Calculated hash strings list",
-                    "description": "Calculated hash strings list",
+                    "name": "Calculated hashes list",
+                    "description": "Calculated hashes list",
                     "recommendedTypes": []
                 }
             ],

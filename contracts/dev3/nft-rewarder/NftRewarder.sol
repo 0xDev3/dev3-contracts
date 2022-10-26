@@ -352,6 +352,18 @@ contract NftRewarder is Ownable, IERC721Receiver {
         );
     }
 
+    function calculateHashString(string memory key) public view returns (string memory) {
+        return string(abi.encodePacked(calculateHash(key)));
+    }
+
+    function calculateHashStrings(string[] memory keys) public view returns (string[] memory) {
+        string[] memory hashes = new string[](keys.length);
+        for (uint256 i = 0; i < keys.length; i++) {
+            hashes[i] = string(abi.encodePacked(calculateHash(keys[i])));
+        }
+        return hashes;
+    }
+
     function onERC721Received(
         address operator,
         address from,

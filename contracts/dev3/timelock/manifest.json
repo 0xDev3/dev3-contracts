@@ -147,38 +147,45 @@
             ],
             "returnDecorators": [
                 {
-                    "name": "Token",
-                    "description": "Token which was locked",
-                    "recommendedTypes": ["traits.erc20"]
-                },
-                {
-                    "name": "Amount",
-                    "description": "Amount of the tokens locked",
-                    "recommendedTypes": []
-                },
-                {
-                    "name": "Created at",
-                    "description": "Exact point in time when tokens were locked",
-                    "recommendedTypes": ["types.unixTimestamp"]
-                },
-                {
-                    "name": "Lockup period",
-                    "description": "Duration of the lockup period",
-                    "recommendedTypes": ["types.durationSeconds"]
-                },
-                {
-                    "name": "Description",
-                    "description": "Arbitrary note connected to this lockup action",
-                    "recommendedTypes": []
-                },
-                {
-                    "name": "Unlocked?",
-                    "description": "Are the tokens unlocked?",
-                    "recommendedTypes": []
-                },
-                {
-                    "name": "Admin account",
-                    "description": "Account with the special rights to unconditionally unlock tokens",
+                    "name": "Lock status",
+                    "description": "Returns the detailed lock status for the given account and lock id",
+                    "parameters": [
+                        {
+                            "name": "Token",
+                            "description": "Token which was locked",
+                            "recommendedTypes": ["traits.erc20"]
+                        },
+                        {
+                            "name": "Amount",
+                            "description": "Amount of the tokens locked",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Created at",
+                            "description": "Exact point in time when tokens were locked",
+                            "recommendedTypes": ["types.unixTimestamp"]
+                        },
+                        {
+                            "name": "Lockup period",
+                            "description": "Duration of the lockup period",
+                            "recommendedTypes": ["types.durationSeconds"]
+                        },
+                        {
+                            "name": "Description",
+                            "description": "Arbitrary note connected to this lockup action",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Unlocked?",
+                            "description": "Are the tokens unlocked?",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Admin account",
+                            "description": "Account with the special rights to unconditionally unlock tokens",
+                            "recommendedTypes": []
+                        }
+                    ],
                     "recommendedTypes": []
                 }
             ],
@@ -197,38 +204,45 @@
             ],
             "returnDecorators": [
                 {
-                    "name": "Token",
-                    "description": "Token which was locked",
-                    "recommendedTypes": ["traits.erc20"]
-                },
-                {
-                    "name": "Amount",
-                    "description": "Amount of the tokens locked",
-                    "recommendedTypes": []
-                },
-                {
-                    "name": "Created at",
-                    "description": "Exact point in time when tokens were locked",
-                    "recommendedTypes": ["types.unixTimestamp"]
-                },
-                {
-                    "name": "Lockup period",
-                    "description": "Duration of the lockup period",
-                    "recommendedTypes": ["types.durationSeconds"]
-                },
-                {
-                    "name": "Description",
-                    "description": "Arbitrary note connected to this lockup action",
-                    "recommendedTypes": []
-                },
-                {
-                    "name": "Unlocked?",
-                    "description": "Are the tokens unlocked?",
-                    "recommendedTypes": []
-                },
-                {
-                    "name": "Admin account",
-                    "description": "Account with the special rights to unconditionally unlock tokens",
+                    "name": "Token locks list",
+                    "description": "List of the token locks for the given account address.",
+                    "parameters": [
+                        {
+                            "name": "Token",
+                            "description": "Token which was locked",
+                            "recommendedTypes": ["traits.erc20"]
+                        },
+                        {
+                            "name": "Amount",
+                            "description": "Amount of the tokens locked",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Created at",
+                            "description": "Exact point in time when tokens were locked",
+                            "recommendedTypes": ["types.unixTimestamp"]
+                        },
+                        {
+                            "name": "Lockup period",
+                            "description": "Duration of the lockup period",
+                            "recommendedTypes": ["types.durationSeconds"]
+                        },
+                        {
+                            "name": "Description",
+                            "description": "Arbitrary note connected to this lockup action",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Unlocked?",
+                            "description": "Are the tokens unlocked?",
+                            "recommendedTypes": []
+                        },
+                        {
+                            "name": "Admin account",
+                            "description": "Account with the special rights to unconditionally unlock tokens",
+                            "recommendedTypes": []
+                        }
+                    ],
                     "recommendedTypes": []
                 }
             ],
